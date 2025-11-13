@@ -1,0 +1,184 @@
+[
+  {
+    "id": "addition-easy-1763066162577",
+    "question": "What is 4 + 7?",
+    "options": [
+      "11",
+      "14",
+      "9",
+      "6"
+    ],
+    "correctAnswer": 0,
+    "explanation": "4 + 7 = 11. Add the two numbers together.",
+    "difficulty": "easy",
+    "topic": "addition"
+  },
+  {
+    "id": "addition-easy-1763066162615",
+    "question": "What is 10 + 4?",
+    "options": [
+      "8",
+      "14",
+      "5",
+      "20"
+    ],
+    "correctAnswer": 1,
+    "explanation": "10 + 4 = 14. Add the two numbers together.",
+    "difficulty": "easy",
+    "topic": "addition"
+  },
+  {
+    "id": "subtraction-easy-1763066164736",
+    "question": "What is 2 - 1?",
+    "options": [
+      "3",
+      "1",
+      "4",
+      "5"
+    ],
+    "correctAnswer": 1,
+    "explanation": "2 - 1 = 1. Subtract the smaller number from the larger.",
+    "difficulty": "easy",
+    "topic": "subtraction"
+  },
+  {
+    "id": "division-easy-1763066165253",
+    "question": "What is 81 ÷ 9?",
+    "options": [
+      "9",
+      "1",
+      "4",
+      "2"
+    ],
+    "correctAnswer": 0,
+    "explanation": "81 ÷ 9 = 9. Divide 81 by 9.",
+    "difficulty": "easy",
+    "topic": "division"
+  },
+  {
+    "id": "fractions-easy-1763066165819",
+    "question": "What is 1/10 + 4/10? (Express as a fraction with denominator 10)",
+    "options": [
+      "10",
+      "5",
+      "13",
+      "8"
+    ],
+    "correctAnswer": 1,
+    "explanation": "1/10 + 4/10 = 5/10. Add the numerators when denominators are the same.",
+    "difficulty": "easy",
+    "topic": "fractions"
+  },
+  {
+    "id": "fractions-medium-1763066166585",
+    "question": "What is 23/10 + 39/10? (Express as a fraction with denominator 10)",
+    "options": [
+      "67",
+      "64",
+      "71",
+      "62"
+    ],
+    "correctAnswer": 3,
+    "explanation": "23/10 + 39/10 = 62/10. Add the numerators when denominators are the same.",
+    "difficulty": "medium",
+    "topic": "fractions"
+  },
+  {
+    "id": "fractions-hard-1763066174145",
+    "question": "What is 51/10 + 75/10? (Express as a fraction with denominator 10)",
+    "options": [
+      "132",
+      "125",
+      "126",
+      "128"
+    ],
+    "correctAnswer": 2,
+    "explanation": "51/10 + 75/10 = 126/10. Add the numerators when denominators are the same.",
+    "difficulty": "hard",
+    "topic": "fractions"
+  },
+  {
+    "id": "addition-hard-1763066185893",
+    "question": "What is 64 + 99?",
+    "options": [
+      "163",
+      "167",
+      "170",
+      "164"
+    ],
+    "correctAnswer": 0,
+    "explanation": "64 + 99 = 163. Add the two numbers together.",
+    "difficulty": "hard",
+    "topic": "addition"
+  },
+  {
+    "id": "addition-easy-1763066210749",
+    "question": "What is 8 + 8?",
+    "options": [
+      "16",
+      "19",
+      "21",
+      "6"
+    ],
+    "correctAnswer": 0,
+    "explanation": "8 + 8 = 16. Add the two numbers together.",
+    "difficulty": "easy",
+    "topic": "addition"
+  },
+  {
+    "id": "groq-addition-easy-1763067344697",
+    "question": "What is 2 + 1?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": 1,
+    "explanation": "2 + 1 = 3. You're a math superstar!",
+    "difficulty": "easy",
+    "topic": "addition"
+  },
+  {
+    "id": "groq-addition-easy-1763067817681",
+    "question": "If I have 2 pencils and I get 4 more, how many pencils do I have now?",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "8"
+    ],
+    "correctAnswer": 3,
+    "explanation": "2 + 4 = 6, you're doing a super job with your addition, keep it up!",
+    "difficulty": "easy",
+    "topic": "addition"
+  },
+  {
+    "id": "groq-addition-easy-1763069047924",
+    "question": "What is 2 + 4?",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": 1,
+    "explanation": "2 + 4 = 6. You're doing fantastic, keep it up!",
+    "difficulty": "easy",
+    "topic": "addition"
+  },
+  {
+    "id": "groq-addition-easy-1763069047993",
+    "question": "If I have 2 toy cars and I get 4 more, how many toy cars do I have now?",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "8"
+    ],
+    "correctAnswer": 3,
+    "explanation": "2 + 4 = 6. You're doing a super job with your addition skills!",
+    "difficulty": "easy",
+    "topic": "addition"
+  }
+]

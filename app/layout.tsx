@@ -73,6 +73,11 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  icons: {
+    icon: '/calculator.png',
+    shortcut: '/calculator.png',
+    apple: '/calculator.png',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -80,12 +85,21 @@ export const metadata: Metadata = {
     title: 'OnlineCalc - Free Online Calculators for All Your Needs',
     description: 'Free online calculators for EMI, SIP, BMI, percentage, age, grade, and more. Fast, accurate financial, math, health, and everyday calculators.',
     siteName: 'OnlineCalc',
+    images: [
+      {
+        url: '/calculator.png',
+        width: 1200,
+        height: 630,
+        alt: 'OnlineCalc - Free Online Calculators',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'OnlineCalc - Free Online Calculators',
     description: 'Free online calculators for EMI, SIP, BMI, percentage, age, and more.',
     creator: '@onlinecalc',
+    images: ['/calculator.png'],
   },
   verification: {
     google: 'your-google-verification-code',

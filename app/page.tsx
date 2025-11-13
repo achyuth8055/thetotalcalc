@@ -332,7 +332,7 @@ export default function Home() {
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
               <h3 className="text-xl font-bold text-gray-900 mb-3">Can I bookmark specific calculators?</h3>
-              <p className="text-gray-700">Yes! Each calculator has its own unique URL that you can bookmark in your browser. Additionally, CalcWorld automatically tracks your recently used calculators for quick access from the homepage.</p>
+              <p className="text-gray-700">Yes! Each calculator has its own unique URL that you can bookmark in your browser. Additionally, TheTotalCalc automatically tracks your recently used calculators for quick access from the homepage.</p>
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
               <h3 className="text-xl font-bold text-gray-900 mb-3">Are the math quiz questions suitable for kids?</h3>

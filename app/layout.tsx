@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://calcworld.com',
+    url: 'https://thetotalcalc.com',
     title: 'TheTotalCalc - Free Online Calculators for All Your Needs',
     description: 'Free online calculators for EMI, SIP, BMI, percentage, age, grade, and more. Fast, accurate financial, math, health, and everyday calculators.',
     siteName: 'TheTotalCalc',

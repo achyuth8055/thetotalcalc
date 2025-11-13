@@ -90,14 +90,14 @@ export default function AboutPage() {
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">Contact Us</h2>
             <p className="leading-relaxed">
               Have suggestions or found a bug? We'd love to hear from you! Your feedback helps us improve 
-              CalcWorld for everyone. While we're constantly working on new features, your input guides our 
+              TheTotalCalc for everyone. While we're constantly working on new features, your input guides our 
               development priorities.
             </p>
           </section>
 
           <section className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-8">
             <p className="text-center text-gray-700">
-              Thank you for choosing <span className="font-bold text-gray-900">CalcWorld</span> as your 
+              Thank you for choosing <span className="font-bold text-gray-900">TheTotalCalc</span> as your 
               calculation companion. We hope our tools make your life easier!
             </p>
           </section>

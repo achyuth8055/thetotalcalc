@@ -78,4 +78,4 @@ MIT License
 
 ---
 
-Made with ❤️ by CalcWorld Team
+Made with ❤️ by TheTotalCalc Team

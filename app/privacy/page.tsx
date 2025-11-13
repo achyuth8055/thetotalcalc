@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">1. Introduction</h2>
             <p className="leading-relaxed">
-              Welcome to CalcWorld. We respect your privacy and are committed to protecting your personal data. 
+              Welcome to TheTotalCalc. We respect your privacy and are committed to protecting your personal data. 
               This privacy policy explains how we handle your information when you use our website and calculators.
             </p>
           </section>
@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
             
             <h3 className="text-lg font-semibold text-gray-800 mt-4 mb-2">2.1 Information You Provide</h3>
             <p className="leading-relaxed mb-3">
-              CalcWorld does <strong>not</strong> require you to create an account or provide personal information 
+              TheTotalCalc does <strong>not</strong> require you to create an account or provide personal information 
               to use our calculators. All calculations are performed locally in your browser.
             </p>
 
@@ -55,7 +55,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">4. Local Storage</h2>
             <p className="leading-relaxed">
-              CalcWorld uses browser local storage to save your recent calculator history and preferred currency 
+              TheTotalCalc uses browser local storage to save your recent calculator history and preferred currency 
               settings. This data is stored <strong>only on your device</strong> and is not transmitted to our 
               servers. You can clear this data at any time through your browser settings.
             </p>
@@ -89,7 +89,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">7. Cookies</h2>
             <p className="leading-relaxed">
-              CalcWorld uses minimal cookies and browser storage for essential functionality such as saving your 
+              TheTotalCalc uses minimal cookies and browser storage for essential functionality such as saving your 
               preferred currency and recent calculator history. We do not use cookies for advertising or tracking 
               purposes.
             </p>
@@ -98,7 +98,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">8. Children's Privacy</h2>
             <p className="leading-relaxed">
-              CalcWorld is suitable for all ages. We do not knowingly collect personal information from children 
+              TheTotalCalc is suitable for all ages. We do not knowingly collect personal information from children 
               under 13. Our calculators can be used without providing any personal information.
             </p>
           </section>
@@ -140,7 +140,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-8">
             <p className="text-sm text-gray-700 mb-3">
-              <strong>Key Takeaway:</strong> CalcWorld is designed with privacy in mind. We don't require accounts, 
+              <strong>Key Takeaway:</strong> TheTotalCalc is designed with privacy in mind. We don't require accounts, 
               don't store your calculations on our servers, and only collect minimal data necessary to provide our 
               services.
             </p>

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/_next/'],
     },
-    sitemap: 'https://online-calc.com/sitemap.xml',
+    sitemap: 'https://thetotalcalc.com/sitemap.xml',
   }
 }

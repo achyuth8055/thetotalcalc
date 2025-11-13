@@ -8,7 +8,7 @@ import Script from "next/script";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://online-calc.com'),
+  metadataBase: new URL('https://thetotalcalc.com'),
   title: {
     default: "TheTotalCalc - Free Online Calculators for Finance, Math, Health & More",
     template: "%s | TheTotalCalc"
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://online-calc.com',
+    url: 'https://thetotalcalc.com',
     title: 'TheTotalCalc - Free Online Calculators for All Your Needs',
     description: 'Free online calculators for EMI, SIP, BMI, percentage, age, grade, and more. Fast, accurate financial, math, health, and everyday calculators.',
     siteName: 'TheTotalCalc',
@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     google: 'your-google-verification-code',
   },
   alternates: {
-    canonical: 'https://online-calc.com',
+    canonical: 'https://thetotalcalc.com',
   },
 };
 
@@ -99,7 +99,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'TheTotalCalc',
-  url: 'https://online-calc.com',
+  url: 'https://thetotalcalc.com',
   description: 'Free online calculators for finance, math, health, dates, and everyday calculations. EMI, SIP, BMI, percentage, age calculator and more.',
   applicationCategory: 'UtilityApplication',
   operatingSystem: 'Any',

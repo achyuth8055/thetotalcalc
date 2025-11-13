@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { calculators } from '@/data/calculators'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://online-calc.com'
+  const baseUrl = 'https://thetotalcalc.com'
   
   // Static pages
   const staticPages = [

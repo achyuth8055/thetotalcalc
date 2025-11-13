@@ -10,13 +10,13 @@ export default function AboutPage() {
       />
 
       <div className="bg-white rounded-xl shadow-md p-8 border border-gray-200">
-        <h1 className="text-4xl font-bold text-gray-900 mb-6">About TheTotalCalc</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-6">About OnlineCalc</h1>
         
         <div className="space-y-6 text-gray-700">
           <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-3">Welcome to TheTotalCalc</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-3">Welcome to OnlineCalc</h2>
             <p className="leading-relaxed">
-              TheTotalCalc is your comprehensive online calculator hub, providing a wide range of free calculators 
+              OnlineCalc is your comprehensive online calculator hub, providing a wide range of free calculators 
               to help you solve everyday mathematical problems quickly and accurately. Whether you're calculating 
               your BMI, planning your finances, or working on academic projects, we've got you covered.
             </p>
@@ -90,14 +90,14 @@ export default function AboutPage() {
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">Contact Us</h2>
             <p className="leading-relaxed">
               Have suggestions or found a bug? We'd love to hear from you! Your feedback helps us improve 
-              TheTotalCalc for everyone. While we're constantly working on new features, your input guides our 
+              OnlineCalc for everyone. While we're constantly working on new features, your input guides our 
               development priorities.
             </p>
           </section>
 
           <section className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-8">
             <p className="text-center text-gray-700">
-              Thank you for choosing <span className="font-bold text-gray-900">TheTotalCalc</span> as your 
+              Thank you for choosing <span className="font-bold text-gray-900">OnlineCalc</span> as your 
               calculation companion. We hope our tools make your life easier!
             </p>
           </section>

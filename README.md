@@ -1,6 +1,6 @@
-# TheTotalCalc - Universal Calculator Hub
+# OnlineCalc - Universal Calculator Hub
 
-TheTotalCalc is a comprehensive web application offering 30+ free calculators across Finance, Math, Health, Date & Time, Everyday, and Developer categories. Built with Next.js 14, TypeScript, and Tailwind CSS.
+OnlineCalc is a comprehensive web application offering 30+ free calculators across Finance, Math, Health, Date & Time, Everyday, and Developer categories. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
 ## 🚀 Features
 
@@ -78,4 +78,4 @@ MIT License
 
 ---
 
-Made with ❤️ by TheTotalCalc Team
+Made with ❤️ by OnlineCalc Team

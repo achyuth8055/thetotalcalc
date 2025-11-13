@@ -8,12 +8,12 @@ import Script from "next/script";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://thetotalcalc.com'),
+  metadataBase: new URL('https://online-calc.com'),
   title: {
-    default: "TheTotalCalc - Free Online Calculators for Finance, Math, Health & More",
-    template: "%s | TheTotalCalc"
+    default: "OnlineCalc - Free Online Calculators for Finance, Math, Health & More",
+    template: "%s | OnlineCalc"
   },
-  description: "Free online calculators for EMI, SIP, BMI, percentage, age, grade, loan, mortgage, tax, and more. Fast, accurate, and easy-to-use financial, mathematical, health, and everyday calculators.",
+  description: "Free online calculators for EMI, SIP, BMI, percentage, age, grade, loan, mortgage, tax, and more. OnlineCalc - Fast, accurate, and easy-to-use financial, mathematical, health, and everyday calculators.",
   keywords: [
     "calculator",
     "online calculator",
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
     "online math practice",
     "math games",
   ],
-  authors: [{ name: "TheTotalCalc Team" }],
-  creator: "TheTotalCalc",
-  publisher: "TheTotalCalc",
+  authors: [{ name: "OnlineCalc Team" }],
+  creator: "OnlineCalc",
+  publisher: "OnlineCalc",
   robots: {
     index: true,
     follow: true,
@@ -76,30 +76,30 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://thetotalcalc.com',
-    title: 'TheTotalCalc - Free Online Calculators for All Your Needs',
+    url: 'https://online-calc.com',
+    title: 'OnlineCalc - Free Online Calculators for All Your Needs',
     description: 'Free online calculators for EMI, SIP, BMI, percentage, age, grade, and more. Fast, accurate financial, math, health, and everyday calculators.',
-    siteName: 'TheTotalCalc',
+    siteName: 'OnlineCalc',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TheTotalCalc - Free Online Calculators',
+    title: 'OnlineCalc - Free Online Calculators',
     description: 'Free online calculators for EMI, SIP, BMI, percentage, age, and more.',
-    creator: '@thetotalcalc',
+    creator: '@onlinecalc',
   },
   verification: {
     google: 'your-google-verification-code',
   },
   alternates: {
-    canonical: 'https://thetotalcalc.com',
+    canonical: 'https://online-calc.com',
   },
 };
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'TheTotalCalc',
-  url: 'https://thetotalcalc.com',
+  name: 'OnlineCalc',
+  url: 'https://online-calc.com',
   description: 'Free online calculators for finance, math, health, dates, and everyday calculations. EMI, SIP, BMI, percentage, age calculator and more.',
   applicationCategory: 'UtilityApplication',
   operatingSystem: 'Any',

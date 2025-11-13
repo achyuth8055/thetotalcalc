@@ -17,7 +17,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">1. Acceptance of Terms</h2>
             <p className="leading-relaxed">
-              By accessing and using TheTotalCalc, you accept and agree to be bound by these Terms of Service. 
+              By accessing and using OnlineCalc, you accept and agree to be bound by these Terms of Service. 
               If you do not agree to these terms, please do not use our website or services.
             </p>
           </section>
@@ -25,7 +25,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">2. Description of Service</h2>
             <p className="leading-relaxed mb-3">
-              TheTotalCalc provides free online calculators for various purposes including:
+              OnlineCalc provides free online calculators for various purposes including:
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Financial calculations (EMI, SIP, Loans, Fixed Deposits)</li>
@@ -40,7 +40,7 @@ export default function TermsOfServicePage() {
 
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">3. User Responsibilities</h2>
-            <p className="leading-relaxed mb-3">When using TheTotalCalc, you agree to:</p>
+            <p className="leading-relaxed mb-3">When using OnlineCalc, you agree to:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Use the calculators for lawful purposes only</li>
               <li>Not attempt to disrupt or interfere with the website's operation</li>
@@ -54,7 +54,7 @@ export default function TermsOfServicePage() {
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">4. Accuracy and Limitations</h2>
             <p className="leading-relaxed mb-3">
               <strong>Important Disclaimer:</strong> While we strive for accuracy in all our calculators, 
-              TheTotalCalc does not guarantee the accuracy, completeness, or reliability of any calculation results.
+              OnlineCalc does not guarantee the accuracy, completeness, or reliability of any calculation results.
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Calculations are based on standard formulas and may not account for all variables</li>
@@ -69,7 +69,7 @@ export default function TermsOfServicePage() {
             <div className="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4 mb-4">
               <p className="font-semibold text-yellow-900 mb-2">⚠️ Important Notice</p>
               <p className="text-sm text-gray-700">
-                TheTotalCalc calculators do <strong>not</strong> constitute professional advice. Our tools are for 
+                OnlineCalc calculators do <strong>not</strong> constitute professional advice. Our tools are for 
                 informational and educational purposes only.
               </p>
             </div>
@@ -84,7 +84,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">6. Intellectual Property</h2>
             <p className="leading-relaxed">
-              All content, design, code, and functionality of TheTotalCalc are owned by us and protected by 
+              All content, design, code, and functionality of OnlineCalc are owned by us and protected by 
               copyright and other intellectual property laws. You may not copy, reproduce, distribute, or 
               create derivative works without explicit permission.
             </p>
@@ -93,7 +93,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">7. Third-Party Services</h2>
             <p className="leading-relaxed mb-3">
-              TheTotalCalc may integrate third-party services (such as currency detection APIs). We are not 
+              OnlineCalc may integrate third-party services (such as currency detection APIs). We are not 
               responsible for:
             </p>
             <ul className="list-disc pl-6 space-y-2">
@@ -106,7 +106,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">8. Limitation of Liability</h2>
             <p className="leading-relaxed mb-3">
-              To the fullest extent permitted by law, TheTotalCalc and its operators shall not be liable for:
+              To the fullest extent permitted by law, OnlineCalc and its operators shall not be liable for:
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Any direct, indirect, incidental, or consequential damages</li>
@@ -120,7 +120,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">9. Service Availability</h2>
             <p className="leading-relaxed">
-              TheTotalCalc is provided free of charge on an "as available" basis. We do not guarantee:
+              OnlineCalc is provided free of charge on an "as available" basis. We do not guarantee:
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Continuous, uninterrupted, or error-free service</li>
@@ -149,7 +149,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">11. Privacy</h2>
             <p className="leading-relaxed">
-              Your use of TheTotalCalc is also governed by our Privacy Policy. Please review it to understand 
+              Your use of OnlineCalc is also governed by our Privacy Policy. Please review it to understand 
               how we handle your information. By using our service, you consent to our privacy practices.
             </p>
           </section>
@@ -158,7 +158,7 @@ export default function TermsOfServicePage() {
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">12. Changes to Terms</h2>
             <p className="leading-relaxed">
               We reserve the right to modify these Terms of Service at any time. Changes will be effective 
-              immediately upon posting. Your continued use of TheTotalCalc after changes constitutes acceptance 
+              immediately upon posting. Your continued use of OnlineCalc after changes constitutes acceptance 
               of the modified terms.
             </p>
           </section>
@@ -166,7 +166,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">13. Termination</h2>
             <p className="leading-relaxed">
-              We reserve the right to terminate or restrict your access to TheTotalCalc at our discretion, 
+              We reserve the right to terminate or restrict your access to OnlineCalc at our discretion, 
               without notice, for any reason, including violation of these terms.
             </p>
           </section>
@@ -199,7 +199,7 @@ export default function TermsOfServicePage() {
           <section className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-8">
             <h3 className="font-semibold text-gray-900 mb-3">Summary</h3>
             <p className="text-sm text-gray-700 mb-2">
-              TheTotalCalc provides free calculators for general informational purposes. While we strive for accuracy:
+              OnlineCalc provides free calculators for general informational purposes. While we strive for accuracy:
             </p>
             <ul className="list-disc pl-6 text-sm text-gray-700 space-y-1">
               <li>Results are estimates and should not replace professional advice</li>
@@ -208,7 +208,7 @@ export default function TermsOfServicePage() {
               <li>Always verify critical calculations with appropriate professionals</li>
             </ul>
             <p className="text-sm text-gray-700 mt-3">
-              <strong>By using TheTotalCalc, you acknowledge and accept these terms.</strong>
+              <strong>By using OnlineCalc, you acknowledge and accept these terms.</strong>
             </p>
           </section>
         </div>

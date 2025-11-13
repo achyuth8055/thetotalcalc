@@ -15,7 +15,7 @@ export default function Navigation() {
             <div className="w-8 h-8 bg-gradient-to-br from-primary-600 to-primary-800 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">=</span>
             </div>
-            <span className="text-xl font-bold text-gray-900">TheTotalCalc</span>
+            <span className="text-xl font-bold text-gray-900">OnlineCalc</span>
           </Link>
 
           {/* Desktop Navigation */}

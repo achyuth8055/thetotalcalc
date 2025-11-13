@@ -98,7 +98,7 @@ export default function Home() {
 
           {/* Animated Title */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight text-white relative">
-            <span className="inline-block animate-fade-in-up">TheTotalCalc</span>
+            <span className="inline-block animate-fade-in-up">OnlineCalc</span>
             <div className="absolute -inset-1 bg-blue-400 blur-2xl opacity-30 animate-pulse-slow -z-10"/>
           </h1>
           
@@ -299,27 +299,27 @@ export default function Home() {
           </div>
           <div className="max-w-4xl mx-auto space-y-6">
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">What types of calculators does TheTotalCalc offer?</h3>
-              <p className="text-gray-700">TheTotalCalc provides comprehensive calculators across multiple categories including Finance (EMI, SIP, loan calculators), Health (BMI, BMR, calorie calculators), Math (percentage, GPA, scientific calculator), Date & Time (age, countdown calculators), Everyday (tip, discount, unit converter), and Developer Tools (binary, hex, base64 converters).</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">What types of calculators does OnlineCalc offer?</h3>
+              <p className="text-gray-700">OnlineCalc provides comprehensive calculators across multiple categories including Finance (EMI, SIP, loan calculators), Health (BMI, BMR, calorie calculators), Math (percentage, GPA, scientific calculator), Date & Time (age, countdown calculators), Everyday (tip, discount, unit converter), and Developer Tools (binary, hex, base64 converters).</p>
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Are TheTotalCalc calculators free to use?</h3>
-              <p className="text-gray-700">Yes! All calculators on TheTotalCalc are completely free to use with no registration required. We believe in providing accessible calculation tools for everyone without any hidden costs or subscriptions.</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Are OnlineCalc calculators free to use?</h3>
+              <p className="text-gray-700">Yes! All calculators on OnlineCalc are completely free to use with no registration required. We believe in providing accessible calculation tools for everyone without any hidden costs or subscriptions.</p>
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
               <h3 className="text-xl font-bold text-gray-900 mb-3">How accurate are the EMI and loan calculators?</h3>
               <p className="text-gray-700">Our EMI and loan calculators use industry-standard formulas to provide highly accurate results. They calculate monthly installments based on principal amount, interest rate, and loan tenure using compound interest formulas. Results match bank calculations for home loans, car loans, and personal loans.</p>
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Can I use TheTotalCalc calculators on mobile devices?</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Can I use OnlineCalc calculators on mobile devices?</h3>
               <p className="text-gray-700">Absolutely! All our calculators are fully responsive and optimized for mobile phones, tablets, and desktop computers. The interface adapts seamlessly to your screen size, providing an excellent user experience on any device.</p>
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">What makes TheTotalCalc different from other calculator websites?</h3>
-              <p className="text-gray-700">TheTotalCalc stands out with its clean, modern interface, comprehensive calculator collection, automatic currency detection for finance tools, interactive visualizations, and educational explanations for each calculation. We also offer unique features like the Math Quiz for Kids and real-time visual feedback on all calculators.</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">What makes OnlineCalc different from other calculator websites?</h3>
+              <p className="text-gray-700">OnlineCalc stands out with its clean, modern interface, comprehensive calculator collection, automatic currency detection for finance tools, interactive visualizations, and educational explanations for each calculation. We also offer unique features like the Math Quiz for Kids and real-time visual feedback on all calculators.</p>
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Do I need to create an account to use TheTotalCalc?</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Do I need to create an account to use OnlineCalc?</h3>
               <p className="text-gray-700">No account is needed! All calculators are instantly accessible without any sign-up process. Your recently used calculators are saved locally in your browser for quick access, but no personal data is collected or stored on our servers.</p>
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
@@ -332,7 +332,7 @@ export default function Home() {
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
               <h3 className="text-xl font-bold text-gray-900 mb-3">Can I bookmark specific calculators?</h3>
-              <p className="text-gray-700">Yes! Each calculator has its own unique URL that you can bookmark in your browser. Additionally, TheTotalCalc automatically tracks your recently used calculators for quick access from the homepage.</p>
+              <p className="text-gray-700">Yes! Each calculator has its own unique URL that you can bookmark in your browser. Additionally, OnlineCalc automatically tracks your recently used calculators for quick access from the homepage.</p>
             </div>
             <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
               <h3 className="text-xl font-bold text-gray-900 mb-3">Are the math quiz questions suitable for kids?</h3>

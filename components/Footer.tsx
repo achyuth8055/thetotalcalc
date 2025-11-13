@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-4">TheTotalCalc</h3>
+            <h3 className="text-white font-bold text-lg mb-4">OnlineCalc</h3>
             <p className="text-sm">
               Your universal calculator hub for finance, math, health, and everyday calculations.
             </p>
@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center">
-          <p>&copy; {currentYear} TheTotalCalc. All rights reserved.</p>
+          <p>&copy; {currentYear} OnlineCalc. All rights reserved.</p>
         </div>
       </div>
     </footer>

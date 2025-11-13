@@ -146,7 +146,11 @@ function generateSimpleQuestion(difficulty: string, topic: string): QuizQuestion
 
 // Generate question using Groq API
 async function generateLLMQuestion(difficulty: string, topic: string): Promise<QuizQuestion | null> {
-  const apiKey = "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";
+  const apiKey = process.env.GROQ_API_KEY;
+  
+  if (!apiKey) {
+    throw new Error("GROQ_API_KEY environment variable is not set");
+  }
   
   try {
     const groq = new Groq({ apiKey });

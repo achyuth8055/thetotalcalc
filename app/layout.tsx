@@ -154,6 +154,11 @@ export default function RootLayout({
             gtag('config', 'G-QEY6X1E51Y');
           `}
         </Script>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7738496464135357"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={inter.className}>
         <Navigation />

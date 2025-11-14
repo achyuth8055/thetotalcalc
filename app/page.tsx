@@ -97,16 +97,16 @@ export default function Home() {
           </div>
 
           {/* Animated Title */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight text-white relative">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold mb-6 tracking-tight text-white relative">
             <span className="inline-block animate-fade-in-up">OnlineCalc</span>
             <div className="absolute -inset-1 bg-blue-400 blur-2xl opacity-30 animate-pulse-slow -z-10"/>
           </h1>
           
-          <p className="text-xl md:text-2xl lg:text-3xl mb-10 text-blue-100 max-w-4xl mx-auto font-light animate-fade-in-up animation-delay-200">
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-8 sm:mb-10 text-blue-100 max-w-4xl mx-auto font-light animate-fade-in-up animation-delay-200 px-4">
             Your Complete Calculator Suite
           </p>
           
-          <p className="text-lg md:text-xl mb-12 text-blue-200 max-w-3xl mx-auto animate-fade-in-up animation-delay-400">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-8 sm:mb-12 text-blue-200 max-w-3xl mx-auto animate-fade-in-up animation-delay-400 px-4">
             Professional tools for Finance • Health • Math • Dates • Developers
           </p>
 
@@ -121,22 +121,22 @@ export default function Home() {
           </div>
           
           {/* Stats Cards with 3D Effect */}
-          <div className="mt-16 flex flex-wrap justify-center gap-4 animate-fade-in-up animation-delay-800">
-            <div className="group px-6 py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
-              <div className="text-3xl font-bold text-white mb-1">{calculators.length}+</div>
-              <div className="text-sm text-blue-200">Calculators</div>
+          <div className="mt-12 sm:mt-16 grid grid-cols-2 md:flex md:flex-wrap justify-center gap-3 sm:gap-4 animate-fade-in-up animation-delay-800 px-4">
+            <div className="group px-3 sm:px-6 py-3 sm:py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
+              <div className="text-xl sm:text-3xl font-bold text-white mb-1">{calculators.length}+</div>
+              <div className="text-xs sm:text-sm text-blue-200">Calculators</div>
             </div>
-            <div className="group px-6 py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
-              <div className="text-3xl font-bold text-white mb-1">{categories.length}</div>
-              <div className="text-sm text-blue-200">Categories</div>
+            <div className="group px-3 sm:px-6 py-3 sm:py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
+              <div className="text-xl sm:text-3xl font-bold text-white mb-1">{categories.length}</div>
+              <div className="text-xs sm:text-sm text-blue-200">Categories</div>
             </div>
-            <div className="group px-6 py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
-              <div className="text-3xl font-bold text-white mb-1">100%</div>
-              <div className="text-sm text-blue-200">Free Forever</div>
+            <div className="group px-3 sm:px-6 py-3 sm:py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
+              <div className="text-xl sm:text-3xl font-bold text-white mb-1">100%</div>
+              <div className="text-xs sm:text-sm text-blue-200">Free Forever</div>
             </div>
-            <div className="group px-6 py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
-              <div className="text-3xl font-bold text-white mb-1">10+</div>
-              <div className="text-sm text-blue-200">Currencies</div>
+            <div className="group px-3 sm:px-6 py-3 sm:py-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
+              <div className="text-xl sm:text-3xl font-bold text-white mb-1">10+</div>
+              <div className="text-xs sm:text-sm text-blue-200">Currencies</div>
             </div>
           </div>
         </div>
@@ -151,13 +151,13 @@ export default function Home() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Popular Calculators */}
-        <section className="mb-24">
-          <div className="text-center mb-14">
+        <section className="mb-16 sm:mb-24">
+          <div className="text-center mb-10 sm:mb-14">
             <div className="inline-block mb-4">
               <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider px-4 py-2 bg-blue-100 rounded-full">Most Popular</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Start Here</h2>
-            <p className="text-gray-600 text-xl max-w-2xl mx-auto">Jump into our most frequently used calculators</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 px-4">Start Here</h2>
+            <p className="text-gray-600 text-base sm:text-lg md:text-xl max-w-2xl mx-auto px-4">Jump into our most frequently used calculators</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {popularCalculators.map((calc, index) => (
@@ -173,13 +173,13 @@ export default function Home() {
         </section>
 
         {/* Category Grid with 3D Cards */}
-        <section className="mb-24">
-          <div className="text-center mb-14">
+        <section className="mb-16 sm:mb-24">
+          <div className="text-center mb-10 sm:mb-14">
             <div className="inline-block mb-4">
               <span className="text-purple-600 font-semibold text-sm uppercase tracking-wider px-4 py-2 bg-purple-100 rounded-full">All Categories</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Explore by Category</h2>
-            <p className="text-gray-600 text-xl max-w-2xl mx-auto">Find the perfect calculator for your needs</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 px-4">Explore by Category</h2>
+            <p className="text-gray-600 text-base sm:text-lg md:text-xl max-w-2xl mx-auto px-4">Find the perfect calculator for your needs</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {categories.map((category, index) => {

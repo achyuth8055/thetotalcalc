@@ -91,6 +91,15 @@ export const calculators: Calculator[] = [
     keywords: ["brokerage", "trading charges", "transaction cost"],
     color: "blue",
   },
+  {
+    id: "flat-vs-reducing-rate",
+    name: "Flat vs Reducing Rate Calculator",
+    description: "Compare flat rate vs reducing rate loans to understand cost differences",
+    category: "finance",
+    slug: "flat-vs-reducing-rate-calculator",
+    keywords: ["flat rate", "reducing rate", "loan comparison", "interest calculation", "EMI"],
+    color: "blue",
+  },
 
   // Math Calculators
   {

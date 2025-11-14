@@ -180,5 +180,61 @@
     "explanation": "2 + 4 = 6. You're doing a super job with your addition skills!",
     "difficulty": "easy",
     "topic": "addition"
+  },
+  {
+    "id": "groq-addition-easy-1763097231731",
+    "question": "What is 2 + 4?",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": 1,
+    "explanation": "2 + 4 = 6. You're doing fantastic, keep it up!",
+    "difficulty": "easy",
+    "topic": "addition"
+  },
+  {
+    "id": "groq-addition-easy-1763097231980",
+    "question": "What is 2 + 4?",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": 1,
+    "explanation": "2 + 4 = 6. You're doing fantastic, keep practicing!",
+    "difficulty": "easy",
+    "topic": "addition"
+  },
+  {
+    "id": "groq-addition-easy-1763097232412",
+    "question": "If I have 2 toy cars and I get 4 more, how many toy cars do I have now?",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "8"
+    ],
+    "correctAnswer": 3,
+    "explanation": "2 + 4 = 6. You're a superstar at adding numbers!",
+    "difficulty": "easy",
+    "topic": "addition"
+  },
+  {
+    "id": "groq-addition-easy-1763097232652",
+    "question": "If I have 2 pencils and I get 4 more, how many pencils do I have now?",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "8"
+    ],
+    "correctAnswer": 3,
+    "explanation": "2 + 4 = 6. You're a superstar mathematician!",
+    "difficulty": "easy",
+    "topic": "addition"
   }
 ]

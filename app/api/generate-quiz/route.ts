@@ -134,7 +134,7 @@ function generateSimpleQuestion(difficulty: string, topic: string): QuizQuestion
   const correctIndex = options.indexOf(correctAnswerStr);
 
   return {
-    id: `${topic}-${difficulty}-${Date.now()}`,
+    id: `simple-${topic}-${difficulty}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     question,
     options,
     correctAnswer: correctIndex,
@@ -224,39 +224,76 @@ async function generateLLMQuestion(difficulty: string, topic: string): Promise<Q
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { difficulty = "easy", topic = "addition" } = body;
+    const { 
+      difficulty = "easy", 
+      topic = "addition", 
+      usedQuestionIds = [], 
+      generateBatch = 1 
+    } = body;
 
     // Load cached questions
     const cachedQuestions = loadCachedQuestions();
     
-    // Filter questions by difficulty and topic
-    const matchingQuestions = cachedQuestions.filter(
-      (q) => q.difficulty === difficulty && q.topic === topic
+    // Filter questions by difficulty, topic, and exclude used ones
+    const availableQuestions = cachedQuestions.filter(
+      (q) => q.difficulty === difficulty && 
+             q.topic === topic && 
+             !usedQuestionIds.includes(q.id)
     );
 
-    // 50% chance to use cached question if available
-    const useCached = matchingQuestions.length > 0 && Math.random() > 0.5;
+    const questions: QuizQuestion[] = [];
+    const targetCount = Math.min(generateBatch, 15); // Max 15 questions per session
 
-    let question: QuizQuestion;
+    // First, use available cached questions
+    while (questions.length < targetCount && availableQuestions.length > 0) {
+      const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+      const question = availableQuestions.splice(randomIndex, 1)[0];
+      questions.push(question);
+    }
 
-    if (useCached) {
-      // Pick random cached question
-      question = matchingQuestions[Math.floor(Math.random() * matchingQuestions.length)];
-    } else {
-      // Try LLM generation first, fall back to simple generation
+    // Generate new questions if we need more
+    while (questions.length < targetCount) {
+      let newQuestion: QuizQuestion;
+      
+      // Try LLM generation first
       const llmQuestion = await generateLLMQuestion(difficulty, topic);
       
-      if (llmQuestion) {
-        question = llmQuestion;
-        saveQuestionToCache(question);
+      if (llmQuestion && !usedQuestionIds.includes(llmQuestion.id) && 
+          !questions.some(q => q.id === llmQuestion.id)) {
+        newQuestion = llmQuestion;
       } else {
-        // Generate simple question
-        question = generateSimpleQuestion(difficulty, topic);
-        saveQuestionToCache(question);
+        // Fallback to simple generation with unique ID
+        newQuestion = generateSimpleQuestion(difficulty, topic);
+        // Ensure unique ID by adding timestamp and random number
+        newQuestion.id = `${newQuestion.id}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      }
+
+      // Double-check uniqueness
+      if (!usedQuestionIds.includes(newQuestion.id) && 
+          !questions.some(q => q.id === newQuestion.id)) {
+        questions.push(newQuestion);
+        
+        // Save new question to cache (async, don't wait)
+        try {
+          saveQuestionToCache(newQuestion);
+        } catch (error) {
+          console.error("Failed to save question to cache:", error);
+        }
+      }
+      
+      // Safety break to avoid infinite loop
+      if (questions.length === 0 && targetCount === 1) {
+        break;
       }
     }
 
-    return NextResponse.json(question);
+    // Return single question or batch based on request
+    if (generateBatch === 1) {
+      return NextResponse.json(questions[0] || generateSimpleQuestion(difficulty, topic));
+    } else {
+      return NextResponse.json(questions);
+    }
+
   } catch (error) {
     console.error("Error generating question:", error);
     return NextResponse.json(

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import confetti from "canvas-confetti";
@@ -30,6 +30,9 @@ export default function MathQuizPage() {
   const [timeLeft, setTimeLeft] = useState(10);
   const [timerDuration, setTimerDuration] = useState(10);
   const [timerPaused, setTimerPaused] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [usedQuestionIds, setUsedQuestionIds] = useState<string[]>([]);
+  const [questionQueue, setQuestionQueue] = useState<QuizQuestion[]>([]);
 
   const topics = [
     { id: "addition", name: "Addition", emoji: "➕" },
@@ -40,34 +43,112 @@ export default function MathQuizPage() {
     { id: "decimals", name: "Decimals", emoji: "0.5" },
   ];
 
-  const loadQuestion = async () => {
+  const loadQuestion = useCallback(async () => {
     setIsLoading(true);
     setShowResult(false);
     setSelectedAnswer(null);
     setTimeLeft(timerDuration);
     setTimerPaused(false);
+    setError(null);
 
+    try {
+      // First check if we have questions in queue
+      if (questionQueue.length > 0) {
+        const question = questionQueue[0];
+        setCurrentQuestion(question);
+        setQuestionQueue(prev => prev.slice(1));
+        setUsedQuestionIds(prev => [...prev, question.id]);
+        setIsLoading(false);
+        return;
+      }
+
+      const response = await fetch("/api/generate-quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          difficulty: selectedDifficulty, 
+          topic: selectedTopic,
+          usedQuestionIds: usedQuestionIds,
+          generateBatch: 5 // Generate 5 questions at once
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      
+      // Handle batch response (array of questions) or single question
+      if (Array.isArray(data)) {
+        if (data.length === 0) {
+          throw new Error("No unique questions available");
+        }
+        
+        // Use first question immediately, queue the rest
+        const [firstQuestion, ...restQuestions] = data;
+        setCurrentQuestion(firstQuestion);
+        setQuestionQueue(restQuestions);
+        setUsedQuestionIds(prev => [...prev, firstQuestion.id]);
+      } else {
+        // Single question response (fallback)
+        const question: QuizQuestion = data;
+        
+        // Validate question structure
+        if (!question || !question.question || !Array.isArray(question.options) || 
+            typeof question.correctAnswer !== 'number') {
+          throw new Error("Invalid question format received");
+        }
+        
+        setCurrentQuestion(question);
+        setUsedQuestionIds(prev => [...prev, question.id]);
+      }
+    } catch (error) {
+      console.error("Error loading question:", error);
+      setError(error instanceof Error ? error.message : "Unknown error occurred");
+      // Fallback to a sample question if API fails
+      const fallbackQuestion = getFallbackQuestion();
+      setCurrentQuestion(fallbackQuestion);
+      setUsedQuestionIds(prev => [...prev, fallbackQuestion.id]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [selectedDifficulty, selectedTopic, timerDuration, usedQuestionIds, questionQueue]);
+
+  // Background question loading to keep queue filled
+  const loadBackgroundQuestions = useCallback(async () => {
+    // Only load if queue is getting low and we haven't used too many questions
+    if (questionQueue.length >= 2 || usedQuestionIds.length >= 15) return;
+    
     try {
       const response = await fetch("/api/generate-quiz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ difficulty: selectedDifficulty, topic: selectedTopic }),
+        body: JSON.stringify({ 
+          difficulty: selectedDifficulty, 
+          topic: selectedTopic,
+          usedQuestionIds: [...usedQuestionIds, ...questionQueue.map(q => q.id)],
+          generateBatch: 5
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to generate question");
+      if (response.ok) {
+        const newQuestions = await response.json();
+        if (Array.isArray(newQuestions) && newQuestions.length > 0) {
+          setQuestionQueue(prev => [...prev, ...newQuestions]);
+        }
       }
-
-      const question: QuizQuestion = await response.json();
-      setCurrentQuestion(question);
     } catch (error) {
-      console.error("Error loading question:", error);
-      // Fallback to a sample question if API fails
-      setCurrentQuestion(getFallbackQuestion());
-    } finally {
-      setIsLoading(false);
+      console.error("Background question loading failed:", error);
     }
-  };
+  }, [selectedDifficulty, selectedTopic, usedQuestionIds, questionQueue]);
+
+  // Effect to trigger background loading
+  useEffect(() => {
+    if (totalQuestions > 0 && totalQuestions < 12 && questionQueue.length < 2) {
+      loadBackgroundQuestions();
+    }
+  }, [totalQuestions, questionQueue.length, loadBackgroundQuestions]);
 
   // Timer countdown effect
   useEffect(() => {
@@ -80,17 +161,17 @@ export default function MathQuizPage() {
     }
 
     const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+      setTimeLeft((prev) => Math.max(0, prev - 1));
     }, 1000);
 
     return () => clearInterval(timer);
   }, [timeLeft, currentQuestion, showResult, quizCompleted, timerPaused, isLoading]);
 
-  const getFallbackQuestion = (): QuizQuestion => {
+  const getFallbackQuestion = useCallback((): QuizQuestion => {
     const fallbackQuestions: Record<string, QuizQuestion[]> = {
       addition: [
         {
-          id: "fallback-1",
+          id: "fallback-add-1",
           question: "What is 5 + 3?",
           options: ["6", "7", "8", "9"],
           correctAnswer: 2,
@@ -98,45 +179,77 @@ export default function MathQuizPage() {
           difficulty: selectedDifficulty,
           topic: "addition",
         },
+        {
+          id: "fallback-add-2",
+          question: "What is 7 + 2?",
+          options: ["8", "9", "10", "11"],
+          correctAnswer: 1,
+          explanation: "7 + 2 = 9. Start with 7 and add 2 more to get 9.",
+          difficulty: selectedDifficulty,
+          topic: "addition",
+        },
       ],
       subtraction: [
         {
-          id: "fallback-2",
-          question: "What is 10 - 4?",
-          options: ["5", "6", "7", "8"],
+          id: "fallback-sub-1",
+          question: "What is 10 - 3?",
+          options: ["6", "7", "8", "9"],
           correctAnswer: 1,
-          explanation: "10 - 4 = 6. Start with 10 and take away 4 to get 6.",
+          explanation: "10 - 3 = 7. Start with 10 and take away 3 to get 7.",
           difficulty: selectedDifficulty,
           topic: "subtraction",
         },
       ],
       multiplication: [
         {
-          id: "fallback-3",
-          question: "What is 3 × 4?",
-          options: ["10", "11", "12", "13"],
+          id: "fallback-mul-1",
+          question: "What is 4 × 2?",
+          options: ["6", "7", "8", "9"],
           correctAnswer: 2,
-          explanation: "3 × 4 = 12. This means 3 groups of 4: 4 + 4 + 4 = 12.",
+          explanation: "4 × 2 = 8. Four groups of 2 equals 8.",
           difficulty: selectedDifficulty,
           topic: "multiplication",
         },
       ],
       division: [
         {
-          id: "fallback-4",
+          id: "fallback-div-1",
           question: "What is 12 ÷ 3?",
-          options: ["2", "3", "4", "5"],
-          correctAnswer: 2,
-          explanation: "12 ÷ 3 = 4. Split 12 items into 3 equal groups, each group has 4.",
+          options: ["3", "4", "5", "6"],
+          correctAnswer: 1,
+          explanation: "12 ÷ 3 = 4. Twelve divided into 3 equal groups gives 4 in each group.",
           difficulty: selectedDifficulty,
           topic: "division",
+        },
+      ],
+      fractions: [
+        {
+          id: "fallback-frac-1",
+          question: "What is 1/2 + 1/4?",
+          options: ["1/4", "2/4", "3/4", "4/4"],
+          correctAnswer: 2,
+          explanation: "1/2 + 1/4 = 2/4 + 1/4 = 3/4",
+          difficulty: selectedDifficulty,
+          topic: "fractions",
+        },
+      ],
+      decimals: [
+        {
+          id: "fallback-dec-1",
+          question: "What is 0.5 + 0.3?",
+          options: ["0.7", "0.8", "0.9", "1.0"],
+          correctAnswer: 1,
+          explanation: "0.5 + 0.3 = 0.8",
+          difficulty: selectedDifficulty,
+          topic: "decimals",
         },
       ],
     };
 
     const topicQuestions = fallbackQuestions[selectedTopic] || fallbackQuestions.addition;
-    return topicQuestions[0];
-  };
+    const randomIndex = Math.floor(Math.random() * topicQuestions.length);
+    return topicQuestions[randomIndex];
+  }, [selectedDifficulty, selectedTopic]);
 
   useEffect(() => {
     if (!quizCompleted && totalQuestions < MAX_QUESTIONS) {
@@ -210,6 +323,8 @@ export default function MathQuizPage() {
     setSelectedAnswer(null);
     setTimeLeft(timerDuration);
     setTimerPaused(false);
+    setUsedQuestionIds([]);
+    setQuestionQueue([]);
     loadQuestion();
   };
 

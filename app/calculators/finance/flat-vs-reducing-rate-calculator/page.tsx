@@ -1,110 +1,101 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import CurrencySelector from "@/components/CurrencySelector";
+import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
 
 export default function FlatVsReducingRateCalculatorPage() {
-  const [loanAmount, setLoanAmount] = useState<string>("500000");
-  const [flatRate, setFlatRate] = useState<string>("12");
-  const [reducingRate, setReducingRate] = useState<string>("12");
-  const [loanTenure, setLoanTenure] = useState<string>("5");
+  const [loanAmount, setLoanAmount] = useState(500000);
+  const [interestRate, setInterestRate] = useState(10);
+  const [loanTenure, setLoanTenure] = useState(5);
+  const [tenureType, setTenureType] = useState<"years" | "months">("years");
+  const [currency, setCurrency] = useState<CurrencyConfig>(CURRENCIES.USD);
+  const [isLoadingCurrency, setIsLoadingCurrency] = useState(true);
   const [results, setResults] = useState({
     flatRate: {
+      monthlyEMI: 0,
       totalInterest: 0,
       totalAmount: 0,
-      monthlyEMI: 0,
     },
-    reducingRate: {
+    reducingBalance: {
+      monthlyEMI: 0,
       totalInterest: 0,
       totalAmount: 0,
-      monthlyEMI: 0,
     },
-    difference: {
-      interestSaved: 0,
-      totalSaved: 0,
-      percentageSaved: 0,
-    }
+    savings: 0
   });
 
-  const calculateRates = () => {
-    const principal = parseFloat(loanAmount) || 0;
-    const flatRateAnnual = parseFloat(flatRate) || 0;
-    const reducingRateAnnual = parseFloat(reducingRate) || 0;
-    const tenure = parseFloat(loanTenure) || 0;
-    const months = tenure * 12;
+  useEffect(() => {
+    const recent = JSON.parse(localStorage.getItem("recentCalculators") || "[]");
+    const updated = ["flat-vs-reducing-rate", ...recent.filter((id: string) => id !== "flat-vs-reducing-rate")].slice(0, 10);
+    localStorage.setItem("recentCalculators", JSON.stringify(updated));
+    
+    // Detect currency based on user's location
+    detectCurrency().then((detectedCurrency) => {
+      setCurrency(detectedCurrency);
+      setIsLoadingCurrency(false);
+    });
+    
+    calculateRates();
+  }, []);
 
-    if (principal <= 0 || flatRateAnnual <= 0 || reducingRateAnnual <= 0 || tenure <= 0) {
+  useEffect(() => {
+    calculateRates();
+  }, [loanAmount, interestRate, loanTenure, tenureType]);
+
+  const calculateRates = () => {
+    const principal = loanAmount;
+    const rate = interestRate;
+    const tenure = tenureType === "years" ? loanTenure : loanTenure / 12;
+    const months = tenureType === "years" ? loanTenure * 12 : loanTenure;
+
+    if (principal <= 0 || rate <= 0 || months <= 0) {
       setResults({
-        flatRate: { totalInterest: 0, totalAmount: 0, monthlyEMI: 0 },
-        reducingRate: { totalInterest: 0, totalAmount: 0, monthlyEMI: 0 },
-        difference: { interestSaved: 0, totalSaved: 0, percentageSaved: 0 }
+        flatRate: { monthlyEMI: 0, totalInterest: 0, totalAmount: 0 },
+        reducingBalance: { monthlyEMI: 0, totalInterest: 0, totalAmount: 0 },
+        savings: 0
       });
       return;
     }
 
     // Flat Rate Calculation
-    const flatInterestTotal = (principal * flatRateAnnual * tenure) / 100;
+    const flatInterestTotal = (principal * rate * tenure) / 100;
     const flatTotalAmount = principal + flatInterestTotal;
     const flatMonthlyEMI = flatTotalAmount / months;
 
-    // Reducing Rate Calculation (EMI Formula)
-    const monthlyReducingRate = reducingRateAnnual / (12 * 100);
-    const reducingEMI = principal * monthlyReducingRate * 
-      Math.pow(1 + monthlyReducingRate, months) / 
-      (Math.pow(1 + monthlyReducingRate, months) - 1);
+    // Reducing Balance Calculation (EMI Formula)
+    const monthlyRate = rate / (12 * 100);
+    const reducingEMI = principal * monthlyRate * 
+      Math.pow(1 + monthlyRate, months) / 
+      (Math.pow(1 + monthlyRate, months) - 1);
     const reducingTotalAmount = reducingEMI * months;
     const reducingInterestTotal = reducingTotalAmount - principal;
 
-    // Difference Calculation
-    const interestSaved = flatInterestTotal - reducingInterestTotal;
-    const totalSaved = flatTotalAmount - reducingTotalAmount;
-    const percentageSaved = (totalSaved / flatTotalAmount) * 100;
+    const savings = flatTotalAmount - reducingTotalAmount;
 
     setResults({
       flatRate: {
+        monthlyEMI: flatMonthlyEMI,
         totalInterest: flatInterestTotal,
         totalAmount: flatTotalAmount,
-        monthlyEMI: flatMonthlyEMI,
       },
-      reducingRate: {
+      reducingBalance: {
+        monthlyEMI: reducingEMI,
         totalInterest: reducingInterestTotal,
         totalAmount: reducingTotalAmount,
-        monthlyEMI: reducingEMI,
       },
-      difference: {
-        interestSaved: Math.max(0, interestSaved),
-        totalSaved: Math.max(0, totalSaved),
-        percentageSaved: Math.max(0, percentageSaved),
-      }
+      savings: Math.max(0, savings)
     });
   };
 
-  useEffect(() => {
-    calculateRates();
-  }, [loanAmount, flatRate, reducingRate, loanTenure]);
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const formatNumber = (num: number, decimals: number = 2) => {
-    return new Intl.NumberFormat('en-IN', {
-      maximumFractionDigits: decimals,
-    }).format(num);
+  const formatCurrency = (value: number) => {
+    return formatCurrencyUtil(value, currency);
   };
 
   return (
-    <CalculatorLayout
-      title="Flat vs Reducing Rate Calculator"
-      description="Compare flat rate vs reducing rate loans to understand the real cost difference and make informed borrowing decisions."
-      keywords={["flat rate", "reducing rate", "loan calculator", "interest rate comparison", "EMI calculator"]}
-    >
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Breadcrumbs
         items={[
           { label: "Finance Calculators", href: "/finance-calculators" },
@@ -112,271 +103,217 @@ export default function FlatVsReducingRateCalculatorPage() {
         ]}
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-4xl font-bold text-gray-900">Flat vs Reducing Rate Calculator</h1>
-            <span className="text-4xl">📊</span>
-          </div>
-          <p className="text-lg text-gray-600">
-            Compare flat rate vs reducing rate loans to understand which option saves you more money.
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Flat vs Reducing Rate Calculator</h1>
+          <p className="text-base text-gray-600">
+            Compare flat rate vs reducing rate loans to understand which option saves you more money
           </p>
         </div>
+        {!isLoadingCurrency && (
+          <CurrencySelector
+            selectedCurrency={currency}
+            onCurrencyChange={setCurrency}
+          />
+        )}
+      </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Input Section */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Loan Details</h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Loan Amount (₹)
-                  </label>
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Left Side - Interactive Controls */}
+        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="space-y-6">
+            {/* Loan Amount */}
+            <div>
+              <div className="flex justify-between items-center mb-3">
+                <label className="text-sm font-semibold text-gray-700">Loan Amount</label>
+                <input
+                  type="number"
+                  value={loanAmount}
+                  onChange={(e) => setLoanAmount(Number(e.target.value) || 0)}
+                  className="w-32 px-3 py-1.5 text-right border border-gray-300 rounded-md text-sm font-semibold text-blue-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Amount"
+                />
+              </div>
+              <input
+                type="range"
+                min="50000"
+                max="5000000"
+                step="10000"
+                value={loanAmount}
+                onChange={(e) => setLoanAmount(Number(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>{currency.symbol}50K</span>
+                <span>{currency.symbol}5M</span>
+              </div>
+            </div>
+
+            {/* Rate of Interest */}
+            <div>
+              <div className="flex justify-between items-center mb-3">
+                <label className="text-sm font-semibold text-gray-700">Rate of Interest (per annum)</label>
+                <div className="flex items-center space-x-1">
                   <input
                     type="number"
-                    value={loanAmount}
-                    onChange={(e) => setLoanAmount(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
-                    placeholder="Enter loan amount"
-                    min="0"
-                    step="1000"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Flat Interest Rate (% per annum)
-                  </label>
-                  <input
-                    type="number"
-                    value={flatRate}
-                    onChange={(e) => setFlatRate(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
-                    placeholder="Enter flat rate"
-                    min="0"
+                    value={interestRate}
+                    onChange={(e) => setInterestRate(Number(e.target.value) || 0)}
+                    className="w-20 px-3 py-1.5 text-right border border-gray-300 rounded-md text-sm font-semibold text-green-600 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     step="0.1"
+                    placeholder="%"
                   />
+                  <span className="text-sm text-green-600 font-semibold">%</span>
                 </div>
+              </div>
+              <input
+                type="range"
+                min="5"
+                max="25"
+                step="0.1"
+                value={interestRate}
+                onChange={(e) => setInterestRate(Number(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-600"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>5%</span>
+                <span>25%</span>
+              </div>
+            </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Reducing Interest Rate (% per annum)
-                  </label>
-                  <input
-                    type="number"
-                    value={reducingRate}
-                    onChange={(e) => setReducingRate(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
-                    placeholder="Enter reducing rate"
-                    min="0"
-                    step="0.1"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Loan Tenure (years)
-                  </label>
+            {/* Loan Tenure */}
+            <div>
+              <div className="flex justify-between items-center mb-3">
+                <label className="text-sm font-semibold text-gray-700">Loan Tenure</label>
+                <div className="flex items-center space-x-2">
                   <input
                     type="number"
                     value={loanTenure}
-                    onChange={(e) => setLoanTenure(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
-                    placeholder="Enter tenure"
-                    min="1"
-                    step="1"
+                    onChange={(e) => setLoanTenure(Number(e.target.value) || 0)}
+                    className="w-20 px-3 py-1.5 text-right border border-gray-300 rounded-md text-sm font-semibold text-purple-600 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    placeholder="Tenure"
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Results Section */}
-          <div className="lg:col-span-2">
-            <div className="space-y-6">
-              {/* Comparison Cards */}
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Flat Rate Results */}
-                <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 border-2 border-red-200">
-                  <h3 className="text-xl font-bold text-red-800 mb-4 flex items-center gap-2">
-                    📉 Flat Rate Loan
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-red-700">Monthly EMI:</span>
-                      <span className="text-lg font-bold text-red-800">
-                        {formatCurrency(results.flatRate.monthlyEMI)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-red-700">Total Interest:</span>
-                      <span className="text-lg font-bold text-red-800">
-                        {formatCurrency(results.flatRate.totalInterest)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center border-t border-red-300 pt-2">
-                      <span className="text-sm font-medium text-red-700">Total Amount:</span>
-                      <span className="text-xl font-bold text-red-900">
-                        {formatCurrency(results.flatRate.totalAmount)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Reducing Rate Results */}
-                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border-2 border-green-200">
-                  <h3 className="text-xl font-bold text-green-800 mb-4 flex items-center gap-2">
-                    📈 Reducing Rate Loan
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-green-700">Monthly EMI:</span>
-                      <span className="text-lg font-bold text-green-800">
-                        {formatCurrency(results.reducingRate.monthlyEMI)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-green-700">Total Interest:</span>
-                      <span className="text-lg font-bold text-green-800">
-                        {formatCurrency(results.reducingRate.totalInterest)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center border-t border-green-300 pt-2">
-                      <span className="text-sm font-medium text-green-700">Total Amount:</span>
-                      <span className="text-xl font-bold text-green-900">
-                        {formatCurrency(results.reducingRate.totalAmount)}
-                      </span>
-                    </div>
+                  <div className="flex bg-gray-100 rounded-md">
+                    <button
+                      onClick={() => setTenureType("years")}
+                      className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+                        tenureType === "years" 
+                          ? "bg-purple-600 text-white" 
+                          : "text-gray-600 hover:text-purple-600"
+                      }`}
+                    >
+                      Years
+                    </button>
+                    <button
+                      onClick={() => setTenureType("months")}
+                      className={`px-3 py-1 text-xs font-medium rounded-md transition-colors ${
+                        tenureType === "months" 
+                          ? "bg-purple-600 text-white" 
+                          : "text-gray-600 hover:text-purple-600"
+                      }`}
+                    >
+                      Months
+                    </button>
                   </div>
                 </div>
               </div>
-
-              {/* Savings Summary */}
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border-2 border-blue-200">
-                <h3 className="text-xl font-bold text-blue-800 mb-4 flex items-center gap-2">
-                  💰 Your Savings with Reducing Rate
-                </h3>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-900">
-                      {formatCurrency(results.difference.interestSaved)}
-                    </div>
-                    <div className="text-sm text-blue-700">Interest Saved</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-900">
-                      {formatCurrency(results.difference.totalSaved)}
-                    </div>
-                    <div className="text-sm text-blue-700">Total Saved</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-900">
-                      {formatNumber(results.difference.percentageSaved, 1)}%
-                    </div>
-                    <div className="text-sm text-blue-700">Percentage Saved</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Key Insights */}
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">📋 Key Insights</h3>
-                <div className="space-y-3 text-gray-700">
-                  <div className="flex items-start gap-2">
-                    <span className="text-green-500 font-bold">✓</span>
-                    <span>
-                      <strong>Reducing Rate</strong> is generally cheaper as interest is calculated on the outstanding principal balance.
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-yellow-500 font-bold">⚠</span>
-                    <span>
-                      <strong>Flat Rate</strong> calculates interest on the original loan amount throughout the tenure, making it more expensive.
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-blue-500 font-bold">💡</span>
-                    <span>
-                      The longer the loan tenure, the greater the difference between flat and reducing rates.
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-purple-500 font-bold">🎯</span>
-                    <span>
-                      Always compare the <strong>effective interest rate</strong> and total cost when choosing between loan options.
-                    </span>
-                  </div>
-                </div>
+              <input
+                type="range"
+                min={tenureType === "years" ? "1" : "6"}
+                max={tenureType === "years" ? "30" : "360"}
+                step={tenureType === "years" ? "1" : "6"}
+                value={loanTenure}
+                onChange={(e) => setLoanTenure(Number(e.target.value))}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>{tenureType === "years" ? "1" : "6"} {tenureType}</span>
+                <span>{tenureType === "years" ? "30" : "360"} {tenureType}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Understanding Section */}
-        <div className="mt-12 bg-gray-50 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Understanding Flat vs Reducing Rate</h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-lg font-bold text-gray-800 mb-3">📊 Flat Rate Method</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Interest calculated on original principal amount</li>
-                <li>• Same interest amount throughout loan tenure</li>
-                <li>• Higher effective interest rate</li>
-                <li>• Commonly used for personal loans, car loans</li>
-                <li>• Simple calculation: Principal × Rate × Time</li>
-              </ul>
+        {/* Right Side - Results */}
+        <div className="space-y-6">
+          {/* Comparison Results */}
+          <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-900">Flat vs Reducing Balance Interest</h3>
             </div>
-            
-            <div>
-              <h3 className="text-lg font-bold text-gray-800 mb-3">📈 Reducing Rate Method</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Interest calculated on outstanding principal</li>
-                <li>• Interest amount decreases with each payment</li>
-                <li>• Lower effective interest rate</li>
-                <li>• Standard for home loans, business loans</li>
-                <li>• Uses compound interest calculation (EMI formula)</li>
-              </ul>
+            <div className="p-6">
+              <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-600 border-b pb-2">
+                  <div></div>
+                  <div className="text-center">Flat Interest Rate</div>
+                  <div className="text-center">Reducing Balance Interest</div>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 py-2 border-b border-gray-100">
+                  <div className="text-sm font-medium text-gray-700">Monthly EMI</div>
+                  <div className="text-center text-lg font-bold text-orange-600">
+                    {formatCurrency(results.flatRate.monthlyEMI)}
+                  </div>
+                  <div className="text-center text-lg font-bold text-green-600">
+                    {formatCurrency(results.reducingBalance.monthlyEMI)}
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 py-2 border-b border-gray-100">
+                  <div className="text-sm font-medium text-gray-700">Total Interest</div>
+                  <div className="text-center text-lg font-bold text-orange-600">
+                    {formatCurrency(results.flatRate.totalInterest)}
+                  </div>
+                  <div className="text-center text-lg font-bold text-green-600">
+                    {formatCurrency(results.reducingBalance.totalInterest)}
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4 py-2">
+                  <div className="text-sm font-medium text-gray-700">Total Amount</div>
+                  <div className="text-center text-lg font-bold text-orange-600">
+                    {formatCurrency(results.flatRate.totalAmount)}
+                  </div>
+                  <div className="text-center text-lg font-bold text-green-600">
+                    {formatCurrency(results.reducingBalance.totalAmount)}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="mt-6 p-4 bg-blue-100 rounded-lg">
-            <p className="text-blue-800 text-sm">
-              <strong>Pro Tip:</strong> When comparing loan offers, always ask for the Annual Percentage Rate (APR) or effective interest rate to make an accurate comparison between flat and reducing rate loans.
-            </p>
+          {/* Savings Highlight */}
+          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 border border-green-200">
+            <div className="text-center">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">You Save with Reducing Balance</h3>
+              <div className="text-3xl font-bold text-green-600 mb-2">
+                {formatCurrency(results.savings)}
+              </div>
+              <p className="text-sm text-gray-600">
+                Choose reducing balance interest for lower total cost
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Related Calculators */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Related Calculators</h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            <Link
-              href="/calculators/finance/emi-calculator"
-              className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow"
-            >
-              <h3 className="font-semibold text-gray-800 mb-2">EMI Calculator</h3>
-              <p className="text-sm text-gray-600">Calculate monthly EMI for loans</p>
-            </Link>
-            <Link
-              href="/calculators/finance/home-loan-emi-calculator"
-              className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow"
-            >
-              <h3 className="font-semibold text-gray-800 mb-2">Home Loan EMI</h3>
-              <p className="text-sm text-gray-600">Calculate home loan payments</p>
-            </Link>
-            <Link
-              href="/calculators/finance/car-loan-emi-calculator"
-              className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow"
-            >
-              <h3 className="font-semibold text-gray-800 mb-2">Car Loan EMI</h3>
-              <p className="text-sm text-gray-600">Calculate car loan payments</p>
-            </Link>
+          {/* Understanding Section */}
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Understanding the Difference</h3>
+            <div className="space-y-3 text-sm text-gray-600">
+              <div className="flex items-start space-x-2">
+                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div>
+                  <strong className="text-orange-600">Flat Rate:</strong> Interest calculated on original principal amount throughout the loan tenure
+                </div>
+              </div>
+              <div className="flex items-start space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div>
+                  <strong className="text-green-600">Reducing Balance:</strong> Interest calculated on outstanding principal balance, decreasing over time
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </CalculatorLayout>
+    </div>
   );
 }

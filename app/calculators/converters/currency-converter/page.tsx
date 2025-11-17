@@ -55,6 +55,7 @@ export default function CurrencyConverterPage() {
       title="Currency Converter"
       description="Convert between major world currencies: USD, EUR, GBP, INR, JPY and more"
     >
+      {/* Currency converter component */}
       <Breadcrumbs
         items={[
           { label: "Converters", href: "/converters" },

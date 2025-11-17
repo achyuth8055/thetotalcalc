@@ -87,7 +87,7 @@ export default function TemperatureConverterPage() {
                 type="number"
                 value={celsius}
                 onChange={(e) => handleCelsiusChange(e.target.value)}
-                className={`w-full px-4 py-3 border-2 ${activeInput === 'celsius' ? 'border-orange-500 bg-orange-50' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-lg font-semibold`}
+                className={`w-full px-4 py-3 border-2 ${activeInput === 'celsius' ? 'border-orange-500 bg-orange-50' : 'border-gray-300 bg-white'} rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-lg font-semibold`}
                 placeholder="Enter Celsius"
               />
             </div>
@@ -101,7 +101,7 @@ export default function TemperatureConverterPage() {
                 type="number"
                 value={fahrenheit}
                 onChange={(e) => handleFahrenheitChange(e.target.value)}
-                className={`w-full px-4 py-3 border-2 ${activeInput === 'fahrenheit' ? 'border-orange-500 bg-orange-50' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-lg font-semibold`}
+                className={`w-full px-4 py-3 border-2 ${activeInput === 'fahrenheit' ? 'border-orange-500 bg-orange-50' : 'border-gray-300 bg-white'} rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-lg font-semibold`}
                 placeholder="Enter Fahrenheit"
               />
             </div>
@@ -115,7 +115,7 @@ export default function TemperatureConverterPage() {
                 type="number"
                 value={kelvin}
                 onChange={(e) => handleKelvinChange(e.target.value)}
-                className={`w-full px-4 py-3 border-2 ${activeInput === 'kelvin' ? 'border-orange-500 bg-orange-50' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-lg font-semibold`}
+                className={`w-full px-4 py-3 border-2 ${activeInput === 'kelvin' ? 'border-orange-500 bg-orange-50' : 'border-gray-300 bg-white'} rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-lg font-semibold`}
                 placeholder="Enter Kelvin"
               />
             </div>

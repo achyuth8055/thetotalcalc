@@ -72,7 +72,7 @@ export default function LengthConverterPage() {
                   type="number"
                   value={fromValue}
                   onChange={(e) => setFromValue(e.target.value)}
-                  className="col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-lg"
+                  className="col-span-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-lg bg-white"
                   placeholder="Enter value"
                 />
                 <select

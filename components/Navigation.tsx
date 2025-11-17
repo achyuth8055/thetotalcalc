@@ -40,12 +40,14 @@ export default function Navigation() {
                 </svg>
               </Link>
               {openDropdown === 'finance' && (
-                <div className="absolute top-full left-0 mt-3 w-64 bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 py-3 z-50">
+                <div className="absolute top-full left-0 mt-1 pt-2 w-64 z-50">
+                  <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 py-3">
                   <Link href="/calculators/finance/emi-calculator" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">EMI Calculator</Link>
                   <Link href="/calculators/finance/sip-calculator" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">SIP Calculator</Link>
                   <Link href="/calculators/finance/home-loan-emi-calculator" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Home Loan EMI</Link>
                   <Link href="/calculators/finance/flat-vs-reducing-rate-calculator" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Flat vs Reducing Rate</Link>
                   <Link href="/finance-calculators" className="block px-5 pt-3 text-sm text-primary-200 font-semibold hover:text-white border-t border-white/10 mt-2">View All →</Link>
+                  </div>
                 </div>
               )}
             </div>
@@ -62,12 +64,14 @@ export default function Navigation() {
                 </svg>
               </button>
               {openDropdown === 'converters' && (
-                <div className="absolute top-full left-0 mt-3 w-64 bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 py-3 z-50">
+                <div className="absolute top-full left-0 mt-1 pt-2 w-64 z-50">
+                  <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 py-3">
                   <Link href="/calculators/converters/weight-converter" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Weight Converter</Link>
                   <Link href="/calculators/converters/length-converter" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Length Converter</Link>
                   <Link href="/calculators/converters/temperature-converter" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Temperature Converter</Link>
                   <Link href="/calculators/converters/currency-converter" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Currency Converter</Link>
                   <Link href="/converters" className="block px-5 pt-3 text-sm text-primary-200 font-semibold hover:text-white border-t border-white/10 mt-2">View All →</Link>
+                  </div>
                 </div>
               )}
             </div>

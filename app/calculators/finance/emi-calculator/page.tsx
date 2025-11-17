@@ -100,7 +100,7 @@ export default function EMICalculator() {
                   type="number"
                   value={loanAmount}
                   onChange={(e) => setLoanAmount(Number(e.target.value) || 0)}
-                  className="w-32 px-3 py-1.5 text-right border border-gray-300 rounded-md text-sm font-semibold text-blue-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-32 px-3 py-1.5 text-right border border-gray-300 rounded-md text-sm font-semibold text-blue-600 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Amount"
                 />
               </div>
@@ -127,7 +127,7 @@ export default function EMICalculator() {
                   type="number"
                   value={interestRate}
                   onChange={(e) => setInterestRate(Number(e.target.value) || 0)}
-                  className="w-24 px-3 py-1.5 text-right border border-gray-300 rounded-md text-sm font-semibold text-green-600 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-24 px-3 py-1.5 text-right border border-gray-300 rounded-md text-sm font-semibold text-green-600 bg-white focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   step="0.1"
                   placeholder="%"
                 />
@@ -155,7 +155,7 @@ export default function EMICalculator() {
                   type="number"
                   value={loanTenure}
                   onChange={(e) => setLoanTenure(Number(e.target.value) || 0)}
-                  className="w-24 px-3 py-1.5 text-right border border-gray-300 rounded-md text-sm font-semibold text-purple-600 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-24 px-3 py-1.5 text-right border border-gray-300 rounded-md text-sm font-semibold text-purple-600 bg-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Years"
                 />
               </div>

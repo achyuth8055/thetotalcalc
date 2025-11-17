@@ -160,12 +160,21 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={inter.className}>
-        <Navigation />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
+      <body className={`${inter.className} bg-slate-950 text-slate-100 antialiased`}>
+        <div className="relative min-h-screen overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.15),_transparent_55%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(79,70,229,0.15),_transparent_60%)]" />
+            <div className="absolute -top-32 right-0 w-[30rem] h-[30rem] bg-primary-500/40 blur-[140px] rounded-full opacity-70" />
+            <div className="absolute -bottom-24 left-10 w-[24rem] h-[24rem] bg-emerald-500/40 blur-[130px] rounded-full opacity-60" />
+            <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:70px_70px] opacity-[0.04]" />
+          </div>
+          <Navigation />
+          <main className="relative z-10 min-h-screen">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

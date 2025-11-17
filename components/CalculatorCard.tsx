@@ -5,42 +5,36 @@ interface CalculatorCardProps {
   calculator: Calculator;
 }
 
-const colorMap: Record<string, { bg: string; border: string; text: string; hover: string }> = {
+const colorMap: Record<string, { iconBg: string; accent: string; glow: string }> = {
   blue: {
-    bg: "bg-blue-50",
-    border: "border-blue-200",
-    text: "text-blue-700",
-    hover: "hover:border-blue-400 hover:shadow-blue-100",
+    iconBg: "from-blue-500/20 via-blue-500/10 to-blue-400/5",
+    accent: "text-blue-600",
+    glow: "from-blue-100/40 via-transparent to-transparent",
   },
   purple: {
-    bg: "bg-purple-50",
-    border: "border-purple-200",
-    text: "text-purple-700",
-    hover: "hover:border-purple-400 hover:shadow-purple-100",
+    iconBg: "from-purple-500/20 via-purple-500/10 to-purple-400/5",
+    accent: "text-purple-600",
+    glow: "from-purple-100/40 via-transparent to-transparent",
   },
   green: {
-    bg: "bg-green-50",
-    border: "border-green-200",
-    text: "text-green-700",
-    hover: "hover:border-green-400 hover:shadow-green-100",
+    iconBg: "from-emerald-500/20 via-emerald-500/10 to-emerald-400/5",
+    accent: "text-emerald-600",
+    glow: "from-emerald-100/40 via-transparent to-transparent",
   },
   indigo: {
-    bg: "bg-indigo-50",
-    border: "border-indigo-200",
-    text: "text-indigo-700",
-    hover: "hover:border-indigo-400 hover:shadow-indigo-100",
+    iconBg: "from-indigo-500/20 via-indigo-500/10 to-indigo-400/5",
+    accent: "text-indigo-600",
+    glow: "from-indigo-100/40 via-transparent to-transparent",
   },
   orange: {
-    bg: "bg-orange-50",
-    border: "border-orange-200",
-    text: "text-orange-700",
-    hover: "hover:border-orange-400 hover:shadow-orange-100",
+    iconBg: "from-orange-500/20 via-orange-500/10 to-orange-400/5",
+    accent: "text-orange-600",
+    glow: "from-orange-100/40 via-transparent to-transparent",
   },
   cyan: {
-    bg: "bg-cyan-50",
-    border: "border-cyan-200",
-    text: "text-cyan-700",
-    hover: "hover:border-cyan-400 hover:shadow-cyan-100",
+    iconBg: "from-cyan-500/20 via-cyan-500/10 to-cyan-400/5",
+    accent: "text-cyan-600",
+    glow: "from-cyan-100/40 via-transparent to-transparent",
   },
 };
 
@@ -50,23 +44,24 @@ export default function CalculatorCard({ calculator }: CalculatorCardProps) {
   return (
     <Link
       href={`/calculators/${calculator.category}/${calculator.slug}`}
-      className={`group block bg-white rounded-xl border-2 ${colors.border} ${colors.hover} transition-all duration-200 p-6 hover:shadow-lg`}
+      className="group relative block rounded-3xl border border-slate-100/80 bg-white/90 p-6 shadow-[0_20px_80px_rgba(15,23,42,0.12)] transition-all duration-300 hover:-translate-y-1 hover:border-primary-200/80"
     >
-      <div className="flex flex-col h-full">
-        <div className={`w-12 h-12 ${colors.bg} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-          <svg className={`w-6 h-6 ${colors.text}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className={`pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br ${colors.glow} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+      <div className="relative flex flex-col h-full">
+        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${colors.iconBg} flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105`}>
+          <svg className={`w-7 h-7 ${colors.accent}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
           </svg>
         </div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+        <h3 className="text-lg font-semibold text-slate-900 mb-2">
           {calculator.name}
         </h3>
-        <p className="text-sm text-gray-600 flex-1">
+        <p className="text-sm text-slate-500 flex-1 leading-relaxed">
           {calculator.description}
         </p>
-        <div className="mt-4 flex items-center text-sm font-medium text-primary-600 group-hover:text-primary-700">
+        <div className={`mt-4 inline-flex items-center text-sm font-semibold ${colors.accent} group-hover:gap-2 transition-all`}>
           <span>Calculate now</span>
-          <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 translate-x-0 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </div>

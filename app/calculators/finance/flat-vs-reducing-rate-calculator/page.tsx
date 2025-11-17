@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import CalculatorLayout from "@/components/CalculatorLayout";
 import CurrencySelector from "@/components/CurrencySelector";
 import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
 
@@ -94,8 +93,26 @@ export default function FlatVsReducingRateCalculatorPage() {
     return formatCurrencyUtil(value, currency);
   };
 
+  const circumference = 2 * Math.PI * 70;
+  const clampPercent = (value: number) =>
+    Math.max(0, Math.min(100, Number.isFinite(value) ? value : 0));
+  const getComposition = (totalAmount: number) => {
+    if (!totalAmount) {
+      return { principal: 0, interest: 0 };
+    }
+    const principal = clampPercent((loanAmount / totalAmount) * 100);
+    return {
+      principal,
+      interest: clampPercent(100 - principal),
+    };
+  };
+
+  const flatComposition = getComposition(results.flatRate.totalAmount);
+  const reducingComposition = getComposition(results.reducingBalance.totalAmount);
+  const maxAmount = Math.max(results.flatRate.totalAmount, results.reducingBalance.totalAmount, 1);
+
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
       <Breadcrumbs
         items={[
           { label: "Finance Calculators", href: "/finance-calculators" },
@@ -103,24 +120,27 @@ export default function FlatVsReducingRateCalculatorPage() {
         ]}
       />
 
-      <div className="mb-6 flex items-start justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Flat vs Reducing Rate Calculator</h1>
-          <p className="text-base text-gray-600">
-            Compare flat rate vs reducing rate loans to understand which option saves you more money
-          </p>
+      <div className="glow-card p-6 sm:p-8 text-white/90">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-6 justify-between">
+          <div>
+            <span className="inline-flex items-center text-xs uppercase tracking-[0.4em] text-white/60 mb-3">Finance</span>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Flat vs Reducing Rate Calculator</h1>
+            <p className="text-white/70 text-base max-w-2xl">
+              Visualize the difference between flat-rate and reducing-balance loans with interactive charts, instant savings insights, and currency-aware controls.
+            </p>
+          </div>
+          {!isLoadingCurrency && (
+            <CurrencySelector
+              selectedCurrency={currency}
+              onCurrencyChange={setCurrency}
+            />
+          )}
         </div>
-        {!isLoadingCurrency && (
-          <CurrencySelector
-            selectedCurrency={currency}
-            onCurrencyChange={setCurrency}
-          />
-        )}
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Left Side - Interactive Controls */}
-        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        <div className="bg-white/95 rounded-[28px] shadow-[0_20px_80px_rgba(15,23,42,0.18)] p-6 sm:p-8 border border-white/80">
           <div className="space-y-6">
             {/* Loan Amount */}
             <div>
@@ -236,9 +256,9 @@ export default function FlatVsReducingRateCalculatorPage() {
         {/* Right Side - Results */}
         <div className="space-y-6">
           {/* Comparison Results */}
-          <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Flat vs Reducing Balance Interest</h3>
+          <div className="bg-white/95 rounded-[28px] border border-white/80 shadow-[0_20px_80px_rgba(15,23,42,0.12)] overflow-hidden">
+            <div className="bg-gradient-to-r from-slate-50 to-white px-6 py-4 border-b border-slate-100">
+              <h3 className="text-lg font-semibold text-slate-900">Flat vs Reducing Balance Interest</h3>
             </div>
             <div className="p-6">
               <div className="space-y-4">
@@ -278,25 +298,137 @@ export default function FlatVsReducingRateCalculatorPage() {
                   </div>
                 </div>
               </div>
+
+              <div className="mt-8">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-[0.3em] mb-3">Total Cost Visualizer</p>
+                <div className="space-y-4">
+                  {[
+                    {
+                      label: "Flat Rate",
+                      value: results.flatRate.totalAmount,
+                      color: "bg-orange-500",
+                      accent: "text-orange-600",
+                    },
+                    {
+                      label: "Reducing Balance",
+                      value: results.reducingBalance.totalAmount,
+                      color: "bg-green-500",
+                      accent: "text-green-600",
+                    },
+                  ].map((item) => (
+                    <div key={item.label}>
+                      <div className="flex justify-between text-sm font-semibold text-gray-600 mb-1">
+                        <span>{item.label}</span>
+                        <span className={item.accent}>{formatCurrency(item.value)}</span>
+                      </div>
+                      <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className={`${item.color} h-full rounded-full transition-[width] duration-500`}
+                          style={{
+                            width: `${
+                              item.value > 0
+                                ? Math.max(12, (item.value / maxAmount) * 100)
+                                : 0
+                            }%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Savings Highlight */}
-          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 border border-green-200">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">You Save with Reducing Balance</h3>
-              <div className="text-3xl font-bold text-green-600 mb-2">
+          {/* Savings Highlight & Graphs */}
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="bg-gradient-to-br from-emerald-500 via-emerald-400 to-primary-500 rounded-[28px] p-6 text-white shadow-lg">
+              <p className="text-xs uppercase tracking-[0.4em] text-white/70 mb-2">Smart choice</p>
+              <h3 className="text-2xl font-semibold mb-3">You Save with Reducing Balance</h3>
+              <div className="text-4xl font-bold mb-2">
                 {formatCurrency(results.savings)}
               </div>
-              <p className="text-sm text-gray-600">
-                Choose reducing balance interest for lower total cost
+              <p className="text-white/80 text-sm mb-5">
+                Switching to reducing balance interest trims your repayment schedule and keeps more money in your pocket.
               </p>
+              <div className="flex items-center gap-6">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/70 mb-1">Flat EMI</p>
+                  <p className="text-lg font-semibold">{formatCurrency(results.flatRate.monthlyEMI)}</p>
+                </div>
+                <div className="w-px h-10 bg-white/20" />
+                <div>
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/70 mb-1">Reducing EMI</p>
+                  <p className="text-lg font-semibold">{formatCurrency(results.reducingBalance.monthlyEMI)}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/95 rounded-[28px] border border-white/80 p-6 shadow-[0_20px_80px_rgba(15,23,42,0.12)]">
+              <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-4">Interest composition</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  {
+                    label: "Flat Rate",
+                    color: "#fb923c",
+                    bg: "bg-orange-50",
+                    composition: flatComposition,
+                    interest: results.flatRate.totalInterest,
+                  },
+                  {
+                    label: "Reducing",
+                    color: "#34d399",
+                    bg: "bg-emerald-50",
+                    composition: reducingComposition,
+                    interest: results.reducingBalance.totalInterest,
+                  },
+                ].map((item) => (
+                  <div key={item.label} className={`${item.bg} rounded-2xl p-4 text-center`}>
+                    <h4 className="text-sm font-semibold text-gray-600 mb-3">{item.label}</h4>
+                    <div className="relative flex items-center justify-center mb-3">
+                      <svg className="w-36 h-36" viewBox="0 0 192 192">
+                        <circle
+                          cx="96"
+                          cy="96"
+                          r="70"
+                          fill="none"
+                          stroke="#e2e8f0"
+                          strokeWidth="18"
+                        />
+                        <circle
+                          cx="96"
+                          cy="96"
+                          r="70"
+                          fill="none"
+                          stroke={item.color}
+                          strokeWidth="18"
+                          strokeDasharray={`${(item.composition.principal / 100) * circumference} ${circumference}`}
+                          transform="rotate(-90 96 96)"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <div className="absolute text-center">
+                        <p className="text-xs text-gray-500">Principal share</p>
+                        <p className="text-xl font-bold text-gray-800">
+                          {item.composition.principal.toFixed(1)}%
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-1">Interest paid</p>
+                    <p className="text-base font-semibold text-gray-800">{formatCurrency(item.interest)}</p>
+                    <p className="text-xs text-gray-500 mt-1">Interest share: {item.composition.interest.toFixed(1)}%</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Understanding Section */}
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Understanding the Difference</h3>
+          <div className="bg-white/95 rounded-[28px] shadow-[0_15px_60px_rgba(15,23,42,0.12)] p-6 border border-white/80">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-600 font-semibold">i</div>
+              <h3 className="text-lg font-semibold text-gray-900">Understanding the Difference</h3>
+            </div>
             <div className="space-y-3 text-sm text-gray-600">
               <div className="flex items-start space-x-2">
                 <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>

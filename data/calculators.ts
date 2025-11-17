@@ -101,6 +101,44 @@ export const calculators: Calculator[] = [
     color: "blue",
   },
 
+  // Converters
+  {
+    id: "weight-converter",
+    name: "Weight Converter",
+    description: "Convert between kg, lbs, grams, ounces, tons and more",
+    category: "converters",
+    slug: "weight-converter",
+    keywords: ["weight converter", "kg to lbs", "lbs to kg", "pounds to kilograms", "weight conversion"],
+    color: "cyan",
+  },
+  {
+    id: "length-converter",
+    name: "Length Converter",
+    description: "Convert between meters, feet, inches, cm, km and more",
+    category: "converters",
+    slug: "length-converter",
+    keywords: ["length converter", "height converter", "cm to feet", "feet to cm", "meters to feet"],
+    color: "cyan",
+  },
+  {
+    id: "temperature-converter",
+    name: "Temperature Converter",
+    description: "Convert between Celsius, Fahrenheit, and Kelvin",
+    category: "converters",
+    slug: "temperature-converter",
+    keywords: ["temperature converter", "celsius to fahrenheit", "fahrenheit to celsius", "kelvin"],
+    color: "cyan",
+  },
+  {
+    id: "currency-converter",
+    name: "Currency Converter",
+    description: "Convert between USD, EUR, GBP, INR, JPY and other currencies",
+    category: "converters",
+    slug: "currency-converter",
+    keywords: ["currency converter", "exchange rate", "usd to inr", "eur to usd", "money converter"],
+    color: "cyan",
+  },
+
   // Math Calculators
   {
     id: "scientific",
@@ -376,6 +414,14 @@ export const categories: Category[] = [
     description: "Binary, hex, ASCII, Base64, and color converters for developers",
     color: "cyan",
     calculators: calculators.filter(c => c.category === "developer"),
+  },
+  {
+    id: "converters",
+    name: "Unit Converters",
+    slug: "converters",
+    description: "Weight, length, temperature, currency and more conversion tools",
+    color: "cyan",
+    calculators: calculators.filter(c => c.category === "converters"),
   },
 ];
 

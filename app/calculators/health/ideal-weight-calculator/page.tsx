@@ -53,8 +53,30 @@ export default function IdealWeightCalculator() {
     }
   };
 
+  const clampValue = (value: number, min: number, max: number) =>
+    Math.min(max, Math.max(min, value));
+  const bmiGaugePercent = result ? clampValue((result.currentBMI - 14) / 26, 0, 1) : 0;
+  const pointerAngle = Math.PI - bmiGaugePercent * Math.PI;
+  const pointerX = 120 + 80 * Math.cos(pointerAngle);
+  const pointerY = 120 - 80 * Math.sin(pointerAngle);
+  const weightRangeMin = 30;
+  const weightRangeMax = 200;
+  const rangeSpan = weightRangeMax - weightRangeMin;
+  const healthyLeft = result
+    ? clampValue(((result.min - weightRangeMin) / rangeSpan) * 100, 0, 100)
+    : 0;
+  const healthyWidth = result
+    ? clampValue(((result.max - result.min) / rangeSpan) * 100, 0, 100 - healthyLeft)
+    : 0;
+  const markerPosition = result ? clampValue(((currentWeight - weightRangeMin) / rangeSpan) * 100, 0, 100) : 0;
+  const isHealthyRange = result ? result.status.toLowerCase().includes("within") : false;
+  const statusGradient = isHealthyRange
+    ? "from-emerald-500 via-emerald-400 to-emerald-500"
+    : "from-orange-500 via-amber-400 to-orange-500";
+  const statusBadge = isHealthyRange ? "bg-emerald-100 text-emerald-700" : "bg-orange-100 text-orange-700";
+
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
       <Breadcrumbs
         items={[
           { label: "Health Calculators", href: "/health-calculators" },
@@ -62,37 +84,54 @@ export default function IdealWeightCalculator() {
         ]}
       />
 
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Ideal Weight Calculator</h1>
-        <p className="text-base text-gray-600">
-          Find your ideal weight range based on BMI recommendations
-        </p>
+      <div className="glow-card p-6 sm:p-8 text-white/90">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div>
+            <span className="inline-flex items-center text-xs uppercase tracking-[0.4em] text-white/60 mb-3">Health</span>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">Ideal Weight Calculator</h1>
+            <p className="text-white/70 text-base max-w-2xl">
+              Get a personalized weight range, BMI insight, and visual guide for how close you are to the healthiest zone for your height and gender.
+            </p>
+          </div>
+          {result && (
+            <div className="grid grid-cols-2 gap-3 min-w-[220px]">
+              <div className="rounded-2xl border border-white/20 bg-white/10 p-4 text-center">
+                <p className="text-xs text-white/60 uppercase tracking-[0.3em]">Healthy Min</p>
+                <p className="text-2xl font-semibold text-white">{result.min}kg</p>
+              </div>
+              <div className="rounded-2xl border border-white/20 bg-white/10 p-4 text-center">
+                <p className="text-xs text-white/60 uppercase tracking-[0.3em]">Healthy Max</p>
+                <p className="text-2xl font-semibold text-white">{result.max}kg</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Left Side - Interactive Controls */}
-        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        <div className="bg-white/95 rounded-[28px] shadow-[0_20px_80px_rgba(15,23,42,0.18)] p-6 sm:p-8 border border-white/80">
           <div className="space-y-6">
             {/* Gender Selector */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-3">Gender</label>
-              <div className="flex gap-3">
+              <div className="flex gap-3 bg-gray-100 rounded-full p-1">
                 <button
                   onClick={() => setGender("male")}
-                  className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
+                  className={`flex-1 py-2 rounded-full font-semibold transition-colors ${
                     gender === "male"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : "text-gray-600 hover:text-blue-600"
                   }`}
                 >
                   Male
                 </button>
                 <button
                   onClick={() => setGender("female")}
-                  className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
+                  className={`flex-1 py-2 rounded-full font-semibold transition-colors ${
                     gender === "female"
-                      ? "bg-pink-600 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-pink-600 text-white shadow-lg"
+                      : "text-gray-600 hover:text-pink-600"
                   }`}
                 >
                   Female
@@ -155,72 +194,120 @@ export default function IdealWeightCalculator() {
         </div>
 
         {/* Right Side - Results */}
-        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        <div className="bg-white/95 rounded-[28px] shadow-[0_20px_80px_rgba(15,23,42,0.12)] p-6 sm:p-8 border border-white/80">
           {result && (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {/* Current Status Card */}
-              <div className={`rounded-xl p-5 text-white ${
-                result.status === "Within healthy range" ? "bg-green-600" : "bg-orange-600"
-              }`}>
-                <div className="text-xs font-medium mb-1 opacity-90">Your Current Status</div>
-                <div className="text-2xl font-bold">{result.status}</div>
-                <div className="text-xs mt-1 opacity-90">Current BMI: {result.currentBMI}</div>
-              </div>
-
-              {/* Ideal Weight Card */}
-              <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-5">
-                <div className="text-center">
-                  <div className="text-sm font-semibold text-gray-700 mb-1">Ideal Weight</div>
-                  <div className="text-4xl font-bold text-blue-600">{result.ideal} kg</div>
-                  <div className="text-xs text-gray-600 mt-1">Based on BMI of 22</div>
+              <div className={`rounded-[24px] p-5 text-white bg-gradient-to-tr ${statusGradient} shadow-lg`}>
+                <div className="text-xs font-semibold mb-2 uppercase tracking-[0.3em] opacity-80">Your current status</div>
+                <div className="text-3xl font-bold">{result.status}</div>
+                <div className="flex items-center gap-3 mt-3">
+                  <span className="text-sm font-semibold bg-white/20 rounded-full px-3 py-1">BMI {result.currentBMI}</span>
+                  <span className={`text-xs font-semibold rounded-full px-3 py-1 ${statusBadge}`}>
+                    {isHealthyRange ? "Healthy" : "Needs attention"}
+                  </span>
                 </div>
               </div>
 
-              {/* Healthy Range */}
-              <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4">
-                <div className="text-sm font-semibold text-gray-700 mb-3 text-center">Healthy Weight Range</div>
-                <div className="flex justify-between items-center">
-                  <div className="text-center">
-                    <div className="text-xs text-gray-600 mb-1">Minimum</div>
-                    <div className="text-2xl font-bold text-gray-700">{result.min} kg</div>
-                    <div className="text-xs text-gray-500">BMI 18.5</div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {/* Ideal Weight Card */}
+                <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 text-center">
+                  <p className="text-xs uppercase tracking-[0.3em] text-blue-500 mb-2">Ideal weight</p>
+                  <p className="text-4xl font-bold text-blue-600">{result.ideal} kg</p>
+                  <p className="text-xs text-blue-500 mt-1">Based on BMI of 22</p>
+                </div>
+
+                {/* Healthy Range */}
+                <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-5 text-center">
+                  <p className="text-xs uppercase tracking-[0.3em] text-emerald-500 mb-2">Healthy range</p>
+                  <div className="flex items-center justify-center gap-4">
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">Min</p>
+                      <p className="text-2xl font-bold text-gray-800">{result.min} kg</p>
+                    </div>
+                    <div className="text-gray-300 text-2xl">—</div>
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">Max</p>
+                      <p className="text-2xl font-bold text-gray-800">{result.max} kg</p>
+                    </div>
                   </div>
-                  <div className="text-gray-400">—</div>
-                  <div className="text-center">
-                    <div className="text-xs text-gray-600 mb-1">Maximum</div>
-                    <div className="text-2xl font-bold text-gray-700">{result.max} kg</div>
-                    <div className="text-xs text-gray-500">BMI 24.9</div>
-                  </div>
+                  <p className="text-xs text-gray-500 mt-3">BMI 18.5 – 24.9</p>
                 </div>
               </div>
 
-              {/* Visual Weight Range Bar */}
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <div className="text-xs font-semibold text-gray-700 mb-2 text-center">Weight Position</div>
-                <div className="relative h-8 bg-gray-200 rounded-full overflow-hidden">
-                  {/* Healthy range indicator */}
-                  <div 
-                    className="absolute h-full bg-green-300"
-                    style={{
-                      left: `${Math.max(0, ((result.min - 30) / 170) * 100)}%`,
-                      width: `${((result.max - result.min) / 170) * 100}%`
-                    }}
-                  />
-                  {/* Current weight marker */}
-                  <div 
-                    className="absolute top-0 w-1 h-full bg-blue-600 shadow-lg"
-                    style={{
-                      left: `${Math.max(0, Math.min(100, ((currentWeight - 30) / 170) * 100))}%`
-                    }}
-                  >
-                    <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-bold text-blue-600 whitespace-nowrap">
-                      You
+              <div className="grid gap-6 md:grid-cols-2">
+                {/* BMI Gauge */}
+                <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5">
+                  <p className="text-sm font-semibold text-gray-700 mb-3 text-center">BMI Gauge</p>
+                  <div className="flex flex-col items-center">
+                    <svg viewBox="0 0 240 140" className="w-full max-w-xs">
+                      <defs>
+                        <linearGradient id="bmiGaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#f97316" />
+                          <stop offset="40%" stopColor="#fbbf24" />
+                          <stop offset="70%" stopColor="#34d399" />
+                          <stop offset="100%" stopColor="#38bdf8" />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M30 120 A90 90 0 0 1 210 120"
+                        stroke="#e5e7eb"
+                        strokeWidth="18"
+                        fill="none"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M30 120 A90 90 0 0 1 210 120"
+                        stroke="url(#bmiGaugeGradient)"
+                        strokeWidth="18"
+                        fill="none"
+                        strokeLinecap="round"
+                      />
+                      <line
+                        x1="120"
+                        y1="120"
+                        x2={pointerX}
+                        y2={pointerY}
+                        stroke="#0ea5e9"
+                        strokeWidth="8"
+                        strokeLinecap="round"
+                      />
+                      <circle cx="120" cy="120" r="10" fill="#0ea5e9" />
+                    </svg>
+                    <p className="text-2xl font-bold text-gray-800 mt-2">{result.currentBMI}</p>
+                    <p className="text-sm text-gray-500">BMI now</p>
+                    <div className="flex gap-4 text-xs text-gray-500 mt-3">
+                      <span>Underweight</span>
+                      <span>Healthy</span>
+                      <span>Overweight</span>
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>30 kg</span>
-                  <span>200 kg</span>
+
+                {/* Visual Weight Range Bar */}
+                <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                  <p className="text-sm font-semibold text-gray-700 mb-3 text-center">Weight Position</p>
+                  <div className="relative h-10 bg-gray-200 rounded-full overflow-hidden">
+                    <div
+                      className="absolute h-full bg-emerald-300/70"
+                      style={{
+                        left: `${healthyLeft}%`,
+                        width: `${healthyWidth}%`,
+                      }}
+                    />
+                    <div
+                      className="absolute top-1/2 -translate-y-1/2 w-[2px] h-12 bg-blue-600 shadow-lg shadow-blue-200"
+                      style={{ left: `${markerPosition}%` }}
+                    >
+                      <div className="absolute -top-7 left-1/2 -translate-x-1/2 text-xs font-bold text-blue-600 whitespace-nowrap">
+                        You
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-xs text-gray-500 mt-2">
+                    <span>{weightRangeMin} kg</span>
+                    <span>{weightRangeMax} kg</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -230,8 +317,8 @@ export default function IdealWeightCalculator() {
 
       {/* Explanation Section */}
       <CalculatorLayout
-        title=""
-        description=""
+        title="Ideal Weight Playbook"
+        description="Learn how BMI defines your healthy weight zone and what habits keep you on track."
         explanation={
           <div>
             <p className="mb-4">

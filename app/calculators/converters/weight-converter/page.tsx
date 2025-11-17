@@ -42,7 +42,6 @@ export default function WeightConverterPage() {
     <CalculatorLayout
       title="Weight Converter"
       description="Convert between different weight units: kg, lb, g, oz, ton, stone and more"
-      keywords={["weight converter", "kg to lbs", "lbs to kg", "pounds to kilograms", "weight conversion"]}
     >
       <Breadcrumbs
         items={[

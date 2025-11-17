@@ -54,7 +54,6 @@ export default function CurrencyConverterPage() {
     <CalculatorLayout
       title="Currency Converter"
       description="Convert between major world currencies: USD, EUR, GBP, INR, JPY and more"
-      keywords={["currency converter", "exchange rate", "usd to inr", "eur to usd", "currency exchange"]}
     >
       <Breadcrumbs
         items={[

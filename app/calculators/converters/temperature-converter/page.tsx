@@ -57,7 +57,6 @@ export default function TemperatureConverterPage() {
     <CalculatorLayout
       title="Temperature Converter"
       description="Convert between Celsius, Fahrenheit, and Kelvin temperature scales"
-      keywords={["temperature converter", "celsius to fahrenheit", "fahrenheit to celsius", "kelvin converter"]}
     >
       <Breadcrumbs
         items={[

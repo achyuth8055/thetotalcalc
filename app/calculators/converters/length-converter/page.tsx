@@ -43,7 +43,6 @@ export default function LengthConverterPage() {
     <CalculatorLayout
       title="Length Converter"
       description="Convert between different length units: meters, feet, inches, cm, km and more"
-      keywords={["length converter", "height converter", "cm to feet", "feet to cm", "meters to feet"]}
     >
       <Breadcrumbs
         items={[

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { FaStar, FaThumbsUp, FaCheckCircle, FaBook, FaDumbbell } from "react-icons/fa";
 
 interface Course {
   subjectName: string;
@@ -165,8 +166,15 @@ export default function GPACalculator() {
                   Based on {result.totalCredits} total credits
                 </div>
                 <div className="mt-4 pt-4 border-t border-white/20">
-                  <div className="text-sm font-medium">
-                    {result.gpa >= 3.8 ? "🌟 Excellent!" : result.gpa >= 3.5 ? "👏 Very Good!" : result.gpa >= 3.0 ? "✅ Good!" : result.gpa >= 2.0 ? "📚 Fair" : "💪 Keep Working!"}
+                  <div className="flex items-center justify-center gap-2 text-sm font-medium">
+                    {(() => {
+                      const g = result.gpa;
+                      if (g >= 3.8) return <><FaStar aria-hidden /> Excellent!</>;
+                      if (g >= 3.5) return <><FaThumbsUp aria-hidden /> Very Good!</>;
+                      if (g >= 3.0) return <><FaCheckCircle aria-hidden /> Good!</>;
+                      if (g >= 2.0) return <><FaBook aria-hidden /> Fair</>;
+                      return <><FaDumbbell aria-hidden /> Keep Working!</>;
+                    })()}
                   </div>
                 </div>
               </div>

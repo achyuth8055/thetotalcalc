@@ -4,6 +4,20 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import confetti from "canvas-confetti";
+import {
+  FaGraduationCap,
+  FaBook,
+  FaBolt,
+  FaStopwatch,
+  FaTrophy,
+  FaStar,
+  FaThumbsUp,
+  FaDumbbell,
+  FaRedo,
+  FaCheckCircle,
+  FaRegLightbulb,
+  FaBullseye,
+} from "react-icons/fa";
 
 interface QuizQuestion {
   id: string;
@@ -35,12 +49,12 @@ export default function MathQuizPage() {
   const [questionQueue, setQuestionQueue] = useState<QuizQuestion[]>([]);
 
   const topics = [
-    { id: "addition", name: "Addition", emoji: "➕" },
-    { id: "subtraction", name: "Subtraction", emoji: "➖" },
-    { id: "multiplication", name: "Multiplication", emoji: "✖️" },
-    { id: "division", name: "Division", emoji: "➗" },
-    { id: "fractions", name: "Fractions", emoji: "½" },
-    { id: "decimals", name: "Decimals", emoji: "0.5" },
+    { id: "addition", name: "Addition" },
+    { id: "subtraction", name: "Subtraction" },
+    { id: "multiplication", name: "Multiplication" },
+    { id: "division", name: "Division" },
+    { id: "fractions", name: "Fractions" },
+    { id: "decimals", name: "Decimals" },
   ];
 
   const loadQuestion = useCallback(async () => {
@@ -340,7 +354,7 @@ export default function MathQuizPage() {
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
           <h1 className="text-4xl font-bold text-gray-900">Math Quiz for Kids</h1>
-          <span className="text-4xl">🎓</span>
+          <span className="text-4xl text-purple-600"><FaGraduationCap aria-hidden /></span>
         </div>
         <p className="text-base text-gray-600">
           Practice your math skills with fun, timed questions!
@@ -351,7 +365,7 @@ export default function MathQuizPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
         {/* Topic Selection - Compact */}
         <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
-          <label className="block text-xs font-bold text-gray-700 mb-2">📚 Topic</label>
+          <label className="flex items-center gap-1.5 text-xs font-bold text-gray-700 mb-2"><FaBook aria-hidden /> Topic</label>
           <select
             value={selectedTopic}
             onChange={(e) => { setSelectedTopic(e.target.value); restartQuiz(); }}
@@ -360,7 +374,7 @@ export default function MathQuizPage() {
           >
             {topics.map((topic) => (
               <option key={topic.id} value={topic.id}>
-                {topic.emoji} {topic.name}
+                {topic.name}
               </option>
             ))}
           </select>
@@ -368,22 +382,22 @@ export default function MathQuizPage() {
 
         {/* Difficulty Selection - Compact */}
         <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
-          <label className="block text-xs font-bold text-gray-700 mb-2">⚡ Difficulty</label>
+          <label className="flex items-center gap-1.5 text-xs font-bold text-gray-700 mb-2"><FaBolt aria-hidden /> Difficulty</label>
           <select
             value={selectedDifficulty}
             onChange={(e) => { setSelectedDifficulty(e.target.value as "easy" | "medium" | "hard"); restartQuiz(); }}
             disabled={totalQuestions > 0 && !quizCompleted}
             className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <option value="easy">😊 Easy</option>
-            <option value="medium">🤔 Medium</option>
-            <option value="hard">🤯 Hard</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
           </select>
         </div>
 
         {/* Timer Setting - Compact */}
         <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
-          <label className="block text-xs font-bold text-gray-700 mb-2">⏱️ Timer (seconds)</label>
+          <label className="flex items-center gap-1.5 text-xs font-bold text-gray-700 mb-2"><FaStopwatch aria-hidden /> Timer (seconds)</label>
           <select
             value={timerDuration}
             onChange={(e) => { setTimerDuration(Number(e.target.value)); setTimeLeft(Number(e.target.value)); }}
@@ -428,8 +442,16 @@ export default function MathQuizPage() {
       {/* Quiz Completion Screen */}
       {quizCompleted ? (
         <div className="bg-white rounded-xl shadow-lg p-4 sm:p-8 border border-gray-200 text-center">
-          <div className="text-6xl mb-4">
-            {score === MAX_QUESTIONS ? "🎉" : score >= MAX_QUESTIONS * 0.8 ? "🌟" : score >= MAX_QUESTIONS * 0.6 ? "👏" : "💪"}
+          <div className="flex justify-center text-6xl text-purple-600 mb-4">
+            {score === MAX_QUESTIONS ? (
+              <FaTrophy aria-hidden />
+            ) : score >= MAX_QUESTIONS * 0.8 ? (
+              <FaStar aria-hidden />
+            ) : score >= MAX_QUESTIONS * 0.6 ? (
+              <FaThumbsUp aria-hidden />
+            ) : (
+              <FaDumbbell aria-hidden />
+            )}
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Quiz Complete!</h2>
           <p className="text-xl text-gray-600 mb-6">
@@ -438,7 +460,7 @@ export default function MathQuizPage() {
 
           {score === MAX_QUESTIONS && (
             <div className="bg-gradient-to-r from-yellow-100 to-orange-100 border border-yellow-300 rounded-lg p-6 mb-6">
-              <p className="text-2xl font-bold text-gray-900 mb-2">🏆 Perfect Score! 🏆</p>
+              <p className="flex items-center justify-center gap-2 text-2xl font-bold text-gray-900 mb-2"><FaTrophy aria-hidden /> Perfect Score! <FaTrophy aria-hidden /></p>
               <p className="text-gray-700">Amazing work! You answered all questions correctly!</p>
             </div>
           )}
@@ -469,7 +491,7 @@ export default function MathQuizPage() {
             aria-label="Start a new quiz"
             className="w-full bg-purple-600 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-purple-700 transition-all shadow-lg"
           >
-            <span role="img" aria-label="Rocket">🚀</span> Start New Quiz
+            <span className="inline-flex items-center justify-center gap-2"><FaRedo aria-hidden /> Start New Quiz</span>
           </button>
         </div>
       ) : isLoading ? (
@@ -549,7 +571,11 @@ export default function MathQuizPage() {
             >
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl">
-                  {selectedAnswer === currentQuestion.correctAnswer ? "🎉" : "💡"}
+                  {selectedAnswer === currentQuestion.correctAnswer ? (
+                    <FaCheckCircle className="text-green-600" aria-hidden />
+                  ) : (
+                    <FaRegLightbulb className="text-amber-500" aria-hidden />
+                  )}
                 </span>
                 <span className="font-bold text-lg">
                   {selectedAnswer === currentQuestion.correctAnswer ? "Correct!" : "Not quite!"}
@@ -574,7 +600,7 @@ export default function MathQuizPage() {
               aria-label="View quiz results"
               className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
             >
-              <span role="img" aria-label="Target">🎯</span> View Results
+              <span className="inline-flex items-center justify-center gap-2"><FaBullseye aria-hidden /> View Results</span>
             </button>
           )}
         </div>
@@ -583,7 +609,7 @@ export default function MathQuizPage() {
       {/* Tips Section */}
       <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
         <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-          <span className="text-xl">💪</span> Tips for Success
+          <span className="text-xl"><FaDumbbell aria-hidden /></span> Tips for Success
         </h3>
         <ul className="text-sm text-gray-700 space-y-2">
           <li>• Start with Easy difficulty and work your way up</li>

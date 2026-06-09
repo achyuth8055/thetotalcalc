@@ -20,7 +20,7 @@ export default function CategoryPage({ category, breadcrumbLabel }: CategoryPage
   const colors = colorClasses[category.color] || colorClasses.blue;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Breadcrumbs
           items={[{ label: breadcrumbLabel, href: `/${category.slug}` }]}

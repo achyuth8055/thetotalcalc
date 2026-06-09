@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { FaThermometerHalf, FaBalanceScale, FaRuler, FaExchangeAlt } from "react-icons/fa";
 
 export default function TemperatureConverterPage() {
   const [celsius, setCelsius] = useState<string>("0");
@@ -69,7 +70,7 @@ export default function TemperatureConverterPage() {
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-4xl font-bold text-gray-900">Temperature Converter</h1>
-            <span className="text-4xl">🌡️</span>
+            <span className="text-4xl"><FaThermometerHalf aria-hidden /></span>
           </div>
           <p className="text-lg text-gray-600">
             Convert between Celsius, Fahrenheit, and Kelvin
@@ -164,21 +165,21 @@ export default function TemperatureConverterPage() {
               href="/calculators/converters/weight-converter"
               className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow"
             >
-              <h3 className="font-semibold text-gray-800 mb-2">⚖️ Weight Converter</h3>
+              <h3 className="flex items-center gap-2 font-semibold text-gray-800 mb-2"><FaBalanceScale aria-hidden /> Weight Converter</h3>
               <p className="text-sm text-gray-600">Convert kg, lbs, oz, grams</p>
             </Link>
             <Link
               href="/calculators/converters/length-converter"
               className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow"
             >
-              <h3 className="font-semibold text-gray-800 mb-2">📏 Length Converter</h3>
+              <h3 className="flex items-center gap-2 font-semibold text-gray-800 mb-2"><FaRuler aria-hidden /> Length Converter</h3>
               <p className="text-sm text-gray-600">Convert cm, m, ft, inches</p>
             </Link>
             <Link
               href="/calculators/converters/currency-converter"
               className="bg-white rounded-lg shadow-md p-4 border border-gray-200 hover:shadow-lg transition-shadow"
             >
-              <h3 className="font-semibold text-gray-800 mb-2">💱 Currency Converter</h3>
+              <h3 className="flex items-center gap-2 font-semibold text-gray-800 mb-2"><FaExchangeAlt aria-hidden /> Currency Converter</h3>
               <p className="text-sm text-gray-600">Convert USD, EUR, INR</p>
             </Link>
           </div>

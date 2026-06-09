@@ -1,192 +1,161 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRegion } from "@/components/RegionContext";
+import { useLanguage } from "@/components/LanguageContext";
+import { REGION_ORDER, REGION_NAMES, type DetectableRegion } from "@/lib/region-detection";
+import { LANGUAGES } from "@/lib/languages";
+
+const NAV_LINKS = [
+  { key: "nav.calculators", href: "/calculators" },
+  { key: "nav.benefits", href: "/calculators?category=benefits" },
+  { key: "nav.propertyTax", href: "/calculators?category=property-tax" },
+  { key: "nav.taxCredits", href: "/calculators?category=tax-credits" },
+  { key: "nav.blog", href: "/blog" },
+];
 
 export default function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const { region, setRegion } = useRegion();
+  const { lang, setLang, t } = useLanguage();
+
+  const isActive = (href: string) => {
+    const base = href.split("?")[0];
+    return base === "/calculators" ? pathname.startsWith("/calculators") : pathname === base;
+  };
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-xl bg-slate-900/70 border-b border-white/5 shadow-[0_12px_40px_rgba(2,6,23,0.6)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 sm:space-x-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-400 to-primary-700 rounded-2xl flex items-center justify-center shadow-lg shadow-primary-900/40">
-              <span className="text-white font-bold text-lg">=</span>
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="text-lg sm:text-xl font-bold text-white tracking-wide">OnlineCalc</span>
-              <span className="hidden sm:block text-[10px] uppercase tracking-[0.3em] text-white/60">Since 2017</span>
-            </div>
-          </Link>
+    <header className="sticky top-0 z-50 border-b border-surface-border bg-surface/95 shadow-sm backdrop-blur">
+      <div className="mx-auto flex h-16 w-full max-w-container-max items-center justify-between px-margin-mobile md:px-margin-desktop">
+        {/* Brand */}
+        <Link href="/" className="flex items-center gap-2">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-on-primary">
+            <span className="material-symbols-outlined text-[20px]">savings</span>
+          </span>
+          <span className="text-headline-md font-bold text-primary">OnlineCalc</span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
-            <Link href="/" className="px-3 xl:px-4 py-2 text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-full transition-colors">
-              Home
-            </Link>
-            
-            {/* Finance Dropdown */}
-            <div className="relative"
-              onMouseEnter={() => setOpenDropdown('finance')}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
-              <Link href="/finance-calculators" className="px-3 xl:px-4 py-2 text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-full transition-colors flex items-center gap-1">
-                Finance
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </Link>
-              {openDropdown === 'finance' && (
-                <div className="absolute top-full left-0 mt-1 pt-2 w-64 z-50">
-                  <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 py-3">
-                  <Link href="/calculators/finance/emi-calculator" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">EMI Calculator</Link>
-                  <Link href="/calculators/finance/sip-calculator" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">SIP Calculator</Link>
-                  <Link href="/calculators/finance/home-loan-emi-calculator" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Home Loan EMI</Link>
-                  <Link href="/calculators/finance/flat-vs-reducing-rate-calculator" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Flat vs Reducing Rate</Link>
-                  <Link href="/finance-calculators" className="block px-5 pt-3 text-sm text-primary-200 font-semibold hover:text-white border-t border-white/10 mt-2">View All →</Link>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Converters Dropdown */}
-            <div className="relative"
-              onMouseEnter={() => setOpenDropdown('converters')}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
-              <button className="px-3 xl:px-4 py-2 text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-full transition-colors flex items-center gap-1">
-                Converters
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {openDropdown === 'converters' && (
-                <div className="absolute top-full left-0 mt-1 pt-2 w-64 z-50">
-                  <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 py-3">
-                  <Link href="/calculators/converters/weight-converter" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Weight Converter</Link>
-                  <Link href="/calculators/converters/length-converter" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Length Converter</Link>
-                  <Link href="/calculators/converters/temperature-converter" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Temperature Converter</Link>
-                  <Link href="/calculators/converters/currency-converter" className="block px-5 py-2 text-sm text-white/80 hover:bg-white/5 hover:text-white">Currency Converter</Link>
-                  <Link href="/converters" className="block px-5 pt-3 text-sm text-primary-200 font-semibold hover:text-white border-t border-white/10 mt-2">View All →</Link>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <Link href="/math-calculators" className="px-3 xl:px-4 py-2 text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-full transition-colors">
-              Math
-            </Link>
-            <Link href="/health-calculators" className="px-3 xl:px-4 py-2 text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-full transition-colors">
-              Health
-            </Link>
-            <Link href="/date-calculators" className="px-3 xl:px-4 py-2 text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-full transition-colors">
-              Date & Time
-            </Link>
-            <Link href="/everyday-calculators" className="px-3 xl:px-4 py-2 text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-full transition-colors">
-              Everyday
-            </Link>
-            <Link href="/developer-calculators" className="px-3 xl:px-4 py-2 text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-full transition-colors">
-              Developer
-            </Link>
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-gutter lg:flex">
+          {NAV_LINKS.map((link) => (
             <Link
-              href="/finance-calculators"
-              className="ml-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary-400 to-primary-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-primary-900/50 hover:shadow-primary-700/80 transition-all"
+              key={link.key}
+              href={link.href}
+              className={`pb-1 text-label-md transition-colors ${
+                isActive(link.href)
+                  ? "border-b-2 border-primary text-primary"
+                  : "text-on-surface-variant hover:text-primary"
+              }`}
             >
-              Explore Tools
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
+              {t(link.key)}
             </Link>
+          ))}
+        </nav>
+
+        {/* Right controls */}
+        <div className="flex items-center gap-stack-sm">
+          {/* Region */}
+          <div className="hidden items-center gap-1 rounded-lg border border-surface-border bg-surface-container-low px-2 py-1.5 sm:flex">
+            <span className="material-symbols-outlined text-[18px] text-on-surface-variant">public</span>
+            <select
+              aria-label="Region"
+              value={region}
+              onChange={(e) => setRegion(e.target.value as DetectableRegion)}
+              className="cursor-pointer border-none bg-transparent p-0 pr-1 text-label-sm text-on-surface focus:outline-none focus:ring-0"
+            >
+              {REGION_ORDER.map((r) => (
+                <option key={r} value={r}>
+                  {r === "Global" ? "All" : r}
+                </option>
+              ))}
+            </select>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 rounded-full text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary-400"
-            aria-label="Toggle menu"
+          {/* Language */}
+          <div className="hidden items-center gap-1 rounded-lg border border-surface-border bg-surface-container-low px-2 py-1.5 md:flex">
+            <span className="material-symbols-outlined text-[18px] text-on-surface-variant">translate</span>
+            <select
+              aria-label="Language"
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              className="cursor-pointer border-none bg-transparent p-0 pr-1 text-label-sm text-on-surface focus:outline-none focus:ring-0"
+            >
+              {LANGUAGES.map((l) => (
+                <option key={l.code} value={l.code}>
+                  {l.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <Link
+            href="/calculators"
+            aria-label="Search calculators"
+            className="material-symbols-outlined text-on-surface-variant transition-colors hover:text-primary"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+            search
+          </Link>
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setMobileOpen((v) => !v)}
+            className="material-symbols-outlined text-primary lg:hidden"
+          >
+            {mobileOpen ? "close" : "menu"}
           </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="lg:hidden pb-4 space-y-1">
-            <Link
-              href="/"
-              className="block px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/10 rounded-xl"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              href="/finance-calculators"
-              className="block px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/10 rounded-xl"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Finance
-            </Link>
-            <Link
-              href="/converters"
-              className="block px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/10 rounded-xl"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Converters
-            </Link>
-            <Link
-              href="/math-calculators"
-              className="block px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/10 rounded-xl"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Math
-            </Link>
-            <Link
-              href="/health-calculators"
-              className="block px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/10 rounded-xl"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Health
-            </Link>
-            <Link
-              href="/date-calculators"
-              className="block px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/10 rounded-xl"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Date & Time
-            </Link>
-            <Link
-              href="/everyday-calculators"
-              className="block px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/10 rounded-xl"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Everyday
-            </Link>
-            <Link
-              href="/developer-calculators"
-              className="block px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/10 rounded-xl"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Developer
-            </Link>
-            <Link
-              href="/finance-calculators"
-              className="block px-4 py-3 text-sm font-semibold text-center text-white bg-gradient-to-r from-primary-400 to-primary-600 rounded-xl mt-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Explore Tools
-            </Link>
-          </div>
-        )}
       </div>
-    </nav>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <nav className="border-t border-surface-border bg-surface px-margin-mobile py-stack-md lg:hidden">
+          <div className="flex flex-col gap-1">
+            {[...NAV_LINKS, { key: "nav.about", href: "/about" }].map((link) => (
+              <Link
+                key={link.key}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-lg px-3 py-2 text-label-md text-on-surface-variant hover:bg-surface-container-low hover:text-primary"
+              >
+                {t(link.key)}
+              </Link>
+            ))}
+
+            <div className="mt-2 grid grid-cols-2 gap-2 border-t border-surface-border pt-3">
+              <label className="flex flex-col gap-1 text-label-sm text-on-surface-variant">
+                Region
+                <select
+                  value={region}
+                  onChange={(e) => setRegion(e.target.value as DetectableRegion)}
+                  className="rounded-lg border border-surface-border bg-surface p-2 text-body-md text-on-surface focus:border-primary focus:outline-none"
+                >
+                  {REGION_ORDER.map((r) => (
+                    <option key={r} value={r}>
+                      {REGION_NAMES[r]}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="flex flex-col gap-1 text-label-sm text-on-surface-variant">
+                Language
+                <select
+                  value={lang}
+                  onChange={(e) => setLang(e.target.value)}
+                  className="rounded-lg border border-surface-border bg-surface p-2 text-body-md text-on-surface focus:border-primary focus:outline-none"
+                >
+                  {LANGUAGES.map((l) => (
+                    <option key={l.code} value={l.code}>
+                      {l.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </div>
+        </nav>
+      )}
+    </header>
   );
 }

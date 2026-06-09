@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export default function TermsOfServicePage() {
   return (
@@ -67,7 +68,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">5. No Professional Advice</h2>
             <div className="bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4 mb-4">
-              <p className="font-semibold text-yellow-900 mb-2">⚠️ Important Notice</p>
+              <p className="flex items-center gap-2 font-semibold text-yellow-900 mb-2"><FaExclamationTriangle aria-hidden /> Important Notice</p>
               <p className="text-sm text-gray-700">
                 OnlineCalc calculators do <strong>not</strong> constitute professional advice. Our tools are for 
                 informational and educational purposes only.

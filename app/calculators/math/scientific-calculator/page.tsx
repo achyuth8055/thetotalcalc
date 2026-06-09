@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { FaBackspace } from "react-icons/fa";
 
 export default function ScientificCalculator() {
   const [display, setDisplay] = useState("0");
@@ -218,7 +219,7 @@ export default function ScientificCalculator() {
             <div className="bg-slate-700 rounded-xl p-3">
               <div className="grid grid-cols-4 gap-2">
                 <button onClick={clear} className="calc-btn-func col-span-2">AC</button>
-                <button onClick={backspace} className="calc-btn-func text-2xl">⌫</button>
+                <button onClick={backspace} aria-label="Backspace" className="calc-btn-func flex items-center justify-center text-2xl"><FaBackspace aria-hidden /></button>
                 <button onClick={() => handleOperator("÷")} className="calc-btn-op">÷</button>
 
                 <button onClick={() => handleNumber("7")} className="calc-btn-num">7</button>

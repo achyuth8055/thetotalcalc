@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { RegionProvider } from "@/components/RegionContext";
+import { LanguageProvider } from "@/components/LanguageContext";
+import RegionBanner from "@/components/RegionBanner";
+import CookieConsent from "@/components/CookieConsent";
+import { JsonLd, organizationSchema, websiteSchema } from "@/components/seo/JsonLd";
 import Script from "next/script";
 
-const inter = Inter({ subsets: ["latin"] });
+const publicSans = Public_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://online-calc.com'),
@@ -137,11 +146,31 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
+        />
         <Script
           id="schema-org"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <JsonLd id="schema-organization" data={organizationSchema()} />
+        <JsonLd id="schema-website" data={websiteSchema()} />
+        {/* Google consent mode v2 - deny by default until the user accepts. */}
+        <Script id="consent-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              analytics_storage: 'denied',
+              wait_for_update: 500
+            });
+          `}
+        </Script>
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-QEY6X1E51Y"
@@ -160,21 +189,18 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`${inter.className} bg-slate-950 text-slate-100 antialiased`}>
-        <div className="relative min-h-screen overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.15),_transparent_55%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(79,70,229,0.15),_transparent_60%)]" />
-            <div className="absolute -top-32 right-0 w-[30rem] h-[30rem] bg-primary-500/40 blur-[140px] rounded-full opacity-70" />
-            <div className="absolute -bottom-24 left-10 w-[24rem] h-[24rem] bg-emerald-500/40 blur-[130px] rounded-full opacity-60" />
-            <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:70px_70px] opacity-[0.04]" />
-          </div>
-          <Navigation />
-          <main className="relative z-10 min-h-screen">
-            {children}
-          </main>
-          <Footer />
-        </div>
+      <body className={`${publicSans.className} bg-background text-on-surface antialiased`}>
+        <RegionProvider>
+          <LanguageProvider>
+            <div className="flex min-h-screen flex-col">
+              <Navigation />
+              <RegionBanner />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
+            <CookieConsent />
+          </LanguageProvider>
+        </RegionProvider>
       </body>
     </html>
   );

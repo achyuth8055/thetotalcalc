@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { FaExclamationTriangle, FaRegCheckCircle } from "react-icons/fa";
 
 export default function GradeCalculator() {
   const [currentGrade, setCurrentGrade] = useState("85");
@@ -109,10 +110,10 @@ export default function GradeCalculator() {
                 You need to score <strong className="text-3xl text-purple-600">{result.toFixed(1)}%</strong> on your final exam
               </p>
               {result > 100 && (
-                <p className="text-red-600 font-medium">⚠️ This grade may not be achievable. Consider talking to your instructor about extra credit options.</p>
+                <p className="flex items-center gap-2 text-red-600 font-medium"><FaExclamationTriangle aria-hidden className="flex-shrink-0" /> This grade may not be achievable. Consider talking to your instructor about extra credit options.</p>
               )}
               {result < 0 && (
-                <p className="text-green-600 font-medium">🎉 You've already achieved your desired grade!</p>
+                <p className="flex items-center gap-2 text-green-600 font-medium"><FaRegCheckCircle aria-hidden className="flex-shrink-0" /> You&apos;ve already achieved your desired grade!</p>
               )}
             </div>
           )}

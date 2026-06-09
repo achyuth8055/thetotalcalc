@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CurrencySelector from "@/components/CurrencySelector";
 import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export default function MarginCalculator() {
   const [positionValue, setPositionValue] = useState(100000);
@@ -194,7 +195,7 @@ export default function MarginCalculator() {
 
           {/* Information Box */}
           <div className="mt-8 bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-gray-700">
-            <p className="font-semibold mb-2">⚠️ Risk Warning</p>
+            <p className="flex items-center gap-2 font-semibold mb-2"><FaExclamationTriangle aria-hidden /> Risk Warning</p>
             <p>
               Trading with leverage amplifies both profits and losses. Only trade with money you can afford to lose.
             </p>

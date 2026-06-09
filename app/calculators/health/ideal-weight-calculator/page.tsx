@@ -225,7 +225,7 @@ export default function IdealWeightCalculator() {
                       <p className="text-xs text-gray-500 mb-1">Min</p>
                       <p className="text-2xl font-bold text-gray-800">{result.min} kg</p>
                     </div>
-                    <div className="text-gray-300 text-2xl">—</div>
+                    <div className="text-gray-300 text-2xl">-</div>
                     <div>
                       <p className="text-xs text-gray-500 mb-1">Max</p>
                       <p className="text-2xl font-bold text-gray-800">{result.max} kg</p>

@@ -209,6 +209,48 @@ const engineEntries: DirectoryEntry[] = [
     live: true,
     cta: "Open Calculator",
   },
+  {
+    id: "uk-stamp-duty",
+    name: "UK Stamp Duty Calculator (SDLT)",
+    description:
+      "Estimate Stamp Duty on a home in England or Northern Ireland, with first-time-buyer relief and the additional-property surcharge.",
+    href: "/calc/uk-stamp-duty-calculator",
+    category: "property-tax",
+    region: "UK",
+    minutes: 2,
+    badge: "official",
+    icon: "home_work",
+    live: true,
+    cta: "Open Calculator",
+  },
+  {
+    id: "us-paycheck",
+    name: "US Paycheck Calculator (2025)",
+    description:
+      "Estimate take-home pay per paycheck after federal tax and FICA, accounting for pay frequency and pre-tax deductions.",
+    href: "/calc/us-paycheck-calculator",
+    category: "salary",
+    region: "US",
+    minutes: 2,
+    badge: "official",
+    icon: "account_balance_wallet",
+    live: true,
+    cta: "Open Calculator",
+  },
+  {
+    id: "ca-salary-after-tax",
+    name: "Canada Salary After Tax (2025)",
+    description:
+      "Estimate Canadian take-home pay after federal and provincial tax, CPP, and EI for Ontario, BC, and Alberta.",
+    href: "/calc/ca-salary-after-tax",
+    category: "salary",
+    region: "CA",
+    minutes: 2,
+    badge: "official",
+    icon: "account_balance_wallet",
+    live: true,
+    cta: "Open Calculator",
+  },
 ];
 
 // 2. Regional calculators (now live, built on the engine).

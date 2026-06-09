@@ -10,6 +10,9 @@ import { ukVat } from "./uk-vat";
 import { usSalesTax } from "./us-sales-tax";
 import { ukSalaryAfterTax } from "./uk-salary-after-tax";
 import { usSelfEmploymentTax } from "./us-self-employment-tax";
+import { ukStampDuty } from "./uk-stamp-duty";
+import { usPaycheck } from "./us-paycheck";
+import { caSalaryAfterTax } from "./ca-salary-after-tax";
 import { CONTENT } from "../content/calculator-content";
 
 const RAW_CALCULATORS: CalculatorDefinition[] = [
@@ -20,6 +23,9 @@ const RAW_CALCULATORS: CalculatorDefinition[] = [
   usSalesTax,
   ukSalaryAfterTax,
   usSelfEmploymentTax,
+  ukStampDuty,
+  usPaycheck,
+  caSalaryAfterTax,
 ];
 
 // Merge long-form people-first content (whoFor, howItWorks, workedExample,

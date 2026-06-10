@@ -251,6 +251,48 @@ const engineEntries: DirectoryEntry[] = [
     live: true,
     cta: "Open Calculator",
   },
+  {
+    id: "us-capital-gains",
+    name: "US Capital Gains Tax (2025)",
+    description:
+      "Estimate federal tax on long-term (0/15/20%) or short-term capital gains based on your income and filing status.",
+    href: "/calc/us-capital-gains-tax",
+    category: "tax",
+    region: "US",
+    minutes: 2,
+    badge: "official",
+    icon: "trending_up",
+    live: true,
+    cta: "Open Calculator",
+  },
+  {
+    id: "uk-capital-gains",
+    name: "UK Capital Gains Tax (2025/26)",
+    description:
+      "Estimate UK CGT after the 3,000 allowance at 18% and 24%, based on how much of your basic-rate band remains.",
+    href: "/calc/uk-capital-gains-tax",
+    category: "tax",
+    region: "UK",
+    minutes: 2,
+    badge: "official",
+    icon: "trending_up",
+    live: true,
+    cta: "Open Calculator",
+  },
+  {
+    id: "ca-capital-gains",
+    name: "Canada Capital Gains Tax (2025)",
+    description:
+      "Estimate tax on a Canadian capital gain using the 50% inclusion rate and your marginal rate in ON, BC, or AB.",
+    href: "/calc/ca-capital-gains-tax",
+    category: "tax",
+    region: "CA",
+    minutes: 2,
+    badge: "official",
+    icon: "trending_up",
+    live: true,
+    cta: "Open Calculator",
+  },
 ];
 
 // 2. Regional calculators (now live, built on the engine).

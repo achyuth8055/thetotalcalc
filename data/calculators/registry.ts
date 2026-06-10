@@ -13,6 +13,9 @@ import { usSelfEmploymentTax } from "./us-self-employment-tax";
 import { ukStampDuty } from "./uk-stamp-duty";
 import { usPaycheck } from "./us-paycheck";
 import { caSalaryAfterTax } from "./ca-salary-after-tax";
+import { usCapitalGains } from "./us-capital-gains";
+import { ukCapitalGains } from "./uk-capital-gains";
+import { caCapitalGains } from "./ca-capital-gains";
 import { CONTENT } from "../content/calculator-content";
 
 const RAW_CALCULATORS: CalculatorDefinition[] = [
@@ -26,6 +29,9 @@ const RAW_CALCULATORS: CalculatorDefinition[] = [
   ukStampDuty,
   usPaycheck,
   caSalaryAfterTax,
+  usCapitalGains,
+  ukCapitalGains,
+  caCapitalGains,
 ];
 
 // Merge long-form people-first content (whoFor, howItWorks, workedExample,

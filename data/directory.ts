@@ -154,6 +154,20 @@ const engineEntries: DirectoryEntry[] = [
     cta: "Open Calculator",
   },
   {
+    id: "ip-subnet-calculator",
+    name: "IP Subnet Calculator (IPv4 / CIDR)",
+    description:
+      "Get the network and broadcast addresses, subnet and wildcard masks, usable host range, and host count for any IPv4 CIDR block.",
+    href: "/calc/ip-subnet-calculator",
+    category: "developer",
+    region: "Global",
+    minutes: 2,
+    badge: "institutional",
+    icon: "lan",
+    live: true,
+    cta: "Open Calculator",
+  },
+  {
     id: "uk-vat",
     name: "UK VAT Calculator",
     description:

@@ -8,9 +8,16 @@ import { JsonLd, breadcrumbSchema, faqSchema, softwareAppSchema } from "@/compon
 import { getCalculatorBySlug, ENGINE_CALCULATORS } from "@/data/calculators/registry";
 import type { DirectoryCategory, DirectoryRegion } from "@/data/directory";
 
+// Slugs that have their own dedicated static route under /app/calc/<slug>/page.tsx
+const BESPOKE_SLUGS = new Set([
+  "us-child-tax-credit",
+  "compound-interest",
+  "us-homestead-exemption",
+]);
+
 export function generateStaticParams() {
-  // Bespoke pages (e.g. CTC) have their own route; only slugs we want at /calc.
-  return ENGINE_CALCULATORS.filter((c) => c.slug !== "us-child-tax-credit").map((c) => ({
+  // Bespoke pages have their own route; exclude them here to avoid duplicate static builds.
+  return ENGINE_CALCULATORS.filter((c) => !BESPOKE_SLUGS.has(c.slug)).map((c) => ({
     slug: c.slug,
   }));
 }

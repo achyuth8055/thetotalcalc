@@ -21,6 +21,134 @@ export interface BlogPost {
 
 export const POSTS: BlogPost[] = [
   {
+    slug: "401k-match-is-free-money",
+    title: "The 401(k) match is free money, and most people leave some behind",
+    description:
+      "An employer 401(k) match is the closest thing to free money in personal finance, yet billions go unclaimed every year. Here is how matching really works, the contribution limits for 2025, and the order in which to fund your retirement accounts.",
+    date: "2026-06-10",
+    readingMinutes: 6,
+    category: "Retirement",
+    related: { name: "401(k) Calculator", href: "/calculators/finance/401k-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "There are very few guaranteed returns in investing. Markets rise and fall, interest rates move, and most promises of certainty are best ignored. The employer 401(k) match is the rare exception: a return you lock in the moment the money lands in your account, before a single dollar is invested. And yet a large share of workers who are offered a match never capture all of it, walking past money their employer has already set aside for them.",
+          "The reason is rarely indifference. It is usually a misunderstanding of how the match works, or a budget that feels too tight to contribute. Both are worth challenging, because the math here is unusually one-sided.",
+        ],
+      },
+      {
+        heading: "What a match actually is",
+        paragraphs: [
+          "A 401(k) match is a contribution your employer makes to your retirement account based on what you put in yourself. The most common formula is a full match on the first portion of your pay and a half match on the next slice, often written as something like '100% on the first 3%, then 50% on the next 2%.' Under that formula, contributing 5% of your salary earns you another 4% from your employer, every pay period, automatically.",
+          "Put plainly, that is an immediate 80% return on the money you contributed up to the match, before any market growth. No investment available to an ordinary saver comes close. If your salary is $60,000 and you contribute 5%, you add $3,000 and your employer adds $2,400. Skip the contribution and that $2,400 simply does not exist.",
+        ],
+      },
+      {
+        heading: "The limits that govern how much you can add",
+        paragraphs: [
+          "For 2025, you can contribute up to $23,500 of your own money to a 401(k). If you are age 50 or older, a catch-up provision lets you add a further $7,500, and a new higher catch-up applies to savers aged 60 to 63. Employer matching contributions sit on top of your personal limit, under a much larger combined cap that most workers never approach.",
+          "Two details trip people up. First, the match does not count against your personal contribution limit, so it never crowds out your own saving. Second, the match has its own ceiling set by the formula, so contributing far above the match percentage earns you tax advantages but no extra employer money. The first goal is always to contribute at least enough to capture the full match.",
+        ],
+      },
+      {
+        heading: "Vesting: the string sometimes attached",
+        paragraphs: [
+          "Your own contributions are always yours immediately. Employer contributions can be subject to a vesting schedule, which means you earn ownership of them over time. Some plans vest instantly, some on a cliff (nothing until a set year, then all at once), and some gradually over several years. If you leave before you are fully vested, you forfeit the unvested employer portion.",
+          "This matters most if you change jobs often. It does not change the advice to capture the match, but it is worth knowing your schedule before counting employer money as fully yours, especially if a move is on the horizon.",
+        ],
+      },
+      {
+        heading: "The order most savers should fund accounts",
+        list: [
+          "Contribute enough to your 401(k) to capture the full employer match - this is the highest-return step available.",
+          "Pay down high-interest debt, such as credit cards, where the guaranteed saving rivals or beats the match.",
+          "Build a basic emergency fund so a setback does not force you to raid retirement savings.",
+          "Consider a Roth or traditional IRA for more investment choice and flexibility.",
+          "Return to the 401(k) and increase contributions toward the annual limit if you have room.",
+        ],
+      },
+      {
+        heading: "Why people still miss it",
+        paragraphs: [
+          "The most common reason is starting at a contribution rate below the match threshold, often the plan's default, and never revisiting it. A default of 3% feels responsible, but if the match runs to 5% it leaves part of the employer money on the table. Raising your rate to meet the full match, even gradually by a percentage point a year, closes that gap.",
+          "Another reason is the belief that money is too tight. Because traditional 401(k) contributions come out pre-tax, the hit to your take-home pay is smaller than the amount you save. A $200 contribution might reduce your paycheck by closer to $160 once the tax deferral is accounted for, while still unlocking the full employer match on top.",
+        ],
+      },
+      {
+        heading: "See the long-run difference",
+        paragraphs: [
+          "The reason the match matters so much is compounding. Money added early has decades to grow, and employer contributions effectively increase your savings rate for free. Over a career, capturing a full match rather than half of it can mean a difference measured in six figures by retirement, driven almost entirely by money you never had to earn.",
+          "The simplest way to make this concrete is to project it. Enter your salary, your contribution rate, your employer's match formula, and an assumed rate of return, and look at the balance at retirement with and without the full match. The gap between those two numbers is the cost of leaving the match unclaimed. These projections are estimates, not guarantees, and are not financial advice, but they make an abstract benefit impossible to ignore.",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "hsa-the-quiet-retirement-account",
+    title: "The HSA is the most tax-advantaged account almost nobody uses right",
+    description:
+      "A Health Savings Account is the only account in the US tax code with three separate tax breaks. Here is how the triple advantage works, the 2025 limits, and why treating it as a retirement account beats spending it each year.",
+    date: "2026-06-10",
+    readingMinutes: 6,
+    category: "Health & Savings",
+    related: { name: "HSA Calculator", href: "/calculators/finance/hsa-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "Most tax-advantaged accounts give you one break and take another. A traditional 401(k) defers tax now but taxes withdrawals later. A Roth does the reverse. The Health Savings Account is the only account in the US tax code that does neither, offering three distinct tax advantages at once. It is also, by a wide margin, the most misunderstood, because almost everyone treats it as a simple spending account rather than the long-term wealth tool it can be.",
+          "The catch is that not everyone can use one, and the rules around eligibility are strict. But for those who qualify, the HSA quietly outperforms accounts that get far more attention.",
+        ],
+      },
+      {
+        heading: "The triple tax advantage",
+        paragraphs: [
+          "The three breaks stack. First, the money you contribute is deductible, lowering your taxable income the year you put it in, much like a traditional retirement contribution. Second, the balance grows tax-free, so any interest or investment gains inside the account are never taxed as they accumulate. Third, withdrawals for qualified medical expenses come out completely tax-free.",
+          "No other account does all three. A 401(k) gives you the first two but taxes withdrawals. A Roth IRA gives you the second and third but no upfront deduction. The HSA gives you all three at the same time, which is why financial planners sometimes call it the most efficient account available to ordinary savers.",
+        ],
+      },
+      {
+        heading: "Who can contribute, and how much",
+        paragraphs: [
+          "Eligibility is the gatekeeper. To contribute to an HSA you must be covered by a qualifying high-deductible health plan, you cannot be enrolled in Medicare, and you cannot be claimed as someone else's dependent. The high-deductible plan requirement is the one most people overlook: a low-deductible plan, however good, locks you out of the account entirely.",
+          "For 2025, the contribution limit is $4,300 for self-only coverage and $8,550 for family coverage. Savers aged 55 and older can add a further $1,000 catch-up contribution. Contributions made through payroll also avoid Social Security and Medicare payroll taxes, a fourth quiet advantage that a Roth or IRA cannot match.",
+        ],
+      },
+      {
+        heading: "The mistake: spending it every year",
+        paragraphs: [
+          "Most people open an HSA, contribute a little, and spend it on this year's prescriptions and copays. That captures the tax deduction but throws away the account's real power, which is tax-free growth over decades. Money spent immediately never gets the chance to compound.",
+          "The alternative strategy is to pay current medical bills out of pocket where you can, leave the HSA invested, and let it grow. Crucially, there is no deadline to reimburse yourself. If you keep your receipts, you can pay a medical bill today and withdraw the matching amount tax-free years later, after the balance has grown. The HSA effectively becomes a medical-expense reimbursement account with a long fuse.",
+        ],
+      },
+      {
+        heading: "What happens at retirement",
+        paragraphs: [
+          "The HSA has a feature that makes it work as a stealth retirement account. After age 65, you can withdraw money for any purpose without the 20% penalty that normally applies to non-medical withdrawals. Those non-medical withdrawals are taxed as ordinary income, which makes the account behave exactly like a traditional IRA for general spending.",
+          "But medical costs do not disappear in retirement; they rise. One large study estimates a typical retired couple will spend hundreds of thousands of dollars on healthcare over their remaining lives. A well-funded HSA covers those costs tax-free, which is the best possible outcome, while still acting as an IRA-equivalent for anything else.",
+        ],
+      },
+      {
+        heading: "Common pitfalls to avoid",
+        list: [
+          "Leaving the balance in cash. Many HSAs let you invest above a threshold, and an uninvested balance loses the growth advantage to inflation.",
+          "Confusing an HSA with an FSA. A Flexible Spending Account is use-it-or-lose-it; an HSA rolls over and is yours forever.",
+          "Contributing while enrolled in Medicare, which is not allowed and can trigger penalties.",
+          "Throwing away receipts. They are what let you reimburse yourself tax-free in the future.",
+          "Overlooking the payroll-tax saving by contributing outside your employer's plan when a payroll option exists.",
+        ],
+      },
+      {
+        heading: "Model it before you decide",
+        paragraphs: [
+          "The decision to treat an HSA as a long-term account rather than a spending account is easier to make once you see the numbers. Project a steady annual contribution, an assumed rate of return, and the years until retirement, and compare the result against spending the same money each year. The invested version typically ends up dramatically larger, because every layer of tax that would normally erode growth is removed.",
+          "These projections are estimates and depend on assumptions that will not hold exactly, and none of this is tax or medical advice. But the structure is real: an account with three tax breaks, used patiently, is one of the strongest tools an eligible saver has. The hardest part is simply choosing not to spend it.",
+        ],
+      },
+    ],
+  },
+
+  {
     slug: "child-tax-credit-2025-what-changed",
     title: "The 2025 Child Tax Credit: what changed, and how to get every dollar",
     description:

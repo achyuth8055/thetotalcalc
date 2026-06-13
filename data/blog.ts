@@ -614,6 +614,241 @@ export const POSTS: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "rent-vs-buy-the-math-that-decides-it",
+    title: "Rent vs. buy: the math that actually decides it",
+    description:
+      "Buying a home is not automatically smarter than renting. The honest comparison weighs the full cost of owning, including the money you would have invested, against rent that rises over time. Here is how to run the numbers for your own situation.",
+    date: "2026-06-13",
+    readingMinutes: 7,
+    category: "Housing",
+    related: { name: "Rent vs. Buy Calculator", href: "/calculators/finance/rent-vs-buy-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "Almost everyone has heard that renting is throwing money away. It is one of the most repeated pieces of financial advice, and it is also one of the least examined. Renting buys you a place to live and the freedom to move, while a large part of an early mortgage payment goes to interest, not ownership. Whether buying wins depends on numbers that vary widely by city, price, and how long you stay.",
+          "The point of running the comparison is not to talk yourself into or out of a house. It is to replace a slogan with a decision you can defend, using your own rent, your own home price, and a realistic guess at how long you will stay put.",
+        ],
+      },
+      {
+        heading: "The costs of owning that the slogan ignores",
+        paragraphs: [
+          "A mortgage payment is the visible cost of owning, but it is far from the only one. Property tax, homeowners insurance, and maintenance are ongoing and never stop. Many buyers also pay private mortgage insurance until they build enough equity, plus closing costs to buy and agent fees to sell. Together these can add a few percent of the home's value every year, on top of the loan.",
+          "There is also a cost that does not show up on any bill: the money tied up in your down payment and closing costs. Invested elsewhere, that lump sum could have grown. Economists call this the opportunity cost, and leaving it out is the single biggest reason the rent-versus-buy comparison gets distorted in favor of buying.",
+        ],
+      },
+      {
+        heading: "Why time horizon decides almost everything",
+        paragraphs: [
+          "The largest one-time costs of owning come at the start and the end: closing costs when you buy, and agent commissions plus fees when you sell. Spread those over two or three years and they are punishing. Spread them over ten years and they fade into the background.",
+          "This is why the honest answer to 'should I buy?' usually starts with 'how long will you stay?' Below roughly five years, the transaction costs and early interest often make renting cheaper. Past seven or eight years, rising rents and slowly building equity tend to tip the balance toward owning. The exact crossover depends on your local prices, but the shape of the answer is almost always about time.",
+        ],
+      },
+      {
+        heading: "Rent does not stand still either",
+        paragraphs: [
+          "The case for renting weakens if you assume rent stays flat, and it almost never does. Over a long stay, rent typically rises with inflation or faster in tight markets, while a fixed-rate mortgage payment stays the same for decades. That widening gap is a real advantage of owning that a snapshot comparison misses.",
+          "A fair comparison therefore grows rent over time and holds the mortgage payment fixed, while still charging the owner for tax, insurance, and upkeep that also rise. Done this way, neither side gets an unearned head start.",
+        ],
+      },
+      {
+        heading: "What a fair comparison looks like",
+        list: [
+          "Add up the full annual cost of owning: mortgage interest, property tax, insurance, maintenance, and any mortgage insurance, minus the small slice of payment that builds equity.",
+          "Charge the owner the opportunity cost of the down payment and closing costs, as if that money had been invested instead.",
+          "Grow rent each year at a realistic rate, rather than freezing it at today's figure.",
+          "Account for the eventual selling costs, since most owners do sell, and those fees are large.",
+          "Compare the two totals over the number of years you actually expect to stay, not over an idealized 30.",
+        ],
+      },
+      {
+        heading: "The factors that swing the result",
+        paragraphs: [
+          "Three inputs move the answer more than any others. The first is how long you stay, because it spreads the fixed transaction costs. The second is the gap between home prices and rents in your area; in expensive coastal cities, rent can be cheap relative to purchase prices, which favors renting. The third is what you assume the invested down payment would earn, since a higher return makes renting and investing more attractive.",
+          "Home price growth matters too, but less than people expect, because a rising home also means higher property tax and a larger sum you could have invested. Treating appreciation as a guaranteed jackpot is how buyers overpay.",
+        ],
+      },
+      {
+        heading: "Run it on your own numbers",
+        paragraphs: [
+          "There is no universal winner between renting and buying, only a winner for your price, your rent, and your timeline. The most useful thing you can do is plug your real figures into a side-by-side calculation and see where the lines cross, then ask whether you truly expect to stay past that point.",
+          "These projections rest on assumptions about rates, returns, and how long you stay, so treat them as estimates, not promises, and nothing here is financial advice. But running the full comparison, with the opportunity cost included and rent allowed to rise, turns a tired slogan into a number you can actually act on.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "roth-or-traditional-ira-which-first",
+    title: "Roth or traditional IRA: which one deserves your money first",
+    description:
+      "The choice between a Roth and a traditional IRA comes down to one honest guess: whether your tax rate is higher now or in retirement. Here is how each account is taxed, who each one favors, and why many savers should hold both.",
+    date: "2026-06-13",
+    readingMinutes: 6,
+    category: "Retirement",
+    related: { name: "Roth vs. Traditional IRA Calculator", href: "/calculators/finance/roth-vs-traditional-ira" },
+    body: [
+      {
+        paragraphs: [
+          "An individual retirement account is one of the best deals an ordinary saver can get, but the first question always stops people: Roth or traditional? The accounts hold the same investments and share the same yearly limit. The only real difference is when you pay tax, and getting that timing right can change your retirement income by a meaningful amount.",
+          "The good news is that the decision rests on a single comparison you can reason about, even if you cannot predict it perfectly. Once you see what that comparison is, the rest is detail.",
+        ],
+      },
+      {
+        heading: "How each account is taxed",
+        paragraphs: [
+          "A traditional IRA gives you a tax deduction now. You contribute pre-tax money, it grows untaxed, and you pay ordinary income tax on every dollar you withdraw in retirement. The benefit is up front; the bill comes later.",
+          "A Roth IRA flips the timing. You contribute money you have already paid tax on, so there is no deduction today, but qualified withdrawals in retirement are completely tax-free, including all the growth. The benefit is at the end; the cost is now.",
+        ],
+      },
+      {
+        heading: "The one question that decides it",
+        paragraphs: [
+          "Strip away the detail and the choice is this: do you expect your tax rate to be higher today or in retirement? If your rate is higher now, the traditional deduction is worth more, so deferring tax wins. If your rate will be higher later, paying tax now at a Roth's lower rate wins.",
+          "That is why a Roth often suits younger savers and people early in their careers, whose income and tax rate are likely to climb. A traditional IRA tends to suit high earners in their peak years who expect to drop into a lower bracket once they stop working.",
+        ],
+      },
+      {
+        heading: "Why a Roth's advantages go beyond the rate",
+        list: [
+          "Tax-free withdrawals make retirement income easier to plan, because what you see is what you keep.",
+          "A Roth IRA has no required minimum distributions during your lifetime, so the money can keep growing untouched if you do not need it.",
+          "You can withdraw your own contributions (not the earnings) at any time without tax or penalty, which adds flexibility in an emergency.",
+          "Tax-free dollars are valuable for managing your bracket in retirement, letting you draw from Roth and traditional accounts in the mix that keeps your tax bill low.",
+        ],
+      },
+      {
+        heading: "Limits and eligibility to know",
+        paragraphs: [
+          "For 2025, you can contribute up to $7,000 across your IRAs, or $8,000 if you are 50 or older. That combined limit applies whether you choose Roth, traditional, or split between them. You also need earned income to contribute at all.",
+          "Roth IRAs add an income ceiling: above certain limits, your ability to contribute directly phases out. Traditional IRA contributions are always allowed if you have earned income, though the deduction can be reduced if you or a spouse have a workplace plan and earn above set thresholds. These numbers change yearly, so confirm the current figures with the IRS before you contribute.",
+        ],
+      },
+      {
+        heading: "Why holding both can be the smartest move",
+        paragraphs: [
+          "Because no one knows their future tax rate for certain, splitting contributions between Roth and traditional is a hedge, not a cop-out. It gives you tax-free and taxable buckets to draw from in retirement, so you can adapt to whatever rates and rules exist then. This is sometimes called tax diversification, and it is genuinely useful.",
+          "Many savers already have a large traditional balance through a workplace 401(k). For them, directing IRA contributions to a Roth builds the tax-free side that their retirement is missing, improving the balance between the two without any extra cost.",
+        ],
+      },
+      {
+        heading: "Put your own numbers to it",
+        paragraphs: [
+          "The cleanest way to choose is to compare the after-tax value of each account using your current tax rate and a realistic guess at your retirement rate. When the two rates are similar, the accounts end up close, and flexibility becomes the tiebreaker. When they differ, the math points clearly to one side.",
+          "These outcomes depend on tax rates that can change and on assumptions about growth, so treat any projection as an estimate rather than a guarantee, and nothing here is tax or financial advice. Still, running the comparison turns an intimidating either-or into a clear, personal answer.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "uk-stamp-duty-2025-what-buyers-pay",
+    title: "UK Stamp Duty in 2025: what buyers actually pay",
+    description:
+      "Stamp Duty Land Tax can add thousands to the cost of buying a home in England and Northern Ireland. Here is how the banded rates work after the April 2025 changes, what first-time buyers still save, and the surcharges that catch people out.",
+    date: "2026-06-13",
+    readingMinutes: 6,
+    category: "UK Property",
+    related: { name: "UK Stamp Duty Calculator", href: "/calc/uk-stamp-duty-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "Stamp Duty Land Tax, usually just called stamp duty, is the tax you pay when you buy a property or land over a certain price in England and Northern Ireland. Scotland and Wales run their own separate systems. For most buyers it is one of the largest single costs of moving, and because it changed in April 2025, a lot of online guidance is now out of date.",
+          "The tax often gets described as a flat percentage, which is wrong and usually makes it sound worse than it is. Stamp duty works in bands, like income tax, so understanding the structure can save you from nasty surprises and from overestimating the bill.",
+        ],
+      },
+      {
+        heading: "How the bands work",
+        paragraphs: [
+          "You do not pay one rate on the whole price. Instead, each slice of the price falls into a band with its own rate, and you pay that rate only on the part of the price within the band. A portion below the starting threshold is taxed at zero, the next slice at a low rate, and higher slices at progressively higher rates.",
+          "Because of this, the headline rate for an expensive home overstates the real cost, since the lower slices are still taxed lightly or not at all. The effective rate, meaning the total tax as a share of the price, is always lower than the top band you reach.",
+        ],
+      },
+      {
+        heading: "What changed in April 2025",
+        paragraphs: [
+          "Temporary thresholds that had been in place reverted from 1 April 2025, which means the tax-free starting band is lower than it was, and more purchases now fall into the charge. In practice, buyers of mid-priced and higher homes are paying somewhat more stamp duty than they would have a year earlier.",
+          "First-time buyer relief also tightened. First-time buyers still pay no stamp duty up to a set threshold and a reduced rate on a band above that, but both of those limits came down in April 2025. The relief remains valuable, just less generous than during the temporary period.",
+        ],
+      },
+      {
+        heading: "The surcharges that catch people out",
+        list: [
+          "An additional-property surcharge applies on top of the standard rates if you buy a second home or a buy-to-let while keeping another residence, and it can add a large amount to the bill.",
+          "Non-UK residents pay a further surcharge on residential purchases, stacked on top of the standard and additional-property rates where they apply.",
+          "If you buy a new home before selling your old one, you may pay the surcharge up front and reclaim it later, within a time limit, once the previous home is sold.",
+          "First-time buyer relief is lost entirely if the price is above the upper limit, so a purchase just over the line can cost noticeably more than one just under it.",
+        ],
+      },
+      {
+        heading: "Who pays and when",
+        paragraphs: [
+          "Stamp duty is the buyer's responsibility, not the seller's. Your solicitor or conveyancer normally files the return and pays the tax on your behalf shortly after completion, and there is a strict deadline. Missing it brings penalties and interest, so this is not a bill to leave until later.",
+          "Crucially, stamp duty is paid in cash on top of your deposit and cannot be added to most mortgages. That makes it essential to budget for it from the start, because it directly reduces the deposit you have available.",
+        ],
+      },
+      {
+        heading: "Work out your own figure",
+        paragraphs: [
+          "Because the tax is banded and depends on whether you are a first-time buyer, an additional-property purchaser, or a non-resident, the only reliable way to know your bill is to run your exact price through the current bands. Small changes in price near a threshold can move the total by a surprising amount.",
+          "Rates and thresholds are set by the government and can change again, so treat any figure as an estimate and check the latest rules on GOV.UK before you commit; nothing here is tax or legal advice. But knowing roughly what stamp duty will cost, well before completion, keeps it from derailing your budget at the worst possible moment.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "canada-capital-gains-inclusion-rate-explained",
+    title: "Canada's capital gains tax: how the inclusion rate really works",
+    description:
+      "Capital gains in Canada are not taxed like regular income. Only part of each gain is taxable, set by the inclusion rate, and after the 2024-25 reversal that rate stayed at one-half. Here is how it works and what it means when you sell.",
+    date: "2026-06-13",
+    readingMinutes: 6,
+    category: "Canada Tax",
+    related: { name: "Canada Capital Gains Tax Calculator", href: "/calc/ca-capital-gains-tax" },
+    body: [
+      {
+        paragraphs: [
+          "When you sell an investment in Canada for more than you paid, the profit is a capital gain, and it is taxed more gently than your salary. A common worry is that selling a winning stock or a cottage will hand half the profit to the government. The reality is milder, because Canada taxes only a portion of each gain, not the whole thing.",
+          "The mechanism that decides how much is the inclusion rate, and it has been in the news. A proposed increase created real confusion in 2024 and 2025, so it is worth being clear about where things actually landed.",
+        ],
+      },
+      {
+        heading: "What the inclusion rate means",
+        paragraphs: [
+          "The inclusion rate is the share of your capital gain that gets added to your taxable income for the year. The rest is not taxed at all. At a one-half inclusion rate, if you realize a $10,000 gain, $5,000 is included in your income and the other $5,000 is tax-free.",
+          "That included amount is then taxed at your ordinary marginal rate, the same rate that applies to your salary. So your actual tax on a gain depends on two things: the inclusion rate, which sets how much counts, and your tax bracket, which sets the rate on the part that counts.",
+        ],
+      },
+      {
+        heading: "Where the rate stands after the reversal",
+        paragraphs: [
+          "In 2024 the federal government proposed raising the inclusion rate to two-thirds on the portion of annual gains above $250,000 for individuals, and on most gains for corporations and many trusts. The plan caused months of uncertainty, was deferred, and was then cancelled, so the long-standing one-half inclusion rate remained in place.",
+          "The practical takeaway is that, for the vast majority of individuals, half of each capital gain is taxable, as it has been for years. Because tax rules can change again, confirm the current rate with the Canada Revenue Agency before relying on it for a large sale.",
+        ],
+      },
+      {
+        heading: "Gains that are sheltered or exempt",
+        list: [
+          "Gains on your principal residence are generally exempt, so selling the home you actually live in usually triggers no capital gains tax.",
+          "Investments held inside a TFSA grow and can be withdrawn completely tax-free, with no capital gains tax on the growth.",
+          "Investments inside an RRSP are tax-deferred; you pay no capital gains tax inside the account, though withdrawals are later taxed as ordinary income.",
+          "Capital losses can offset capital gains, reducing the taxable amount, and unused losses can often be carried back or forward to other years.",
+        ],
+      },
+      {
+        heading: "When the gain is counted",
+        paragraphs: [
+          "Capital gains tax is triggered when you realize the gain, which usually means you sell or are deemed to have disposed of the asset. Simply watching an investment rise in value creates no tax; the bill only arrives when you actually sell. This gives you some control over timing.",
+          "That timing can matter. Because only realized gains count, spreading large sales across more than one tax year, or pairing a sale with realized losses, can keep more of the gain in lower brackets. These are general ideas, not a plan for any specific situation.",
+        ],
+      },
+      {
+        heading: "Estimate your own tax",
+        paragraphs: [
+          "To estimate the tax on a sale, take your gain, apply the inclusion rate to find the taxable portion, and then apply your marginal tax rate to that portion. The result is usually a good deal smaller than people fear, precisely because half the gain escapes tax entirely.",
+          "Rates, brackets, and inclusion rules are set by government and can change, so treat any number as an estimate and verify the current rules with the CRA; nothing here is tax advice. Still, understanding the inclusion rate turns a vague dread of capital gains tax into a figure you can plan around before you sell.",
+        ],
+      },
+    ],
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {

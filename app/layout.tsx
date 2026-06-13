@@ -146,9 +146,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Warm up connections to third-party origins so the first request to
+            each does not pay the full DNS + TLS handshake cost. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://ipapi.co" />
+        {/* display=swap so icons paint with a fallback immediately instead of
+            staying invisible (FOIT) while the icon font downloads. */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
         />
         <Script
           id="schema-org"
@@ -172,10 +181,10 @@ export default function RootLayout({
           `}
         </Script>
         <Script
-          async
           src="https://www.googletagmanager.com/gtag/js?id=G-QEY6X1E51Y"
+          strategy="afterInteractive"
         />
-        <Script id="google-analytics">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -183,9 +192,11 @@ export default function RootLayout({
             gtag('config', 'G-QEY6X1E51Y');
           `}
         </Script>
+        {/* AdSense runs heavy main-thread work and injects ad slots; load it
+            lazily so it does not compete with page hydration and interaction. */}
         <Script
-          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8069357472142495"
+          strategy="lazyOnload"
           crossOrigin="anonymous"
         />
       </head>

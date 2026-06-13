@@ -15,6 +15,13 @@ type PriceUnit = "us_gal" | "uk_gal" | "litre";
 export default function FuelCostCalculator() {
   const [distance, setDistance] = useState("100");
   const [distanceUnit, setDistanceUnit] = useState<"miles" | "km">("miles");
+
+  // Optional auto-distance lookup (free OpenStreetMap). Manual entry still works.
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+  const [lookupLoading, setLookupLoading] = useState(false);
+  const [lookupError, setLookupError] = useState<string | null>(null);
+  const [lookupNote, setLookupNote] = useState<string | null>(null);
   const [efficiency, setEfficiency] = useState("30");
   const [efficiencyUnit, setEfficiencyUnit] = useState<EfficiencyUnit>("mpg_us");
   const [price, setPrice] = useState("3.50");
@@ -37,6 +44,39 @@ export default function FuelCostCalculator() {
     const updated = ["fuel-cost", ...recent.filter((id: string) => id !== "fuel-cost")].slice(0, 10);
     localStorage.setItem("recentCalculators", JSON.stringify(updated));
   }, []);
+
+  const lookupDistance = async () => {
+    const from = origin.trim();
+    const to = destination.trim();
+    if (!from || !to) {
+      setLookupError("Enter both a start and a destination.");
+      setLookupNote(null);
+      return;
+    }
+    setLookupLoading(true);
+    setLookupError(null);
+    setLookupNote(null);
+    try {
+      const res = await fetch(
+        `/api/distance?origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}`
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        setLookupError(data?.error || "Could not look up that route. Enter the distance manually.");
+        return;
+      }
+      // Fill the distance field in whichever unit is currently selected.
+      const value = distanceUnit === "km" ? data.km : data.miles;
+      setDistance(String(value));
+      setLookupNote(
+        `Driving distance: ${data.miles} mi / ${data.km} km. You can edit it below if needed.`
+      );
+    } catch {
+      setLookupError("Network error during lookup. Enter the distance manually.");
+    } finally {
+      setLookupLoading(false);
+    }
+  };
 
   const calculate = () => {
     const dist = parseFloat(distance);
@@ -161,6 +201,11 @@ export default function FuelCostCalculator() {
               "Enter your typical one-way commute distance and set the trips field to the number of one-way journeys you make in a month (for example 2 trips per work day times about 22 work days is 44). The total cost line then shows the monthly figure.",
           },
           {
+            question: "How does the auto-fill distance feature work?",
+            answer:
+              "Type a start and a destination (a city, address, or landmark) and the calculator looks up the driving distance for you using free OpenStreetMap routing data, then fills it into the distance field. It is a planning estimate, so you can always edit the number or skip the lookup and type the distance in by hand.",
+          },
+          {
             question: "Why is my real fuel cost higher than the estimate?",
             answer:
               "Stated fuel economy is measured under ideal conditions. City driving, heavy loads, air conditioning, cold weather, and aggressive acceleration all lower real-world economy, so treat the result as a planning estimate rather than an exact figure.",
@@ -173,6 +218,61 @@ export default function FuelCostCalculator() {
         ]}
       >
         <div className="space-y-6">
+          {/* Optional: auto-fill distance from a start and destination. */}
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+            <div className="mb-1 flex items-center gap-2">
+              <span className="material-symbols-outlined text-[20px] text-primary-600">route</span>
+              <h3 className="text-sm font-semibold text-gray-800">
+                Auto-fill distance (optional)
+              </h3>
+            </div>
+            <p className="mb-3 text-xs text-gray-500">
+              Enter a start and destination to look up the driving distance, or skip this and type
+              the distance in manually below.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">From</label>
+                <input
+                  type="text"
+                  value={origin}
+                  onChange={(e) => setOrigin(e.target.value)}
+                  className={inputClass}
+                  placeholder="e.g. London, UK"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">To</label>
+                <input
+                  type="text"
+                  value={destination}
+                  onChange={(e) => setDestination(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") lookupDistance();
+                  }}
+                  className={inputClass}
+                  placeholder="e.g. Manchester, UK"
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={lookupDistance}
+              disabled={lookupLoading}
+              className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <span className="material-symbols-outlined text-[18px]">
+                {lookupLoading ? "progress_activity" : "search"}
+              </span>
+              {lookupLoading ? "Looking up..." : "Get driving distance"}
+            </button>
+            {lookupNote && <p className="mt-2 text-xs text-green-700">{lookupNote}</p>}
+            {lookupError && <p className="mt-2 text-xs text-red-600">{lookupError}</p>}
+            <p className="mt-2 text-[11px] text-gray-400">
+              Distances from OpenStreetMap (Nominatim and OSRM). Approximate, for planning only.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Trip Distance</label>

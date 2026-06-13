@@ -28,7 +28,7 @@ export default function Navigation() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-surface-border bg-surface/95 shadow-sm backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-surface-border bg-surface shadow-sm">
       <div className="mx-auto flex h-16 w-full max-w-container-max items-center justify-between px-margin-mobile md:px-margin-desktop">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2">

@@ -1,6 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Tree-shake heavy barrel imports so each calculator page only ships the
+  // chart/icon code it actually uses, instead of the whole library. This is a
+  // big win for the finance/health pages that statically import recharts.
+  experimental: {
+    optimizePackageImports: ["recharts", "react-icons", "country-flag-icons"],
+  },
+  // Drop console.* from production bundles (keep warnings and errors).
+  compiler: {
+    removeConsole: { exclude: ["error", "warn"] },
+  },
 };
 
 export default nextConfig;

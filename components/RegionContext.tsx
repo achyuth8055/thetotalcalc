@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   detectRegion,
   getStoredRegion,
@@ -52,16 +52,17 @@ export function RegionProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const setRegion = (r: DetectableRegion) => {
+  const setRegion = useCallback((r: DetectableRegion) => {
     setRegionState(r);
     setStoredRegion(r);
     setAutoDetected(false);
     setResolved(true);
-  };
+  }, []);
 
-  return (
-    <RegionContext.Provider value={{ region, setRegion, resolved, autoDetected }}>
-      {children}
-    </RegionContext.Provider>
+  const value = useMemo(
+    () => ({ region, setRegion, resolved, autoDetected }),
+    [region, setRegion, resolved, autoDetected]
   );
+
+  return <RegionContext.Provider value={value}>{children}</RegionContext.Provider>;
 }

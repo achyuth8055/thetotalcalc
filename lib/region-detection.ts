@@ -113,11 +113,15 @@ function timezoneRegion(): DetectableRegion {
 export async function detectRegion(): Promise<DetectableRegion> {
   if (typeof window === "undefined") return "Global";
 
-  // 1. IP geolocation (free, no key). Best-effort.
+  // 1. IP geolocation (free, no key). Best-effort, with a hard timeout so a
+  // slow or blocked response never delays region resolution / the UI.
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3500);
     const res = await fetch("https://ipapi.co/json/", {
       headers: { Accept: "application/json" },
-    });
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timeout));
     if (res.ok) {
       const data = await res.json();
       const region = COUNTRY_TO_REGION[data.country_code] ?? timezoneRegion();

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const TUITION_PRESETS = [
   { label: "Community College", value: 5000 },
@@ -317,6 +318,44 @@ export default function CollegeCostCalculator() {
           )}
         </div>
       </div>
+
+      {result && (() => {
+        const totalYears = result.yearsUntilCollege + yearsInCollege;
+        const chartData: { year: number; "Projected Cost": number; "Savings Goal": number }[] = [];
+        const annualTuition = useCustomTuition ? customTuition : tuitionPreset;
+        const annualTotal = annualTuition + roomBoard;
+        const monthlyRate = investmentReturn / 100 / 12;
+        for (let y = 1; y <= totalYears; y++) {
+          const inflatedCost = annualTotal * Math.pow(1 + inflationRate / 100, y);
+          const months = y * 12;
+          let savings: number;
+          if (monthlyRate === 0) {
+            savings = currentSavings + monthlyContribution * months;
+          } else {
+            savings = currentSavings * Math.pow(1 + monthlyRate, months) + monthlyContribution * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+          }
+          chartData.push({ year: y, "Projected Cost": Math.round(inflatedCost), "Savings Goal": Math.round(savings) });
+        }
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Projected Cost vs Savings Over Time</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="year" tick={{ fontSize: 11 }} label={{ value: "Years from now", position: "insideBottom", offset: -2, fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Area type="monotone" dataKey="Projected Cost" stroke="#ef4444" fill="#fecaca" fillOpacity={0.5} />
+                <Area type="monotone" dataKey="Savings Goal" stroke="#22c55e" fill="#bbf7d0" fillOpacity={0.5} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       <CalculatorLayout
         title=""

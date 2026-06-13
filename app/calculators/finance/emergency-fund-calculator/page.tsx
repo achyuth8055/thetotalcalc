@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 export default function EmergencyFundCalculator() {
   const [rent, setRent] = useState(1500);
@@ -201,6 +202,43 @@ export default function EmergencyFundCalculator() {
           )}
         </div>
       </div>
+
+      {result && (() => {
+        const progressColor = result.progressPct >= 100 ? "#22c55e" : result.progressPct >= 50 ? "#3b82f6" : "#f59e0b";
+        const timeframeData = [3, 6, 12, 24].map((months) => {
+          const target = result.monthlyEssentials * months;
+          const gap = Math.max(0, target - currentSavings);
+          const needed = gap > 0 ? Math.ceil(gap / months) : 0;
+          return { months: `${months} mo`, "Monthly Savings Needed": needed };
+        });
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Progress &amp; Monthly Savings by Timeframe</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <div className="mb-4">
+              <div className="flex justify-between text-xs text-gray-500 mb-1">
+                <span>Current: {fmt(currentSavings)}</span>
+                <span>Target: {fmt(result.targetFund)}</span>
+              </div>
+              <div className="w-full h-6 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-full rounded-full transition-all duration-500" style={{ width: `${result.progressPct}%`, backgroundColor: progressColor }} />
+              </div>
+              <div className="text-center text-xs font-semibold mt-1" style={{ color: progressColor }}>{result.progressPct.toFixed(0)}% funded</div>
+            </div>
+            <ResponsiveContainer width="100%" height={160}>
+              <BarChart data={timeframeData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="months" tick={{ fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]} />
+                <Bar dataKey="Monthly Savings Needed" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       <CalculatorLayout
         title=""

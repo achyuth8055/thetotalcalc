@@ -6,6 +6,7 @@ import CalculatorLayout from "@/components/CalculatorLayout";
 import CurrencySelector from "@/components/CurrencySelector";
 import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
 import { FaExclamationTriangle } from "react-icons/fa";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 export default function MarginCalculator() {
   const [positionValue, setPositionValue] = useState(100000);
@@ -296,6 +297,34 @@ export default function MarginCalculator() {
           )}
         </div>
       </div>
+
+      {result && (() => {
+        const leverageSteps = [1, 2, 3, 5, 7, 10, 15, 20].filter((l) => l <= 20);
+        const sensitivityData = leverageSteps.map((lev) => {
+          const marginPct = 100 / lev;
+          const margin = (positionValue * marginPct) / 100;
+          return { leverage: `${lev}x`, "Margin Required": Math.round(margin), "Borrowed Capital": Math.round(positionValue - margin) };
+        });
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Margin Required vs Borrowed Capital by Leverage</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={sensitivityData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="leverage" tick={{ fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${formatCurrency(v)}`} />
+                <Tooltip formatter={(value: number) => [formatCurrency(value), undefined]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Bar dataKey="Margin Required" fill="#a855f7" radius={[4, 4, 0, 0]} stackId="a" />
+                <Bar dataKey="Borrowed Capital" fill="#3b82f6" radius={[4, 4, 0, 0]} stackId="a" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       {/* Explanation Section */}
       <CalculatorLayout

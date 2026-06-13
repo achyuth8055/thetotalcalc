@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, RadialBarChart, RadialBar } from "recharts";
 
 const FPL_2025: Record<number, number> = {
   1: 15060, 2: 20440, 3: 25820, 4: 31200,
@@ -305,6 +306,82 @@ export default function MedicaidEligibilityCalculator() {
           <strong>Disclaimer:</strong> This tool provides estimates based on federal income guidelines. Actual eligibility depends on state-specific rules, asset tests, immigration status, and other factors. Contact your state Medicaid office or visit medicaid.gov for an official determination.
         </p>
       </div>
+
+      {result && (
+        <div className="mt-6 grid md:grid-cols-2 gap-6">
+          {/* Income vs threshold horizontal bars */}
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Income vs Eligibility Threshold</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <div className="space-y-5">
+              <div>
+                <div className="flex justify-between text-xs text-gray-600 mb-1 font-medium">
+                  <span>Your Annual Income</span>
+                  <span>{fmt(result.annualIncome)}</span>
+                </div>
+                <div className="h-5 rounded-full overflow-hidden bg-gray-100">
+                  <div
+                    className={`h-full rounded-full transition-all ${result.annualIncome <= result.limitIncome ? "bg-green-500" : "bg-red-500"}`}
+                    style={{ width: `${Math.min(100, (result.annualIncome / (result.limitIncome * 1.5)) * 100)}%` }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-xs text-gray-600 mb-1 font-medium">
+                  <span>Medicaid Limit ({result.limit.pct}% FPL)</span>
+                  <span>{fmt(result.limitIncome)}</span>
+                </div>
+                <div className="h-5 rounded-full overflow-hidden bg-gray-100">
+                  <div
+                    className="h-full rounded-full bg-blue-500 transition-all"
+                    style={{ width: `${Math.min(100, (result.limitIncome / (result.limitIncome * 1.5)) * 100)}%` }}
+                  />
+                </div>
+              </div>
+              <div className="flex justify-between text-xs text-gray-400 mt-1">
+                <span>$0</span>
+                <span className={result.annualIncome <= result.limitIncome ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
+                  {result.annualIncome <= result.limitIncome ? "Within limit" : "Exceeds limit"}
+                </span>
+                <span>{fmt(result.limitIncome * 1.5)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Bar chart: income limits by household size (138% FPL) */}
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Medicaid Income Limits by Household Size</h3>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart
+                data={[1, 2, 3, 4, 5, 6].map((size) => {
+                  const fplVal = size <= 8 ? FPL_2025[size] : FPL_2025[8] + (size - 8) * FPL_EXTRA;
+                  return {
+                    size: `${size} person`,
+                    "138% FPL Limit": Math.round(fplVal * 1.38),
+                    isUser: size === householdSize,
+                  };
+                })}
+                margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="size" tick={{ fontSize: 10 }} />
+                <YAxis tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} tick={{ fontSize: 10 }} />
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, "Income Limit"]} />
+                <Bar dataKey="138% FPL Limit" radius={[4, 4, 0, 0]}>
+                  {[1, 2, 3, 4, 5, 6].map((size) => (
+                    <Cell key={size} fill={size === householdSize ? "#3b82f6" : "#cbd5e1"} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+            <p className="text-xs text-gray-400 mt-1 text-center">Blue bar = your household size. Based on 138% FPL (Medicaid expansion standard).</p>
+          </div>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={

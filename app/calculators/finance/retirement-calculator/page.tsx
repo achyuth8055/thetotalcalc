@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
 
 export default function RetirementCalculator() {
   const [currentAge, setCurrentAge] = useState(30);
@@ -18,6 +19,7 @@ export default function RetirementCalculator() {
     totalEarnings: number;
     yearsMoneyLasts: number;
     monthlyIncome: number;
+    chartData: { year: number; balance: number; target: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -59,6 +61,15 @@ export default function RetirementCalculator() {
       }
     }
 
+    const target = monthlyExpenses * 12 / 0.04;
+    const chartData: { year: number; balance: number; target: number }[] = [];
+    for (let yr = 0; yr <= yearsToRetire; yr++) {
+      const nMonths = yr * 12;
+      const bal = currentSavings * Math.pow(1 + r, nMonths) +
+        (r > 0 ? monthlyContribution * ((Math.pow(1 + r, nMonths) - 1) / r) : monthlyContribution * nMonths);
+      chartData.push({ year: yr, balance: Math.round(bal), target: Math.round(target) });
+    }
+
     setResult({
       finalNestEgg,
       yearsToRetire,
@@ -66,6 +77,7 @@ export default function RetirementCalculator() {
       totalEarnings: finalNestEgg - totalContributions,
       yearsMoneyLasts,
       monthlyIncome,
+      chartData,
     });
   };
 
@@ -162,6 +174,29 @@ export default function RetirementCalculator() {
           )}
         </div>
       </div>
+
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Retirement Balance Growth</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ Download PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <AreaChart data={result.chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="year" tick={{ fontSize: 11 }} tickFormatter={(v) => `Yr ${v}`} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v: number) => v >= 1000000 ? '$'+(v/1000000).toFixed(1)+'M' : v >= 1000 ? '$'+(v/1000).toFixed(0)+'k' : '$'+v} />
+              <Tooltip formatter={(value: number, name: string) => [new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value), name === "balance" ? "Projected Balance" : "Goal"]} labelFormatter={(label) => `Year ${label}`} />
+              <ReferenceLine y={result.chartData[0]?.target} stroke="#ef4444" strokeDasharray="4 3" label={{ value: "Goal", position: "insideTopRight", fontSize: 11, fill: "#ef4444" }} />
+              <Area type="monotone" dataKey="balance" stroke="#22c55e" fill="#22c55e" fillOpacity={0.3} name="balance" />
+            </AreaChart>
+          </ResponsiveContainer>
+          <div className="flex gap-4 mt-2 justify-center">
+            <span className="flex items-center gap-1 text-xs text-gray-500"><span className="inline-block w-3 h-3 rounded-sm bg-green-500"></span>Projected Balance</span>
+            <span className="flex items-center gap-1 text-xs text-gray-500"><span className="inline-block w-5 border-t-2 border-dashed border-red-500"></span>Retirement Goal</span>
+          </div>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={<div><p className="mb-2">This calculator projects your retirement savings using compound growth during the accumulation phase, then estimates how long the nest egg lasts based on the 4% withdrawal rule and your monthly expenses.</p><p className="text-xs text-gray-500 mt-2">⚠️ Estimates only. Inflation, taxes, and Social Security are not included.</p></div>}

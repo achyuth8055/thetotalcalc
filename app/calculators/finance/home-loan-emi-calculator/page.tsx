@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CurrencySelector from "@/components/CurrencySelector";
 import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 export default function HomeLoanEMICalculator() {
   const [loanAmount, setLoanAmount] = useState(3000000);
@@ -18,6 +19,7 @@ export default function HomeLoanEMICalculator() {
     totalAmount: number;
     principalPercentage: number;
     interestPercentage: number;
+    yearlyData: { year: number; principal: number; interest: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -49,12 +51,35 @@ export default function HomeLoanEMICalculator() {
       const principalPercentage = (P / totalAmount) * 100;
       const interestPercentage = (totalInterest / totalAmount) * 100;
 
+      // Build year-by-year amortization data
+      let balance = P;
+      const yearlyMap: { principal: number; interest: number }[] = Array.from(
+        { length: loanTenure },
+        () => ({ principal: 0, interest: 0 })
+      );
+      for (let m = 0; m < n; m++) {
+        const interestPayment = balance * r;
+        const principalPayment = emi - interestPayment;
+        balance = Math.max(0, balance - principalPayment);
+        const yr = Math.floor(m / 12);
+        if (yr < loanTenure) {
+          yearlyMap[yr].interest += interestPayment;
+          yearlyMap[yr].principal += principalPayment;
+        }
+      }
+      const yearlyData = yearlyMap.map((d, i) => ({
+        year: i + 1,
+        principal: Math.round(d.principal),
+        interest: Math.round(d.interest),
+      }));
+
       setResult({
         emi: Math.round(emi),
         totalInterest: Math.round(totalInterest),
         totalAmount: Math.round(totalAmount),
         principalPercentage,
         interestPercentage,
+        yearlyData,
       });
     }
   };
@@ -271,6 +296,27 @@ export default function HomeLoanEMICalculator() {
           )}
         </div>
       </div>
+
+      {/* Amortization Chart */}
+      {result && result.yearlyData.length > 0 && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Home Loan: Principal vs Interest Per Year</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={result.yearlyData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="year" tickFormatter={(v) => `Yr ${v}`} tick={{ fontSize: 11 }} />
+              <YAxis tickFormatter={(v) => formatCurrency(v)} tick={{ fontSize: 11 }} width={80} />
+              <Tooltip formatter={(value: number, name: string) => [formatCurrency(value), name]} labelFormatter={(label) => `Year ${label}`} />
+              <Legend />
+              <Bar dataKey="principal" stackId="a" fill="#3b82f6" name="Principal" />
+              <Bar dataKey="interest" stackId="a" fill="#f97316" name="Interest" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {/* Explanation Section */}
       <CalculatorLayout

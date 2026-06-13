@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 
 export default function BMRCalculator() {
   const [age, setAge] = useState(30);
@@ -263,6 +264,42 @@ export default function BMRCalculator() {
           )}
         </div>
       </div>
+
+      {/* Activity Level Calorie Chart */}
+      {result && (() => {
+        const activityData = [
+          { label: "Sedentary", calories: Math.round(result.bmr * 1.2), multiplier: 1.2 },
+          { label: "Light", calories: Math.round(result.bmr * 1.375), multiplier: 1.375 },
+          { label: "Moderate", calories: Math.round(result.bmr * 1.55), multiplier: 1.55 },
+          { label: "Very Active", calories: Math.round(result.bmr * 1.725), multiplier: 1.725 },
+          { label: "Extra Active", calories: Math.round(result.bmr * 1.9), multiplier: 1.9 },
+        ];
+        const activityMultipliers: {[key: string]: number} = {
+          sedentary: 1.2, light: 1.375, moderate: 1.55, active: 1.725, veryActive: 1.9,
+        };
+        const selectedMultiplier = activityMultipliers[activityLevel];
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Calorie Needs by Activity Level</h3>
+            <ResponsiveContainer width="100%" height={180}>
+              <BarChart data={activityData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <XAxis dataKey="label" tick={{ fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} domain={['auto', 'auto']} width={50} />
+                <Tooltip formatter={(value: number) => [`${value} cal/day`, "Calories"]} />
+                <Bar dataKey="calories" radius={[4, 4, 0, 0]}>
+                  {activityData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.multiplier === selectedMultiplier ? "#2563eb" : "#93c5fd"}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+            <p className="text-xs text-gray-500 mt-2 text-center">Highlighted bar = your selected activity level</p>
+          </div>
+        );
+      })()}
 
       {/* Explanation Section */}
       <CalculatorLayout

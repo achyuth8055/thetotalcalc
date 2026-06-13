@@ -3,6 +3,16 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 
 type RepaymentPlan = "standard" | "extended" | "idr" | "graduated";
 
@@ -45,8 +55,6 @@ function calcGraduated(balance: number, rate: number): PlanResult {
   const r = rate / 100 / 12;
   const totalMonths = 120;
   // Payments increase 2% every 24 months (5 periods of 24 months = 120 months)
-  // Initial payment approximation: solve for P0 such that PV of all payments = balance
-  // We approximate: P0 = standard payment * 0.75 as starting point, then iterate
   let lo = balance * r / 100, hi = balance * 0.5;
   let p0 = balance * r;
   for (let iter = 0; iter < 60; iter++) {
@@ -99,6 +107,39 @@ function calcIDR(balance: number, rate: number, income: number, familySize: numb
   return { monthly, totalPaid, totalInterest: totalPaid - (balance - forgiven), payoffDate, payments: months, forgiven: forgiven > 0 ? forgiven : 0 };
 }
 
+// Compute monthly balance trace for a plan (subsampled every 6 months)
+function balanceTrace(balance: number, rate: number, monthly: number, totalPayments: number): number[] {
+  const r = rate / 100 / 12;
+  const trace: number[] = [];
+  let rem = balance;
+  for (let m = 0; m <= totalPayments; m++) {
+    if (m % 6 === 0) trace.push(Math.max(0, rem));
+    if (m < totalPayments) {
+      const interest = rem * r;
+      rem = Math.max(0, rem + interest - monthly);
+    }
+  }
+  return trace;
+}
+
+function graduatedBalanceTrace(balance: number, rate: number, p0: number): number[] {
+  const r = rate / 100 / 12;
+  const totalMonths = 120;
+  const trace: number[] = [];
+  let rem = balance;
+  let m = 0;
+  for (let period = 0; period < 5; period++) {
+    const payment = p0 * Math.pow(1.02, period);
+    for (let pm = 0; pm < 24; pm++, m++) {
+      if (m % 6 === 0) trace.push(Math.max(0, rem));
+      const interest = rem * r;
+      rem = Math.max(0, rem + interest - payment);
+    }
+  }
+  trace.push(0);
+  return trace;
+}
+
 export default function StudentLoanCalculator() {
   const [loanBalance, setLoanBalance] = useState(30000);
   const [interestRate, setInterestRate] = useState(6.5);
@@ -109,6 +150,8 @@ export default function StudentLoanCalculator() {
   const [results, setResults] = useState<Record<RepaymentPlan, PlanResult | null>>({
     standard: null, extended: null, idr: null, graduated: null,
   });
+
+  const [payoffData, setPayoffData] = useState<{ month: number; standard: number; extended: number; idr: number; graduated: number }[]>([]);
 
   useEffect(() => {
     const recent = JSON.parse(localStorage.getItem("recentCalculators") || "[]");
@@ -121,12 +164,32 @@ export default function StudentLoanCalculator() {
 
   const calculate = () => {
     if (loanBalance <= 0) return;
-    setResults({
-      standard: calcStandard(loanBalance, interestRate, 120),
-      extended: calcStandard(loanBalance, interestRate, 300),
-      idr: calcIDR(loanBalance, interestRate, income, familySize),
-      graduated: calcGraduated(loanBalance, interestRate),
-    });
+
+    const standard = calcStandard(loanBalance, interestRate, 120);
+    const extended = calcStandard(loanBalance, interestRate, 300);
+    const idr = calcIDR(loanBalance, interestRate, income, familySize);
+    const graduated = calcGraduated(loanBalance, interestRate);
+
+    setResults({ standard, extended, idr, graduated });
+
+    // Build payoff chart data (subsampled every 6 months)
+    const stdTrace = standard ? balanceTrace(loanBalance, interestRate, standard.monthly, standard.payments) : [];
+    const extTrace = extended ? balanceTrace(loanBalance, interestRate, extended.monthly, extended.payments) : [];
+    const idrTrace = idr ? balanceTrace(loanBalance, interestRate, idr.monthly, idr.payments) : [];
+    const gradTrace = graduated ? graduatedBalanceTrace(loanBalance, interestRate, graduated.monthly) : [];
+
+    const maxLen = Math.max(stdTrace.length, extTrace.length, idrTrace.length, gradTrace.length);
+    const data: { month: number; standard: number; extended: number; idr: number; graduated: number }[] = [];
+    for (let i = 0; i < maxLen; i++) {
+      data.push({
+        month: i * 6,
+        standard: stdTrace[i] ?? 0,
+        extended: extTrace[i] ?? 0,
+        idr: idrTrace[i] ?? 0,
+        graduated: gradTrace[i] ?? 0,
+      });
+    }
+    setPayoffData(data);
   };
 
   const planLabels: Record<RepaymentPlan, string> = {
@@ -148,6 +211,12 @@ export default function StudentLoanCalculator() {
 
   const povertyLine = familySize * 15060 * 1.5;
   const discretionary = Math.max(0, income - povertyLine);
+
+  const fmtK = (n: number) => {
+    if (Math.abs(n) >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+    if (Math.abs(n) >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
+    return `$${n}`;
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -320,6 +389,43 @@ export default function StudentLoanCalculator() {
           </table>
         </div>
       </div>
+
+      {/* Chart Section */}
+      {payoffData.length > 1 && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Loan Balance Over Time by Repayment Plan</h3>
+            <button
+              onClick={() => window.print()}
+              className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg"
+            >
+              ↓ PDF
+            </button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <LineChart data={payoffData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis
+                dataKey="month"
+                tick={{ fontSize: 11 }}
+                tickFormatter={(v) => `Mo ${v}`}
+                label={{ value: "Month", position: "insideBottomRight", offset: -4, fontSize: 11 }}
+              />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={fmtK} width={56} />
+              <Tooltip
+                formatter={(value: number, name: string) => [fmt(value), name]}
+                labelFormatter={(label) => `Month ${label}`}
+              />
+              <Legend wrapperStyle={{ fontSize: 11 }} />
+              <Line type="monotone" dataKey="standard" stroke="#3b82f6" strokeWidth={2} dot={false} name="Standard (10yr)" />
+              <Line type="monotone" dataKey="extended" stroke="#f97316" strokeWidth={2} dot={false} name="Extended (25yr)" />
+              <Line type="monotone" dataKey="idr" stroke="#22c55e" strokeWidth={2} dot={false} name="SAVE/IDR" />
+              <Line type="monotone" dataKey="graduated" stroke="#a855f7" strokeWidth={2} dot={false} name="Graduated" />
+            </LineChart>
+          </ResponsiveContainer>
+          <p className="text-xs text-gray-400 mt-2">Remaining balance shown every 6 months. IDR line may end at month 240 with forgiven balance.</p>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={

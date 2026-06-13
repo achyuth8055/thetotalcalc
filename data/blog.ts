@@ -481,6 +481,139 @@ export const POSTS: BlogPost[] = [
       },
     ],
   },
+
+  {
+    slug: "avalanche-vs-snowball-debt-payoff",
+    title: "Avalanche or snowball: which debt payoff method gets you free faster",
+    description:
+      "The two most popular debt payoff strategies pull in opposite directions: one saves the most money, the other keeps you motivated. Here is how the avalanche and snowball methods actually differ, the math behind each, and how to pick the one you will finish.",
+    date: "2026-06-12",
+    readingMinutes: 6,
+    category: "Debt Payoff",
+    related: { name: "Debt Payoff Calculator", href: "/calculators/finance/debt-payoff-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "If you carry more than one balance, the hardest part of paying off debt is not finding the money. It is deciding where to send the extra dollar each month. Every credit card, car loan, and personal loan competes for the same limited surplus, and the order you tackle them in changes both how much interest you pay and how long the whole effort takes.",
+          "Two methods dominate the advice you will hear, and they disagree on purpose. The avalanche method optimizes for math. The snowball method optimizes for momentum. Neither is wrong, but they suit different people, and choosing the one that fits how you actually behave matters more than choosing the one that looks best on a spreadsheet.",
+        ],
+      },
+      {
+        heading: "The one rule both methods share",
+        paragraphs: [
+          "Before the two strategies diverge, they agree on a starting move: pay the minimum on every debt, every month, without exception. Missing a minimum triggers late fees and can damage your credit score, which makes every remaining balance more expensive. The minimums are non-negotiable.",
+          "What the methods argue about is the surplus, the amount you can pay above the combined minimums. That extra payment is the only lever that actually shrinks your debt faster, so where you aim it is the entire decision.",
+        ],
+      },
+      {
+        heading: "The avalanche: attack the highest rate first",
+        paragraphs: [
+          "The avalanche method tells you to throw every spare dollar at the debt with the highest interest rate, while paying minimums on the rest. Once that balance hits zero, you roll its payment into the next-highest rate, and so on down the line. The interest rate, not the balance size, decides the order.",
+          "This is the mathematically optimal approach. High-rate debt grows fastest, so killing it first stops the most interest from accruing. A credit card at 24% does far more damage per month than a car loan at 6%, even if the car loan balance is larger. Over the life of the payoff, the avalanche almost always costs the least and finishes soonest, sometimes by months and hundreds of dollars.",
+        ],
+      },
+      {
+        heading: "The snowball: clear the smallest balance first",
+        paragraphs: [
+          "The snowball method ignores interest rates and orders debts by balance, smallest to largest. You pour the surplus into the smallest debt until it is gone, then move to the next smallest, regardless of rate. Each cleared balance frees up its minimum payment, which rolls into the next one, so the payment you are throwing grows like a snowball rolling downhill.",
+          "On pure math, the snowball usually costs a little more than the avalanche, because you may be paying minimums on a high-rate card while you knock out a small low-rate loan first. The trade is deliberate: by retiring whole debts quickly, you get visible wins early. Fewer bills, fewer due dates, and a shrinking list of creditors. For many people that early sense of progress is what keeps them going.",
+        ],
+      },
+      {
+        heading: "A worked example",
+        paragraphs: [
+          "Say you have three debts: a $1,000 store card at 22%, a $4,000 credit card at 18%, and a $9,000 car loan at 7%. You can pay $400 a month above the minimums.",
+          "Under the avalanche, you attack the 22% store card first, then the 18% card, then the 7% loan, so the two most expensive debts go first and you pay the least total interest. The snowball happens to start the same way here, because the smallest balance is also the highest rate. But flip the example, make the smallest debt the lowest-rate one, and the two methods split apart: the snowball clears that small balance for the morale boost while a pricier card keeps charging, trading some interest savings for an earlier feeling of progress.",
+        ],
+      },
+      {
+        heading: "How to choose the one you will finish",
+        list: [
+          "Choose the avalanche if you are motivated by numbers, have a wide gap between your highest and lowest rates, and trust yourself to stay the course without frequent wins.",
+          "Choose the snowball if past attempts have stalled, if you need visible progress to stay disciplined, or if your debts are similar in rate so the math difference is small.",
+          "Consider a hybrid: knock out one tiny balance first for the morale boost, then switch to strict avalanche order for everything else.",
+          "Whichever you pick, automate the payments so the decision is made once, not relitigated every month when motivation dips.",
+        ],
+      },
+      {
+        heading: "The traps that undo either plan",
+        paragraphs: [
+          "Both methods fail the same way: new debt added while you pay off the old. Putting fresh charges on a card you are trying to clear resets your progress and is the single most common reason payoff plans stall. Pausing new borrowing matters more than the method you pick.",
+          "The other trap is ignoring a balance transfer or refinance that could lower a rate outright. If a high-interest card can be moved to a lower-rate product, doing so shrinks the problem before either method even starts. Just watch transfer fees and the date any promotional rate expires, because a rate that jumps later can erase the saving.",
+        ],
+      },
+      {
+        heading: "Model it before you start",
+        paragraphs: [
+          "The fastest way to settle the avalanche-versus-snowball debate for your own debts is to run the numbers both ways. Enter each balance, its rate, and the extra amount you can pay, then compare the payoff date and total interest under each ordering. Seeing that the avalanche saves, for instance, two months and a few hundred dollars, against a snowball that clears your first debt sooner, turns an abstract argument into a concrete choice you can make with your eyes open.",
+          "These projections are estimates, not guarantees, and they are not financial advice. But they make the trade-off visible, and the best payoff plan is almost always the one you will actually see through to zero.",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "inflation-tax-on-idle-cash",
+    title: "Inflation is a quiet tax on the cash you are not investing",
+    description:
+      "Money sitting in a low-interest account does not stay still; it loses purchasing power every year to inflation. Here is what inflation really does to a dollar, why a large cash pile can cost you, and how to think about real return rather than the number on your statement.",
+    date: "2026-06-12",
+    readingMinutes: 6,
+    category: "Inflation & Saving",
+    related: { name: "Inflation Calculator", href: "/calculators/finance/inflation-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "A bank balance feels like the safest thing you own. The number does not fall, no statement ever shows a loss, and the money is there whenever you need it. That sense of safety is real in one way and an illusion in another. The dollar count holds steady, but what each dollar can buy quietly shrinks year after year.",
+          "That shrinkage is inflation, and over a long stretch it behaves like a tax you never see on any bill. It takes nothing from the number in your account and everything from the value behind it. Understanding how that works changes how much cash you choose to hold and where you put the rest.",
+        ],
+      },
+      {
+        heading: "What inflation does to a single dollar",
+        paragraphs: [
+          "Inflation is the rate at which prices rise across the economy. When inflation runs at 3% a year, a basket of goods that costs $100 today costs $103 a year from now. The flip side is that your $100, if it did not grow, now buys what $97 used to. The money did not move; the goal post did.",
+          "The effect compounds, which is what makes it easy to underestimate. At 3% annual inflation, prices roughly double in about 24 years. Money left untouched in a drawer or a near-zero account would lose half its purchasing power over that span, even though the dollar amount never changed. A long retirement or savings horizon turns a small annual rate into a large cumulative loss.",
+        ],
+      },
+      {
+        heading: "Why a big cash pile can cost you",
+        paragraphs: [
+          "Cash that earns less than the inflation rate loses real value every year it sits. If your savings account pays 1% while prices rise 3%, you are going backward by about 2% a year in what your money can actually buy, even as the statement balance ticks slightly upward. The gain is nominal; the loss is real.",
+          "This is why holding far more cash than you need is not the conservative choice it appears to be. It feels safe because the number is stable, but stability of the number is not the same as stability of value. The larger the idle pile and the longer it sits, the more inflation quietly removes.",
+        ],
+      },
+      {
+        heading: "Real return is the number that matters",
+        paragraphs: [
+          "The figure on your statement is the nominal return: the raw interest or growth rate. The number that actually tells you whether you are getting richer is the real return, which is roughly the nominal return minus inflation. A savings account paying 4% during 3% inflation gives a real return near 1%. The same account during 6% inflation gives a real return of about negative 2%, a loss in everything but the headline.",
+          "Once you start thinking in real terms, financial choices look different. A high-yield savings account that beats inflation is genuinely growing your money. One that trails inflation is shrinking it slowly, no matter how positive the advertised rate looks. The comparison that counts is always your rate against the inflation rate, not your rate against zero.",
+        ],
+      },
+      {
+        heading: "Where cash still belongs",
+        paragraphs: [
+          "None of this argues for holding no cash. An emergency fund, money for bills, and savings for anything you will spend in the next year or two should stay in cash precisely because you cannot afford a market dip to hit them right when you need the money. For short horizons, certainty of the number is exactly the point, and a small real loss is the price of that certainty.",
+          "The problem is not cash itself; it is cash held far beyond its job. Money you will not touch for many years has time to ride out the ups and downs of investments that have historically outpaced inflation, so parking it in a near-zero account locks in the slow loss for no reason. The skill is matching the timeframe to the place: short-term money in cash, long-term money somewhere it can grow.",
+        ],
+      },
+      {
+        heading: "What to do about it",
+        list: [
+          "Keep an emergency fund and near-term spending in cash, ideally in a high-yield account that at least keeps pace with inflation.",
+          "Move money you will not need for several years into investments with a long track record of beating inflation, accepting short-term swings as the cost of long-term growth.",
+          "Compare any savings rate against the current inflation rate, not against zero, so you know whether you are gaining or losing in real terms.",
+          "Revisit large cash balances periodically; a pile that made sense during a scary stretch may be quietly bleeding value once the emergency passes.",
+        ],
+      },
+      {
+        heading: "See it on your own numbers",
+        paragraphs: [
+          "The cleanest way to feel the effect is to project it forward. Take an amount you are holding in cash, pick an inflation rate, and look at what that money will buy in 5, 10, or 20 years if it does not grow. The drop is usually larger and faster than intuition expects, because compounding works against you here just as it works for you when you invest.",
+          "These figures are estimates based on assumed rates, not predictions, and nothing here is financial advice. But seeing the future purchasing power of today's cash, side by side with the comfortable-looking balance, makes the quiet tax visible, and a tax you can see is one you can finally do something about.",
+        ],
+      },
+    ],
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {

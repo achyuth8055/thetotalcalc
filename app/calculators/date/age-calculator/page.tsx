@@ -174,6 +174,23 @@ export default function AgeCalculator() {
                   </div>
                 </div>
               </div>
+
+              {/* Life Progress Bar */}
+              <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-200">
+                <div className="flex justify-between text-xs text-gray-600 mb-2">
+                  <span className="font-medium">Age {result.years}</span>
+                  <span>Life expectancy: 80 yrs</span>
+                </div>
+                <div className="bg-gray-200 rounded-full h-4 overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-blue-400 to-indigo-600 h-4 rounded-full transition-all duration-500"
+                    style={{ width: `${Math.min(100, (result.years / 80) * 100)}%` }}
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1 text-right">
+                  {((result.years / 80) * 100).toFixed(1)}% of average lifespan
+                </p>
+              </div>
             </div>
           )}
         </div>

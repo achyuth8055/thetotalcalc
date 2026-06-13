@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const FILING_STATUS = ["Single", "Married Filing Jointly", "Married Filing Separately", "Head of Household"] as const;
 type FilingStatus = typeof FILING_STATUS[number];
@@ -118,9 +119,12 @@ export default function IncomeTaxCalculator() {
           { label: "Income Tax Calculator", href: "/calculators/finance/income-tax-calculator" },
         ]}
       />
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Income Tax Calculator</h1>
-        <p className="text-base text-gray-600">Estimate your 2024 US federal income tax using current brackets</p>
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Income Tax Calculator</h1>
+          <p className="text-base text-gray-600">Estimate your 2024 US federal income tax using current brackets</p>
+        </div>
+        <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg shrink-0 ml-4">↓ PDF</button>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -209,6 +213,59 @@ export default function IncomeTaxCalculator() {
           )}
         </div>
       </div>
+
+      {result && result.brackets.length > 0 && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Federal Tax Breakdown by Bracket</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={result.brackets.map((b) => ({ name: `${(b.rate * 100).toFixed(0)}%`, "Taxable Income": Math.round(b.taxable), "Tax Paid": Math.round(b.tax) }))} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+              <Tooltip formatter={(v: number) => [`$${v.toLocaleString()}`, undefined]} />
+              <Legend />
+              <Bar dataKey="Taxable Income" fill="#3b82f6" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="Tax Paid" fill="#ef4444" radius={[3, 3, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Take-Home Income Breakdown</h3>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <PieChart>
+              <Pie
+                data={[
+                  { name: "Federal Tax", value: Math.round(result.federalTax) },
+                  { name: "FICA (SS + Medicare)", value: Math.round(income * 0.0765) },
+                  { name: "State Tax (est.)", value: 0 },
+                  { name: "Take-Home", value: Math.round(Math.max(0, income - result.federalTax - income * 0.0765)) },
+                ].filter((s) => s.value > 0)}
+                cx="50%"
+                cy="50%"
+                innerRadius={55}
+                outerRadius={80}
+                dataKey="value"
+                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                labelLine={false}
+              >
+                <Cell fill="#ef4444" />
+                <Cell fill="#f97316" />
+                <Cell fill="#9ca3af" />
+                <Cell fill="#22c55e" />
+              </Pie>
+              <Tooltip formatter={(v: number) => [`$${v.toLocaleString()}`, undefined]} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={<div><p className="mb-2">This calculator uses 2024 US federal tax brackets. It applies the standard deduction unless you enter higher itemized deductions.</p><p className="text-xs text-gray-500 mt-2">⚠️ This is an estimate only. State taxes, FICA, credits, and other factors are not included. Consult a tax professional for filing.</p></div>}

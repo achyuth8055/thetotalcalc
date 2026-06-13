@@ -3,6 +3,16 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 
 export default function FourOhOneKCalculator() {
   const [annualSalary, setAnnualSalary] = useState(85000);
@@ -26,6 +36,7 @@ export default function FourOhOneKCalculator() {
     isOverLimit: boolean;
     limit: number;
     yearsToRetire: number;
+    chartData: { year: number; age: number; yourContribs: number; employerContribs: number; growth: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -48,7 +59,6 @@ export default function FourOhOneKCalculator() {
     const employerAnnualContribution = matchBasis * (employerMatchPct / 100);
 
     // Money left on table: if not contributing enough to max employer match
-    const maxEmployerMatchable = annualSalary * (employerMatchUpTo / 100);
     const moneyLeftOnTable = Math.max(0, maxEmployerMatch - employerAnnualContribution);
 
     const totalAnnualContribution = yourAnnualContribution + employerAnnualContribution;
@@ -71,7 +81,49 @@ export default function FourOhOneKCalculator() {
     const taxRate = 0.22;
     const takeHomeWithout = annualSalary * (1 - taxRate);
     const takeHomeWith = (annualSalary - yourAnnualContribution) * (1 - taxRate);
-    const takeHomeDiff = takeHomeWithout - takeHomeWith; // actual reduction in take-home
+    const takeHomeDiff = takeHomeWithout - takeHomeWith;
+
+    // Build chart data: year-by-year accumulation
+    const chartData: { year: number; age: number; yourContribs: number; employerContribs: number; growth: number }[] = [];
+    const totalYears = yearsToRetire;
+    const step = Math.max(1, Math.floor(totalYears / 20)); // at most ~20 data points
+    for (let y = 0; y <= totalYears; y += step) {
+      const mths = y * 12;
+      const cumulYour = yourAnnualContribution * y;
+      const cumulEmployer = employerAnnualContribution * y;
+      let balance = currentBalance;
+      if (monthlyReturn > 0) {
+        balance = currentBalance * Math.pow(1 + monthlyReturn, mths) +
+          monthlyContribution * ((Math.pow(1 + monthlyReturn, mths) - 1) / monthlyReturn);
+      } else {
+        balance = currentBalance + monthlyContribution * mths;
+      }
+      const growthPart = Math.max(0, balance - cumulYour - cumulEmployer - currentBalance);
+      chartData.push({
+        year: y,
+        age: currentAge + y,
+        yourContribs: Math.round(cumulYour + currentBalance),
+        employerContribs: Math.round(cumulEmployer),
+        growth: Math.round(growthPart),
+      });
+    }
+    // Always include the final year
+    if (totalYears > 0 && (chartData[chartData.length - 1]?.year ?? -1) !== totalYears) {
+      const mths = totalYears * 12;
+      const cumulYour = yourAnnualContribution * totalYears;
+      const cumulEmployer = employerAnnualContribution * totalYears;
+      let balance = monthlyReturn > 0
+        ? currentBalance * Math.pow(1 + monthlyReturn, mths) + monthlyContribution * ((Math.pow(1 + monthlyReturn, mths) - 1) / monthlyReturn)
+        : currentBalance + monthlyContribution * mths;
+      const growthPart = Math.max(0, balance - cumulYour - cumulEmployer - currentBalance);
+      chartData.push({
+        year: totalYears,
+        age: currentAge + totalYears,
+        yourContribs: Math.round(cumulYour + currentBalance),
+        employerContribs: Math.round(cumulEmployer),
+        growth: Math.round(growthPart),
+      });
+    }
 
     setResult({
       yourAnnualContribution,
@@ -85,11 +137,18 @@ export default function FourOhOneKCalculator() {
       isOverLimit: annualSalary * (contributionPct / 100) > limit,
       limit,
       yearsToRetire,
+      chartData,
     });
   };
 
   const fmt = (n: number) =>
     new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+
+  const fmtK = (n: number) => {
+    if (Math.abs(n) >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+    if (Math.abs(n) >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
+    return `$${n}`;
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -254,6 +313,46 @@ export default function FourOhOneKCalculator() {
           )}
         </div>
       </div>
+
+      {/* Chart Section */}
+      {result && result.chartData.length > 1 && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          {result.moneyLeftOnTable > 0 && (
+            <div className="mb-3 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 text-sm text-amber-800 font-medium">
+              Employer match: {fmt(result.employerAnnualContribution)}/yr — don&apos;t leave this money on the table!
+            </div>
+          )}
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Balance Growth to Retirement</h3>
+            <button
+              onClick={() => window.print()}
+              className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg"
+            >
+              ↓ PDF
+            </button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <AreaChart data={result.chartData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis
+                dataKey="age"
+                tick={{ fontSize: 11 }}
+                tickFormatter={(v) => `${v}`}
+                label={{ value: "Age", position: "insideBottomRight", offset: -4, fontSize: 11 }}
+              />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={fmtK} width={56} />
+              <Tooltip
+                formatter={(value: number, name: string) => [fmt(value), name]}
+                labelFormatter={(label) => `Age ${label}`}
+              />
+              <Legend wrapperStyle={{ fontSize: 11 }} />
+              <Area type="monotone" dataKey="yourContribs" stackId="1" stroke="#6366f1" fill="#6366f1" fillOpacity={0.85} name="Your Contributions" />
+              <Area type="monotone" dataKey="employerContribs" stackId="1" stroke="#22c55e" fill="#22c55e" fillOpacity={0.85} name="Employer Match" />
+              <Area type="monotone" dataKey="growth" stackId="1" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.85} name="Investment Growth" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       <CalculatorLayout
         title=""

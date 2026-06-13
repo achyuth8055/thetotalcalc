@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ComposedChart } from "recharts";
 
 // IRS Uniform Lifetime Table (simplified)
 const IRS_TABLE: Record<number, number> = {
@@ -218,6 +219,39 @@ export default function RMDCalculator() {
           ) : null}
         </div>
       </div>
+
+      {requiresRMD && result && (() => {
+        const chartData: { age: number; RMD: number; "Remaining Balance": number }[] = [];
+        let runningBalance = balance;
+        const startAge = Math.max(73, age);
+        for (let a = startAge; a <= 95 && runningBalance > 0; a++) {
+          const dp = getDistributionPeriod(a);
+          if (!dp) break;
+          const rmd = runningBalance / dp;
+          runningBalance = Math.max(0, runningBalance - rmd);
+          chartData.push({ age: a, RMD: Math.round(rmd), "Remaining Balance": Math.round(runningBalance) });
+        }
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Required Minimum Distributions by Age</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <ComposedChart data={chartData} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="age" tick={{ fontSize: 11 }} label={{ value: "Age", position: "insideBottom", offset: -2, fontSize: 11 }} />
+                <YAxis yAxisId="left" tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Bar yAxisId="left" dataKey="RMD" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                <Line yAxisId="right" type="monotone" dataKey="Remaining Balance" stroke="#f97316" dot={false} strokeWidth={2} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       <CalculatorLayout
         title=""

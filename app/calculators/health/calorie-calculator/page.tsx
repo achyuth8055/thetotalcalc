@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import { FaRegLightbulb } from "react-icons/fa";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 export default function CalorieCalculator() {
   const [tdee, setTdee] = useState(2000);
@@ -151,6 +152,47 @@ export default function CalorieCalculator() {
           )}
         </div>
       </div>
+
+      {/* Macronutrient Chart */}
+      {result && (() => {
+        const calories = result.maintenance;
+        const proteinG = Math.round((calories * 0.25) / 4);
+        const carbsG = Math.round((calories * 0.50) / 4);
+        const fatG = Math.round((calories * 0.25) / 9);
+        const macroData = [
+          { name: `Protein (${proteinG}g)`, value: 25, grams: proteinG },
+          { name: `Carbs (${carbsG}g)`, value: 50, grams: carbsG },
+          { name: `Fat (${fatG}g)`, value: 25, grams: fatG },
+        ];
+        const COLORS = ["#3b82f6", "#22c55e", "#f59e0b"];
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <h3 className="text-sm font-semibold text-gray-700 mb-1">Macronutrient Targets (Maintenance)</h3>
+            <p className="text-xs text-gray-500 mb-3">Based on {calories} cal/day — Protein 25% · Carbs 50% · Fat 25%</p>
+            <ResponsiveContainer width="100%" height={200}>
+              <PieChart>
+                <Pie
+                  data={macroData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={55}
+                  outerRadius={80}
+                  paddingAngle={3}
+                  dataKey="value"
+                  label={({ name, value }) => `${value}%`}
+                  labelLine={false}
+                >
+                  {macroData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value: number, name: string) => [`${value}%`, name]} />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       {/* Explanation Section */}
       <CalculatorLayout

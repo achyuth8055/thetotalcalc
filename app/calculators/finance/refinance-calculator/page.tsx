@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 export default function RefinanceCalculator() {
   const [currentBalance, setCurrentBalance] = useState(300000);
@@ -199,6 +200,37 @@ export default function RefinanceCalculator() {
           )}
         </div>
       </div>
+
+      {result && (() => {
+        const maxMonths = Math.min(Math.max(remainingTerm * 12, newTerm * 12), 120);
+        const chartData: { month: number; "Current Mortgage": number; "New Mortgage": number }[] = [];
+        let cumOld = closingCosts * 0; // old has no closing cost
+        let cumNew = closingCosts;
+        for (let m = 1; m <= maxMonths; m += 3) {
+          cumOld += result.currentMonthly * 3;
+          cumNew += result.newMonthly * 3;
+          chartData.push({ month: m, "Current Mortgage": Math.round(cumOld), "New Mortgage": Math.round(cumNew) });
+        }
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Cumulative Cost Comparison</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <LineChart data={chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="month" tick={{ fontSize: 11 }} label={{ value: "Month", position: "insideBottom", offset: -2, fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Line type="monotone" dataKey="Current Mortgage" stroke="#6b7280" dot={false} strokeWidth={2} />
+                <Line type="monotone" dataKey="New Mortgage" stroke="#3b82f6" dot={false} strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       <CalculatorLayout
         title=""

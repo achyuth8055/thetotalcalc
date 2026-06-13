@@ -350,6 +350,17 @@ export const calculators: Calculator[] = [
     color: "blue",
   },
 
+  // Housing
+  {
+    id: "rent-vs-buy",
+    name: "Rent vs Buy Calculator",
+    description: "Compare the true cost of renting vs buying a home over the years you plan to stay, with a break-even point",
+    category: "finance",
+    slug: "rent-vs-buy-calculator",
+    keywords: ["rent vs buy calculator", "should i rent or buy", "rent or buy a house", "buy vs rent", "rent versus buy calculator", "is it better to rent or buy"],
+    color: "blue",
+  },
+
   // Auto & Personal Finance
   {
     id: "car-lease-buy",

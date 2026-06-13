@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const fmt = (v: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(v);
@@ -78,6 +79,36 @@ function simulatePayoff(debts: Debt[], extraPayment: number, strategy: "avalanch
   const payoffDateStr = payoffDate.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 
   return { months, totalInterest, payoffOrder, payoffDate: payoffDateStr };
+}
+
+function simulateBalanceSnapshots(debts: Debt[], extraPayment: number, strategy: "avalanche" | "snowball"): { month: number; balance: number }[] {
+  if (debts.length === 0) return [];
+  let remaining = debts.map((d) => ({ ...d }));
+  const snapshots: { month: number; balance: number }[] = [{ month: 0, balance: remaining.reduce((s, d) => s + d.balance, 0) }];
+  const maxMonths = 600;
+  for (let m = 1; m <= maxMonths; m++) {
+    remaining = remaining.map((d) => {
+      const interest = d.balance * (d.rate / 100 / 12);
+      return { ...d, balance: d.balance + interest };
+    });
+    let target: Debt;
+    if (strategy === "avalanche") {
+      target = [...remaining].sort((a, b) => b.rate - a.rate)[0];
+    } else {
+      target = [...remaining].sort((a, b) => a.balance - b.balance)[0];
+    }
+    remaining = remaining.map((d) => {
+      if (d.id !== target.id) return { ...d, balance: Math.max(0, d.balance - d.minPayment) };
+      return d;
+    });
+    const targetIdx = remaining.findIndex((d) => d.id === target.id);
+    if (targetIdx >= 0) remaining[targetIdx].balance = Math.max(0, remaining[targetIdx].balance - (target.minPayment + extraPayment));
+    remaining = remaining.filter((d) => d.balance > 0.01);
+    const total = remaining.reduce((s, d) => s + d.balance, 0);
+    if (m % 3 === 0 || remaining.length === 0) snapshots.push({ month: m, balance: Math.round(total) });
+    if (remaining.length === 0) break;
+  }
+  return snapshots;
 }
 
 let nextId = 4;
@@ -295,6 +326,42 @@ export default function DebtPayoffPlanner() {
           )}
         </div>
       </div>
+
+      {avalanche && snowball && debts.length > 0 && (() => {
+        const avalancheSnaps = simulateBalanceSnapshots(debts, extraPayment, "avalanche");
+        const snowballSnaps = simulateBalanceSnapshots(debts, extraPayment, "snowball");
+        const maxMonth = Math.max(
+          avalancheSnaps.length > 0 ? avalancheSnaps[avalancheSnaps.length - 1].month : 0,
+          snowballSnaps.length > 0 ? snowballSnaps[snowballSnaps.length - 1].month : 0
+        );
+        const avalancheMap = new Map(avalancheSnaps.map((s) => [s.month, s.balance]));
+        const snowballMap = new Map(snowballSnaps.map((s) => [s.month, s.balance]));
+        const allMonths = Array.from(new Set([...Array.from(avalancheMap.keys()), ...Array.from(snowballMap.keys())])).sort((a, b) => a - b);
+        const chartData = allMonths.map((m) => ({
+          month: m,
+          Avalanche: avalancheMap.get(m) ?? 0,
+          Snowball: snowballMap.get(m) ?? 0,
+        }));
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Total Debt Balance: Avalanche vs Snowball</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="month" tick={{ fontSize: 11 }} label={{ value: "Month", position: "insideBottom", offset: -2, fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Area type="monotone" dataKey="Avalanche" stroke="#3b82f6" fill="#bfdbfe" fillOpacity={0.4} />
+                <Area type="monotone" dataKey="Snowball" stroke="#22c55e" fill="#bbf7d0" fillOpacity={0.4} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       <CalculatorLayout title="" description=""
         explanation={

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, RadialBarChart, RadialBar } from "recharts";
 
 const FPL_2025: Record<number, number> = {
   1: 15060, 2: 20440, 3: 25820, 4: 31200,
@@ -244,6 +245,94 @@ export default function SnapEligibilityCalculator() {
           <strong>Disclaimer:</strong> This is an estimate based on federal guidelines. Final determination is made by your state SNAP office. Some states have additional rules, deductions, or categorical eligibility that may affect your eligibility. Contact your local benefits office for an official determination.
         </p>
       </div>
+
+      {result && (
+        <div className="mt-6 grid md:grid-cols-2 gap-6">
+          {/* Bar chart: max SNAP benefits by household size */}
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Max Monthly SNAP Benefits by Household Size</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart
+                data={[292, 535, 766, 973, 1155, 1386, 1532, 1751].map((benefit, i) => ({
+                  size: `${i + 1}`,
+                  "Max Benefit": benefit,
+                  isUser: i + 1 === householdSize,
+                }))}
+                margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="size" tick={{ fontSize: 11 }} label={{ value: "Household Size", position: "insideBottom", offset: -2, fontSize: 10 }} />
+                <YAxis tickFormatter={(v) => `$${v}`} tick={{ fontSize: 10 }} />
+                <Tooltip formatter={(value: number) => [`$${value}/mo`, "Max Benefit"]} />
+                <Bar dataKey="Max Benefit" radius={[4, 4, 0, 0]}>
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((size) => (
+                    <Cell key={size} fill={size === householdSize ? "#22c55e" : "#cbd5e1"} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+            <p className="text-xs text-gray-400 mt-1 text-center">Green bar = your household size. 2025 SNAP maximum allotments.</p>
+          </div>
+
+          {/* Income vs limit comparison */}
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Income vs SNAP Limits</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <div className="space-y-6">
+              {/* Gross income vs 130% FPL */}
+              <div>
+                <div className="flex justify-between text-xs text-gray-600 mb-1 font-medium">
+                  <span>Gross Income vs 130% FPL Limit</span>
+                  <span>{fmt(grossMonthlyIncome)} / {fmt(result.grossLimit)}</span>
+                </div>
+                <div className="relative h-5 rounded-full overflow-hidden bg-gray-100">
+                  <div
+                    className={`h-full rounded-full transition-all ${result.passesGross ? "bg-green-500" : "bg-red-500"}`}
+                    style={{ width: `${Math.min(100, (grossMonthlyIncome / (result.grossLimit * 1.3)) * 100)}%` }}
+                  />
+                  <div
+                    className="absolute top-0 h-full w-0.5 bg-blue-600"
+                    style={{ left: `${Math.min(99, (result.grossLimit / (result.grossLimit * 1.3)) * 100)}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-xs text-gray-400 mt-1">
+                  <span>$0</span>
+                  <span className="text-blue-500">130% limit: {fmt(result.grossLimit)}</span>
+                  <span>{fmt(result.grossLimit * 1.3)}</span>
+                </div>
+              </div>
+
+              {/* Net income vs 100% FPL */}
+              <div>
+                <div className="flex justify-between text-xs text-gray-600 mb-1 font-medium">
+                  <span>Net Income vs 100% FPL Limit</span>
+                  <span>{fmt(result.netIncome)} / {fmt(result.netIncomeLimit)}</span>
+                </div>
+                <div className="relative h-5 rounded-full overflow-hidden bg-gray-100">
+                  <div
+                    className={`h-full rounded-full transition-all ${result.passesNet ? "bg-green-500" : "bg-red-500"}`}
+                    style={{ width: `${Math.min(100, (result.netIncome / (result.netIncomeLimit * 1.3)) * 100)}%` }}
+                  />
+                  <div
+                    className="absolute top-0 h-full w-0.5 bg-blue-600"
+                    style={{ left: `${Math.min(99, (result.netIncomeLimit / (result.netIncomeLimit * 1.3)) * 100)}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-xs text-gray-400 mt-1">
+                  <span>$0</span>
+                  <span className="text-blue-500">100% limit: {fmt(result.netIncomeLimit)}</span>
+                  <span>{fmt(result.netIncomeLimit * 1.3)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={

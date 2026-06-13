@@ -119,6 +119,14 @@ export default function PercentageCalculator() {
                 <div className="text-3xl font-bold text-blue-600">
                   {results.percentOf.toFixed(2)}
                 </div>
+                {/* Progress bar: value1% filled out of 100% */}
+                <div className="mt-3 bg-blue-100 rounded-full h-5 overflow-hidden">
+                  <div
+                    className="bg-blue-500 h-full rounded-full transition-all duration-300"
+                    style={{ width: `${Math.min(100, Math.max(0, value1))}%` }}
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1 text-right">{Math.min(100, value1).toFixed(1)}% of total</p>
               </div>
 
               {/* Is What Percent */}

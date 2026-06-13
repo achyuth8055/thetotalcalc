@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, RadialBarChart, RadialBar } from "recharts";
 
 type FilingStatus = "single" | "mfj";
 type CoverageType = "partb" | "partb_partd" | "advantage";
@@ -357,6 +358,61 @@ export default function MedicareCostCalculator() {
           )}
         </div>
       </div>
+
+      {result && result.eligible && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Part B Premiums by Income Bracket</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart
+              data={[
+                { bracket: "≤$106k", premium: 185.00, threshold: 0 },
+                { bracket: "$106-133k", premium: 185.00 + 74.90, threshold: 106000 },
+                { bracket: "$133-167k", premium: 185.00 + 187.20, threshold: 133000 },
+                { bracket: "$167-200k", premium: 185.00 + 299.40, threshold: 167000 },
+                { bracket: "$200-500k", premium: 185.00 + 411.60, threshold: 200000 },
+                { bracket: ">$500k", premium: 185.00 + 503.50, threshold: 500000 },
+              ].map((d) => ({
+                ...d,
+                isUser: (() => {
+                  const thresholdMult = filingStatus === "mfj" ? 2 : 1;
+                  const userBracketIdx = IRMAA_BRACKETS.reduce((acc, b, i) => {
+                    return annualIncome > b.singleThreshold * thresholdMult ? i : acc;
+                  }, 0);
+                  const bracketIdx = [0, 106000, 133000, 167000, 200000, 500000].indexOf(d.threshold);
+                  return bracketIdx === userBracketIdx;
+                })(),
+              }))}
+              margin={{ top: 5, right: 10, left: 10, bottom: 40 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="bracket" tick={{ fontSize: 10 }} angle={-30} textAnchor="end" interval={0} />
+              <YAxis tickFormatter={(v) => `$${v}`} tick={{ fontSize: 10 }} />
+              <Tooltip formatter={(value: number) => [`$${value.toFixed(2)}/mo`, "Part B Premium"]} />
+              <Bar dataKey="premium" radius={[4, 4, 0, 0]}>
+                {[
+                  { bracket: "≤$106k", threshold: 0 },
+                  { bracket: "$106-133k", threshold: 106000 },
+                  { bracket: "$133-167k", threshold: 133000 },
+                  { bracket: "$167-200k", threshold: 167000 },
+                  { bracket: "$200-500k", threshold: 200000 },
+                  { bracket: ">$500k", threshold: 500000 },
+                ].map((d) => {
+                  const thresholdMult = filingStatus === "mfj" ? 2 : 1;
+                  const userBracketIdx = IRMAA_BRACKETS.reduce((acc, b, i) => {
+                    return annualIncome > b.singleThreshold * thresholdMult ? i : acc;
+                  }, 0);
+                  const bracketIdx = [0, 106000, 133000, 167000, 200000, 500000].indexOf(d.threshold);
+                  return <Cell key={d.bracket} fill={bracketIdx === userBracketIdx ? "#3b82f6" : "#cbd5e1"} />;
+                })}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+          <p className="text-xs text-gray-400 mt-1 text-center">Blue bar = your current bracket. Single filer thresholds shown; MFJ limits are double.</p>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={

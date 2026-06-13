@@ -135,6 +135,35 @@ export default function DiscountCalculator() {
                   You save <strong className="text-green-600">${result.savings.toFixed(2)}</strong>!
                 </p>
               </div>
+
+              {/* Savings visualization */}
+              <div className="mt-5 space-y-2">
+                <p className="text-xs font-semibold text-gray-600 mb-2">Price Breakdown</p>
+                <div>
+                  <div className="flex justify-between text-xs text-gray-500 mb-1">
+                    <span>Final Price</span>
+                    <span>${result.finalPrice.toFixed(2)}</span>
+                  </div>
+                  <div className="bg-gray-200 rounded-full h-5 overflow-hidden">
+                    <div
+                      className="bg-green-500 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${100 - parseFloat(discountPercent)}%` }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-xs text-gray-500 mb-1">
+                    <span>Amount Saved</span>
+                    <span>${result.discountAmount.toFixed(2)}</span>
+                  </div>
+                  <div className="bg-gray-200 rounded-full h-5 overflow-hidden">
+                    <div
+                      className="bg-red-400 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(100, parseFloat(discountPercent))}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function InvestmentCalculator() {
   const [initialAmount, setInitialAmount] = useState(10000);
@@ -15,6 +16,7 @@ export default function InvestmentCalculator() {
     totalEarnings: number;
     growthPct: number;
     yearlyData: { year: number; value: number }[];
+    chartData: { year: number; invested: number; returns: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -38,19 +40,22 @@ export default function InvestmentCalculator() {
     }
 
     const totalContributions = initialAmount + monthlyContribution * n;
+    const chartData = yearlyData.map(({ year, value: val }) => {
+      const invested = initialAmount + monthlyContribution * 12 * year;
+      return { year, invested, returns: Math.max(0, val - invested) };
+    });
     setResult({
       finalValue: value,
       totalContributions,
       totalEarnings: value - totalContributions,
       growthPct: ((value - totalContributions) / totalContributions) * 100,
       yearlyData,
+      chartData,
     });
   };
 
   const fmt = (v: number) =>
     new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(v);
-
-  const maxVal = result ? result.finalValue : 1;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -108,25 +113,33 @@ export default function InvestmentCalculator() {
                   <div className="text-lg font-bold text-orange-600">{fmt(result.totalEarnings)}</div>
                 </div>
               </div>
-              {/* Simple bar chart */}
-              <div>
-                <div className="text-xs font-semibold text-gray-600 mb-2">Growth Over Time</div>
-                <div className="space-y-1 max-h-40 overflow-y-auto">
-                  {result.yearlyData.filter((_, i) => i % Math.max(1, Math.floor(result.yearlyData.length / 10)) === 0 || i === result.yearlyData.length - 1).map(({ year, value }) => (
-                    <div key={year} className="flex items-center gap-2">
-                      <span className="text-xs text-gray-500 w-10">Yr {year}</span>
-                      <div className="flex-1 bg-gray-100 rounded-full h-3">
-                        <div className="bg-green-500 h-3 rounded-full transition-all" style={{ width: `${(value / maxVal) * 100}%` }} />
-                      </div>
-                      <span className="text-xs font-semibold text-gray-700 w-20 text-right">{fmt(value)}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
           )}
         </div>
       </div>
+
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Investment Growth Over Time</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ Download PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <AreaChart data={result.chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="year" tick={{ fontSize: 11 }} tickFormatter={(v) => `Yr ${v}`} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v: number) => v >= 1000000 ? '$'+(v/1000000).toFixed(1)+'M' : v >= 1000 ? '$'+(v/1000).toFixed(0)+'k' : '$'+v} />
+              <Tooltip formatter={(value: number, name: string) => [new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value), name === "invested" ? "Invested" : "Returns"]} labelFormatter={(label) => `Year ${label}`} />
+              <Area type="monotone" dataKey="invested" stackId="1" stroke="#6366f1" fill="#6366f1" fillOpacity={0.7} name="invested" />
+              <Area type="monotone" dataKey="returns" stackId="1" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.7} name="returns" />
+            </AreaChart>
+          </ResponsiveContainer>
+          <div className="flex gap-4 mt-2 justify-center">
+            <span className="flex items-center gap-1 text-xs text-gray-500"><span className="inline-block w-3 h-3 rounded-sm bg-indigo-500"></span>Invested</span>
+            <span className="flex items-center gap-1 text-xs text-gray-500"><span className="inline-block w-3 h-3 rounded-sm bg-amber-400"></span>Returns</span>
+          </div>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={<p>This calculator compounds monthly contributions at your chosen annual return rate. It shows how consistent investing grows wealth dramatically over time through compounding.</p>}

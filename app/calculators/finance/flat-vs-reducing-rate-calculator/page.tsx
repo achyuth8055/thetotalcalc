@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CurrencySelector from "@/components/CurrencySelector";
 import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 export default function FlatVsReducingRateCalculatorPage() {
   const [loanAmount, setLoanAmount] = useState(500000);
@@ -446,6 +447,52 @@ export default function FlatVsReducingRateCalculatorPage() {
           </div>
         </div>
       </div>
+      {results.flatRate.totalAmount > 0 && (() => {
+        const months = tenureType === "years" ? loanTenure * 12 : loanTenure;
+        const monthlyRate = interestRate / (12 * 100);
+        const flatMonthlyEMI = results.flatRate.monthlyEMI;
+        const reducingEMI = results.reducingBalance.monthlyEMI;
+        const chartData: { month: number; "Flat Rate Balance": number; "Reducing Rate Balance": number }[] = [];
+        let flatBalance = loanAmount;
+        let reducingBalance = loanAmount;
+        const flatPrincipalPerMonth = loanAmount / months;
+        for (let m = 0; m <= months; m += Math.max(1, Math.floor(months / 20))) {
+          chartData.push({
+            month: m,
+            "Flat Rate Balance": Math.max(0, Math.round(flatBalance - flatPrincipalPerMonth * m)),
+            "Reducing Rate Balance": Math.max(0, Math.round(reducingBalance)),
+          });
+          for (let i = 0; i < Math.max(1, Math.floor(months / 20)) && m + i < months; i++) {
+            const interest = reducingBalance * monthlyRate;
+            const principal = reducingEMI - interest;
+            reducingBalance = Math.max(0, reducingBalance - principal);
+          }
+        }
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Loan Balance: Flat vs Reducing Rate</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <div className="flex gap-6 text-xs text-gray-600 mb-3">
+              <span>Total Interest (Flat): <strong className="text-orange-600">{formatCurrency(results.flatRate.totalInterest)}</strong></span>
+              <span>Total Interest (Reducing): <strong className="text-green-600">{formatCurrency(results.reducingBalance.totalInterest)}</strong></span>
+              <span>You Save: <strong className="text-emerald-700">{formatCurrency(results.savings)}</strong></span>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <LineChart data={chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="month" tick={{ fontSize: 11 }} label={{ value: "Month", position: "insideBottom", offset: -2, fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => formatCurrency(v)} />
+                <Tooltip formatter={(value: number) => [formatCurrency(value), undefined]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Line type="monotone" dataKey="Flat Rate Balance" stroke="#f97316" dot={false} strokeWidth={2} />
+                <Line type="monotone" dataKey="Reducing Rate Balance" stroke="#22c55e" dot={false} strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
     </div>
   );
 }

@@ -16,6 +16,7 @@ import { caSalaryAfterTax } from "./ca-salary-after-tax";
 import { usCapitalGains } from "./us-capital-gains";
 import { ukCapitalGains } from "./uk-capital-gains";
 import { caCapitalGains } from "./ca-capital-gains";
+import { ENGINEERING_CALCULATORS } from "./engineering";
 import { CONTENT } from "../content/calculator-content";
 
 const RAW_CALCULATORS: CalculatorDefinition[] = [
@@ -32,6 +33,7 @@ const RAW_CALCULATORS: CalculatorDefinition[] = [
   usCapitalGains,
   ukCapitalGains,
   caCapitalGains,
+  ...ENGINEERING_CALCULATORS,
 ];
 
 // Merge long-form people-first content (whoFor, howItWorks, workedExample,

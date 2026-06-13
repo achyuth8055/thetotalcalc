@@ -3,6 +3,16 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 
 export default function RothVsTraditionalIRA() {
   const [annualContribution, setAnnualContribution] = useState(6000);
@@ -23,6 +33,7 @@ export default function RothVsTraditionalIRA() {
     totalContributions: number;
     rothBetter: boolean;
     difference: number;
+    comparisonData: { label: string; roth: number; traditional: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -40,16 +51,12 @@ export default function RothVsTraditionalIRA() {
     const totalContributions = annualContribution * yearsToRetire;
 
     // Roth: contribute after-tax, grows tax-free
-    // Future value of annuity (end of year)
     const fv = r > 0
       ? annualContribution * ((Math.pow(1 + r, yearsToRetire) - 1) / r) * (1 + r)
       : annualContribution * yearsToRetire;
     const rothFinalBalance = fv; // No tax at withdrawal
 
-    // Traditional: contribute pre-tax (save currentTaxRate% now), grows tax-deferred, taxed at retirementTaxRate at withdrawal
-    // The pre-tax contribution grows to the same nominal FV as Roth
-    // But the traditional contribution is effectively larger (you contributed pre-tax dollars worth annualContribution / (1-currentTaxRate))
-    // However, to compare apples-to-apples on the same nominal contribution amount:
+    // Traditional: contribute pre-tax, taxed at retirementTaxRate at withdrawal
     const traditionalFinalBalance = fv; // Same growth on same nominal contribution
     const traditionalAfterTaxBalance = traditionalFinalBalance * (1 - retirementTaxRate / 100);
 
@@ -59,22 +66,32 @@ export default function RothVsTraditionalIRA() {
     // Roth tax savings at retirement: taxes you avoid vs traditional
     const rothTaxSavingsAtRetirement = traditionalFinalBalance * (retirementTaxRate / 100);
 
-    // Break-even tax rate: what retirement tax rate would make them equal?
-    // RothBalance = TraditionalAfterTax
-    // fv = fv * (1 - breakEvenRate)
-    // 1 = 1 - breakEvenRate → only with same contribution basis
-    // Actually: Roth after-tax contribution = annualContrib * (1 - currentTaxRate/100) if we think in pre-tax terms
-    // Roth balance = annualContrib * FVfactor (already after-tax)
-    // Traditional balance after tax = annualContrib * FVfactor * (1 - retirementTaxRate/100)
-    // They're equal when retirementTaxRate = currentTaxRate
-    // Break-even: when Roth (after-tax basis) = Traditional (after-tax withdrawal)
-    // Roth: (annualContrib) * FVfactor   (no further tax)
-    // Trad: (annualContrib) * FVfactor * (1 - t_r/100) + (annualContrib * t_c/100) * growth_on_tax_savings
-    // Simplified break-even (ignoring tax savings reinvestment): t_r = t_c → breakEvenTaxRate = currentTaxRate
     const breakEvenTaxRate = currentTaxRate;
 
     const rothBetter = retirementTaxRate > currentTaxRate;
     const difference = Math.abs(rothFinalBalance - traditionalAfterTaxBalance);
+
+    // Build decade comparison data
+    const comparisonData: { label: string; roth: number; traditional: number }[] = [];
+    const step = 10;
+    for (let y = step; y <= yearsToRetire; y += step) {
+      const fvY = r > 0
+        ? annualContribution * ((Math.pow(1 + r, y) - 1) / r) * (1 + r)
+        : annualContribution * y;
+      comparisonData.push({
+        label: `Year ${y}`,
+        roth: Math.round(fvY),
+        traditional: Math.round(fvY * (1 - retirementTaxRate / 100)),
+      });
+    }
+    // Always include the final year if not already included
+    if (yearsToRetire > 0 && (comparisonData.length === 0 || comparisonData[comparisonData.length - 1].label !== `Year ${yearsToRetire}`)) {
+      comparisonData.push({
+        label: `Year ${yearsToRetire}`,
+        roth: Math.round(fv),
+        traditional: Math.round(fv * (1 - retirementTaxRate / 100)),
+      });
+    }
 
     setResult({
       rothFinalBalance,
@@ -87,11 +104,18 @@ export default function RothVsTraditionalIRA() {
       totalContributions,
       rothBetter,
       difference,
+      comparisonData,
     });
   };
 
   const fmt = (n: number) =>
     new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+
+  const fmtK = (n: number) => {
+    if (Math.abs(n) >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+    if (Math.abs(n) >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
+    return `$${n}`;
+  };
 
   const contributionLimit = currentAge >= 50 ? 8000 : 7000;
 
@@ -250,6 +274,38 @@ export default function RothVsTraditionalIRA() {
               <div className="text-lg font-bold text-green-700">{fmt(result.rothFinalBalance - result.totalContributions)}</div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Chart Section */}
+      {result && result.comparisonData.length > 0 && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="mb-3 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-sm text-blue-800">
+            At your current tax rate of <strong>{currentTaxRate}%</strong>, Roth is better if your retirement tax rate &gt; {currentTaxRate}%.
+          </div>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Roth vs Traditional: Balance Comparison</h3>
+            <button
+              onClick={() => window.print()}
+              className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg"
+            >
+              ↓ PDF
+            </button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={result.comparisonData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="label" tick={{ fontSize: 11 }} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={fmtK} width={56} />
+              <Tooltip
+                formatter={(value: number, name: string) => [fmt(value), name]}
+              />
+              <Legend wrapperStyle={{ fontSize: 11 }} />
+              <Bar dataKey="roth" name="Roth IRA" fill="#22c55e" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="traditional" name="Traditional IRA (after-tax)" fill="#3b82f6" radius={[3, 3, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+          <p className="text-xs text-gray-400 mt-2">Traditional balance shown after applying {retirementTaxRate}% retirement tax rate at withdrawal.</p>
         </div>
       )}
 

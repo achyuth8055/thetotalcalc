@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 type PayFrequency = "weekly" | "biweekly" | "semimonthly" | "monthly" | "annually";
 const FREQUENCIES: { label: string; value: PayFrequency; perYear: number }[] = [
@@ -73,9 +74,12 @@ export default function PaycheckCalculator() {
           { label: "Paycheck Calculator", href: "/calculators/finance/paycheck-calculator" },
         ]}
       />
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Paycheck Calculator</h1>
-        <p className="text-base text-gray-600">Estimate your take-home pay after federal tax, FICA, and state taxes</p>
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Paycheck Calculator</h1>
+          <p className="text-base text-gray-600">Estimate your take-home pay after federal tax, FICA, and state taxes</p>
+        </div>
+        <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg shrink-0 ml-4">↓ PDF</button>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -181,6 +185,71 @@ export default function PaycheckCalculator() {
           )}
         </div>
       </div>
+
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Gross Pay Breakdown (per Paycheck)</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={280}>
+            <PieChart>
+              <Pie
+                data={[
+                  { name: "Federal Tax", value: Math.round(result.federalTax) },
+                  { name: "Social Security", value: Math.round(result.socialSecurity) },
+                  { name: "Medicare", value: Math.round(result.medicare) },
+                  { name: "State Tax", value: Math.round(result.stateTax) },
+                  ...(otherDeductions > 0 ? [{ name: "Other Deductions", value: Math.round(otherDeductions) }] : []),
+                  { name: "Take-Home Net Pay", value: Math.round(Math.max(0, result.netPay)) },
+                ].filter((s) => s.value > 0)}
+                cx="50%"
+                cy="50%"
+                innerRadius={65}
+                outerRadius={95}
+                dataKey="value"
+              >
+                <Cell fill="#ef4444" />
+                <Cell fill="#f97316" />
+                <Cell fill="#eab308" />
+                <Cell fill="#f59e0b" />
+                <Cell fill="#9ca3af" />
+                <Cell fill="#22c55e" />
+              </Pie>
+              <Tooltip formatter={(v: number) => [`$${v.toLocaleString()}`, undefined]} />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Annual Summary</h3>
+          </div>
+          <ResponsiveContainer width="100%" height={180}>
+            <BarChart
+              data={[
+                { name: "Annual Gross", value: Math.round(result.annualGross) },
+                { name: "Annual Net", value: Math.round(result.annualNet) },
+                { name: "Total Annual Tax", value: Math.round(result.annualGross - result.annualNet) },
+              ]}
+              margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+              <Tooltip formatter={(v: number) => [`$${v.toLocaleString()}`, undefined]} />
+              <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                <Cell fill="#3b82f6" />
+                <Cell fill="#22c55e" />
+                <Cell fill="#ef4444" />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={<div><p className="mb-2">This calculator estimates your take-home pay by subtracting federal income tax, FICA taxes (Social Security + Medicare), and state taxes from your gross pay.</p><p className="text-xs text-gray-500 mt-2">⚠️ Estimate only. Actual withholding depends on your W-4, credits, and other factors.</p></div>}

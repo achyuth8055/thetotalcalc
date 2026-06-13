@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CurrencySelector from "@/components/CurrencySelector";
 import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 export default function SIPCalculator() {
   const [monthlyInvestment, setMonthlyInvestment] = useState(5000);
@@ -16,6 +17,7 @@ export default function SIPCalculator() {
     invested: number;
     returns: number;
     maturityValue: number;
+    chartData: { year: number; invested: number; returns: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -46,10 +48,19 @@ export default function SIPCalculator() {
       const invested = P * n;
       const returns = maturityValue - invested;
 
+      const chartData = Array.from({ length: timePeriod + 1 }, (_, y) => {
+        if (y === 0) return { year: y, invested: 0, returns: 0 };
+        const yn = y * 12;
+        const mv = P * (((Math.pow(1 + r, yn) - 1) / r) * (1 + r));
+        const inv = P * yn;
+        return { year: y, invested: Math.round(inv), returns: Math.max(0, Math.round(mv - inv)) };
+      });
+
       setResult({
         invested: Math.round(invested),
         returns: Math.round(returns),
         maturityValue: Math.round(maturityValue),
+        chartData,
       });
     }
   };
@@ -270,6 +281,27 @@ export default function SIPCalculator() {
           )}
         </div>
       </div>
+
+      {/* Growth Chart */}
+      {result && result.chartData.length > 1 && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">SIP Corpus Growth</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <AreaChart data={result.chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="year" tickFormatter={(v) => `Year ${v}`} tick={{ fontSize: 11 }} />
+              <YAxis tickFormatter={(v) => formatCurrency(v)} tick={{ fontSize: 11 }} width={80} />
+              <Tooltip formatter={(value: number, name: string) => [formatCurrency(value), name]} labelFormatter={(label) => `Year ${label}`} />
+              <Legend />
+              <Area type="monotone" dataKey="invested" stackId="1" stroke="#3b82f6" fill="#93c5fd" name="Invested" />
+              <Area type="monotone" dataKey="returns" stackId="1" stroke="#22c55e" fill="#86efac" name="Returns" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {/* Explanation Section */}
       <CalculatorLayout

@@ -187,6 +187,38 @@ export default function TipCalculator() {
                   )}
                 </div>
               </div>
+
+              {/* Tip comparison cards */}
+              <div>
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">Tip Amount Comparison</h4>
+                <div className="grid grid-cols-5 gap-2">
+                  {[15, 18, 20, 22, 25].map((pct) => {
+                    const bill = parseFloat(billAmount) || 0;
+                    const numPeople = parseInt(people) || 1;
+                    const tipAmt = (bill * pct) / 100;
+                    const totalAmt = bill + tipAmt;
+                    const perPersonAmt = totalAmt / numPeople;
+                    const isSelected = pct === parseInt(tipPercent);
+                    return (
+                      <button
+                        key={pct}
+                        onClick={() => setTipPercent(pct.toString())}
+                        className={`p-3 rounded-lg text-center border-2 transition-all ${
+                          isSelected
+                            ? "border-blue-500 bg-blue-50 shadow-md"
+                            : "border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50"
+                        }`}
+                      >
+                        <div className={`text-sm font-bold ${isSelected ? "text-blue-700" : "text-gray-700"}`}>{pct}%</div>
+                        <div className={`text-xs font-semibold mt-1 ${isSelected ? "text-blue-600" : "text-gray-600"}`}>${tipAmt.toFixed(2)}</div>
+                        {numPeople > 1 && (
+                          <div className="text-xs text-gray-400 mt-0.5">${perPersonAmt.toFixed(2)}/ea</div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           )}
         </div>

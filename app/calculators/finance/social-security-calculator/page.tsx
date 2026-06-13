@@ -3,6 +3,16 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 
 export default function SocialSecurityCalculator() {
   const [currentAge, setCurrentAge] = useState(45);
@@ -20,6 +30,7 @@ export default function SocialSecurityCalculator() {
     benefit70: number;
     breakEven6267: number;
     breakEven6770: number;
+    breakEvenData: { age: number; at62: number; at67: number; at70: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -57,9 +68,6 @@ export default function SocialSecurityCalculator() {
     pia = pia * workFactor;
 
     // Age adjustments
-    // At 62: -30% (36 months early at 5/9 of 1% per month for first 36, then 5/12% after)
-    // At 67: 0% (Full Retirement Age assumed 67)
-    // At 70: +24% (8% per year for 3 years of delayed credits)
     const benefit62 = pia * 0.70;
     const benefit67 = pia;
     const benefit70 = pia * 1.24;
@@ -70,29 +78,31 @@ export default function SocialSecurityCalculator() {
       retirementAge === 70 ? benefit70 :
       benefit67;
 
-    // Break-even analysis: total cumulative benefits
-    // breakEven6267: age at which claiming at 67 gives more total than 62
-    // At 62 you get 5 more years of benefit62 before reaching 67
-    // Total62(n years after 62) = benefit62 * (n + 5) * 12
-    // Total67(n years after 67) = benefit67 * n * 12
-    // benefit67 * n * 12 = benefit62 * (n + 5) * 12
-    // n * (benefit67 - benefit62) = benefit62 * 5
-    // n = benefit62 * 5 / (benefit67 - benefit62)
+    // Break-even analysis
     let breakEven6267 = 0;
     if (benefit67 > benefit62) {
       const yearsAfter67 = (benefit62 * 5) / (benefit67 - benefit62);
       breakEven6267 = 67 + yearsAfter67;
     }
 
-    // Break-even 67 vs 70: 3 extra years from 67
-    // Total67(n years after 70) = benefit67 * (n + 3) * 12
-    // Total70(n years after 70) = benefit70 * n * 12
-    // n * (benefit70 - benefit67) = benefit67 * 3
-    // n = benefit67 * 3 / (benefit70 - benefit67)
     let breakEven6770 = 0;
     if (benefit70 > benefit67) {
       const yearsAfter70 = (benefit67 * 3) / (benefit70 - benefit67);
       breakEven6770 = 70 + yearsAfter70;
+    }
+
+    // Build break-even chart data: cumulative benefits from ages 62 to 85
+    const breakEvenData: { age: number; at62: number; at67: number; at70: number }[] = [];
+    for (let age = 62; age <= 90; age++) {
+      const monthsSince62 = (age - 62) * 12;
+      const monthsSince67 = Math.max(0, (age - 67) * 12);
+      const monthsSince70 = Math.max(0, (age - 70) * 12);
+      breakEvenData.push({
+        age,
+        at62: Math.round(benefit62 * monthsSince62),
+        at67: Math.round(benefit67 * monthsSince67),
+        at70: Math.round(benefit70 * monthsSince70),
+      });
     }
 
     setResult({
@@ -105,11 +115,18 @@ export default function SocialSecurityCalculator() {
       benefit70,
       breakEven6267,
       breakEven6770,
+      breakEvenData,
     });
   };
 
   const fmt = (n: number) =>
     new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+
+  const fmtK = (n: number) => {
+    if (Math.abs(n) >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+    if (Math.abs(n) >= 1_000) return `$${(n / 1_000).toFixed(0)}K`;
+    return `$${n}`;
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -230,6 +247,41 @@ export default function SocialSecurityCalculator() {
           )}
         </div>
       </div>
+
+      {/* Chart Section */}
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Cumulative Benefits by Claiming Age</h3>
+            <button
+              onClick={() => window.print()}
+              className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg"
+            >
+              ↓ PDF
+            </button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <LineChart data={result.breakEvenData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis
+                dataKey="age"
+                tick={{ fontSize: 11 }}
+                label={{ value: "Age", position: "insideBottomRight", offset: -4, fontSize: 11 }}
+              />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={fmtK} width={56} />
+              <Tooltip
+                formatter={(value: number, name: string) => [fmt(value), name]}
+                labelFormatter={(label) => `Age ${label}`}
+              />
+              <Legend wrapperStyle={{ fontSize: 11 }} />
+              <Line type="monotone" dataKey="at62" stroke="#f97316" strokeWidth={2} dot={false} name="Claim at 62" />
+              <Line type="monotone" dataKey="at67" stroke="#3b82f6" strokeWidth={2} dot={false} name="Claim at 67" />
+              <Line type="monotone" dataKey="at70" stroke="#22c55e" strokeWidth={2} dot={false} name="Claim at 70" />
+            </LineChart>
+          </ResponsiveContainer>
+          <p className="text-xs text-gray-400 mt-2">Where lines cross = break-even age. Claiming later pays off if you live past that age.</p>
+        </div>
+      )}
 
       <CalculatorLayout
         title=""

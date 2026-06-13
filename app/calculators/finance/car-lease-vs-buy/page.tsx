@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 export default function CarLeaseVsBuyCalculator() {
   const [carPrice, setCarPrice] = useState(35000);
@@ -260,6 +261,36 @@ export default function CarLeaseVsBuyCalculator() {
           )}
         </div>
       </div>
+
+      {result && (() => {
+        const barData = [
+          { name: "Total Cost", Lease: Math.round(result.leaseTotalCost), Buy: Math.round(result.buyTotalCost) },
+          ...result.leaseBreakdown.slice(0, 3).map((item, i) => ({
+            name: item.label.replace("Total Lease Payments", "Payments").replace("Down / Cap Cost Reduction", "Down Pmt").replace("Mileage Overage Fees", "Mileage"),
+            Lease: Math.round(Math.max(0, item.value)),
+            Buy: Math.round(Math.max(0, result.buyBreakdown[i]?.value ?? 0)),
+          })),
+        ];
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">5-Year Total Cost: Lease vs Buy</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={barData} margin={{ top: 5, right: 10, left: 10, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-15} textAnchor="end" />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Bar dataKey="Lease" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Buy" fill="#22c55e" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       <CalculatorLayout
         title=""

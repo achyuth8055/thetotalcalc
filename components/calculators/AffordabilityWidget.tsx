@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { NumberField, PrimaryResult, ResultCard, ResultRow, fmtUSD } from "./ui";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 // Estimate the home price you can afford from income, debts, and a back-end DTI.
 export default function AffordabilityWidget() {
@@ -45,6 +46,35 @@ export default function AffordabilityWidget() {
             <ResultRow label="Max loan amount" value={fmtUSD(maxLoan)} />
             <ResultRow label="Plus down payment" value={fmtUSD(down)} />
           </div>
+          {maxTotalDebt > 0 && (
+            <div className="mt-2">
+              <p className="text-label-sm font-semibold text-on-surface-variant mb-2">Monthly Budget Breakdown</p>
+              <ResponsiveContainer width="100%" height={220}>
+                <PieChart>
+                  <Pie
+                    data={[
+                      { name: "P&I Payment", value: Math.round(Math.max(0, maxPI)) },
+                      { name: "Tax + Insurance", value: Math.round(taxInsMonthly) },
+                      { name: "Existing Debts", value: Math.round(monthlyDebts) },
+                      { name: "Remaining Budget", value: Math.round(Math.max(0, monthlyIncome - maxTotalDebt)) },
+                    ].filter((s) => s.value > 0)}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={55}
+                    outerRadius={80}
+                    dataKey="value"
+                  >
+                    <Cell fill="#3b82f6" />
+                    <Cell fill="#f97316" />
+                    <Cell fill="#ef4444" />
+                    <Cell fill="#22c55e" />
+                  </Pie>
+                  <Tooltip formatter={(v: number) => [`$${v.toLocaleString()}/mo`, undefined]} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          )}
         </div>
       </div>
     </ResultCard>

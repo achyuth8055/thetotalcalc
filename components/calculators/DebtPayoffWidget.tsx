@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PrimaryResult, ResultCard, ResultRow, fmtUSD } from "./ui";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 interface Debt {
   id: number;
@@ -17,7 +18,7 @@ function simulate(debts: Debt[], extra: number, strategy: Strategy) {
   const active = debts
     .filter((d) => d.balance > 0)
     .map((d) => ({ ...d, bal: d.balance }));
-  if (active.length === 0) return { months: 0, totalInterest: 0, totalPaid: 0, order: [] as string[], payable: true };
+  if (active.length === 0) return { months: 0, totalInterest: 0, totalPaid: 0, order: [] as string[], payable: true, balanceByMonth: [] as { month: number; balance: number }[] };
 
   const budget = active.reduce((s, d) => s + d.minPayment, 0) + extra;
   const order = [...active].sort((a, b) => (strategy === "avalanche" ? b.apr - a.apr : a.bal - b.bal));
@@ -26,6 +27,10 @@ function simulate(debts: Debt[], extra: number, strategy: Strategy) {
   let totalInterest = 0;
   let totalPaid = 0;
   const clearedOrder: string[] = [];
+  const balanceByMonth: { month: number; balance: number }[] = [];
+
+  // Record starting balance
+  balanceByMonth.push({ month: 0, balance: Math.round(active.reduce((s, d) => s + d.bal, 0)) });
 
   while (active.some((d) => d.bal > 0.005) && month < 1200) {
     month++;
@@ -61,9 +66,19 @@ function simulate(debts: Debt[], extra: number, strategy: Strategy) {
     for (const d of order) {
       if (d.bal <= 0.005 && !clearedOrder.includes(d.name)) clearedOrder.push(d.name);
     }
+    // Record balance snapshot every 6 months
+    if (month % 6 === 0) {
+      balanceByMonth.push({ month, balance: Math.round(Math.max(0, active.reduce((s, d) => s + d.bal, 0))) });
+    }
   }
 
-  return { months: month, totalInterest, totalPaid, order: clearedOrder, payable: month < 1200 };
+  // Always record final balance at payoff
+  const finalBal = Math.round(Math.max(0, active.reduce((s, d) => s + d.bal, 0)));
+  if (balanceByMonth[balanceByMonth.length - 1]?.month !== month) {
+    balanceByMonth.push({ month, balance: finalBal });
+  }
+
+  return { months: month, totalInterest, totalPaid, order: clearedOrder, payable: month < 1200, balanceByMonth };
 }
 
 function describeMonths(m: number) {
@@ -91,6 +106,21 @@ export default function DebtPayoffWidget() {
 
   const result = simulate(debts, extra, strategy);
   const totalBalance = debts.reduce((s, d) => s + d.balance, 0);
+
+  // Compute both strategies for the chart
+  const avalancheResult = simulate(debts, extra, "avalanche");
+  const snowballResult = simulate(debts, extra, "snowball");
+
+  // Merge balance timelines into a single dataset keyed by month
+  const chartDataMap = new Map<number, { month: number; Avalanche?: number; Snowball?: number }>();
+  for (const { month, balance } of avalancheResult.balanceByMonth) {
+    chartDataMap.set(month, { month, Avalanche: balance });
+  }
+  for (const { month, balance } of snowballResult.balanceByMonth) {
+    const existing = chartDataMap.get(month) || { month };
+    chartDataMap.set(month, { ...existing, Snowball: balance });
+  }
+  const chartData = Array.from(chartDataMap.values()).sort((a, b) => a.month - b.month);
 
   return (
     <ResultCard>
@@ -162,6 +192,33 @@ export default function DebtPayoffWidget() {
           <p className="rounded-lg border border-error bg-error-container/30 p-stack-md text-label-md text-error">
             With these payments the balances are not being paid down (interest exceeds payments). Increase the minimum or extra payment.
           </p>
+        )}
+
+        {result.payable && chartData.length > 1 && (
+          <div className="mt-2">
+            <p className="text-label-sm font-semibold text-on-surface-variant mb-2">Projected Balance Over Time</p>
+            <ResponsiveContainer width="100%" height={260}>
+              <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <defs>
+                  <linearGradient id="avalancheGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="snowballGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#22c55e" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" tick={{ fontSize: 11 }} label={{ value: "Month", position: "insideBottomRight", offset: -5, fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <Tooltip formatter={(v: number) => [`$${v.toLocaleString()}`, undefined]} labelFormatter={(l) => `Month ${l}`} />
+                <Legend />
+                <Area type="monotone" dataKey="Avalanche" stroke="#3b82f6" fill="url(#avalancheGrad)" strokeWidth={2} dot={false} connectNulls />
+                <Area type="monotone" dataKey="Snowball" stroke="#22c55e" fill="url(#snowballGrad)" strokeWidth={2} dot={false} connectNulls />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
         )}
       </div>
     </ResultCard>

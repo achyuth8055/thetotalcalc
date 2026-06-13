@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CurrencySelector from "@/components/CurrencySelector";
 import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function SWPCalculator() {
   const [totalInvestment, setTotalInvestment] = useState(1000000);
@@ -18,6 +19,7 @@ export default function SWPCalculator() {
     finalValue: number;
     totalMonths: number;
     wealthGenerated: number;
+    chartData: { period: string; corpus: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -42,13 +44,14 @@ export default function SWPCalculator() {
     const months = timePeriod * 12;
     let balance = totalInvestment;
     let totalWithdrawn = 0;
+    const monthlyBalances: number[] = [balance];
 
     for (let i = 0; i < months; i++) {
       if (balance <= 0) break;
-      
+
       // Add monthly returns
       balance = balance * (1 + monthlyRate);
-      
+
       // Withdraw amount
       if (balance >= withdrawalAmount) {
         balance -= withdrawalAmount;
@@ -56,8 +59,17 @@ export default function SWPCalculator() {
       } else {
         totalWithdrawn += balance;
         balance = 0;
+        monthlyBalances.push(0);
         break;
       }
+      monthlyBalances.push(Math.round(balance));
+    }
+
+    // Build yearly chart data from monthly balances
+    const chartData: { period: string; corpus: number }[] = [];
+    for (let y = 0; y <= timePeriod; y++) {
+      const idx = Math.min(y * 12, monthlyBalances.length - 1);
+      chartData.push({ period: `Year ${y}`, corpus: monthlyBalances[idx] });
     }
 
     setResult({
@@ -65,6 +77,7 @@ export default function SWPCalculator() {
       finalValue: Math.round(balance),
       totalMonths: months,
       wealthGenerated: Math.round(totalWithdrawn + balance - totalInvestment),
+      chartData,
     });
   };
 
@@ -293,6 +306,25 @@ export default function SWPCalculator() {
           )}
         </div>
       </div>
+
+      {/* Corpus Chart */}
+      {result && result.chartData.length > 1 && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Corpus Over Withdrawal Period</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <AreaChart data={result.chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="period" tick={{ fontSize: 11 }} />
+              <YAxis tickFormatter={(v) => formatCurrency(v)} tick={{ fontSize: 11 }} width={80} />
+              <Tooltip formatter={(value: number) => [formatCurrency(value), "Remaining Corpus"]} />
+              <Area type="monotone" dataKey="corpus" stroke="#f97316" fill="#fed7aa" name="Remaining Corpus" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {/* Explanation Section */}
       <CalculatorLayout

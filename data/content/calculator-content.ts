@@ -485,4 +485,206 @@ export const CONTENT: Record<string, Content> = {
       { question: "Where do the figures come from?", answer: "From the CRA's GST/HST credit amounts for 2025–26, linked on the result and dated when last verified." },
     ],
   },
+
+  // -------------------------------------------------------------------------
+  // Voltage Divider
+  // -------------------------------------------------------------------------
+  "voltage-divider": {
+    whoFor:
+      "This voltage divider calculator is for electronics students, makers, and engineers who need a smaller voltage from a larger one using two resistors. It is the tool you reach for when scaling a sensor signal down to fit a microcontroller's input range, setting a reference voltage, biasing a transistor, or reading a battery's level through an analog pin. Anyone learning how resistors share a voltage, or anyone who wants to skip rearranging the divider formula by hand, will find it quicker and less error-prone than working it out on paper.",
+    howItWorks:
+      "A voltage divider puts two resistors in series across a source. The output is taken from the point between them. Because the same current flows through both resistors, each one takes a share of the total voltage in proportion to its resistance. The output across the bottom resistor R2 is Vout = Vin x R2 / (R1 + R2). The calculator adds R1 and R2, divides R2 by that total to get the ratio, and multiplies by your input voltage. It also reports the voltage dropped across R1, which is simply the input minus the output, so you can see how the source voltage splits between the two parts.",
+    workedExample:
+      "Say you have a 9 volt supply and you want roughly two-thirds of it. Put a 1,000 ohm resistor on top (R1) and a 2,000 ohm resistor on the bottom (R2). The total is 3,000 ohms, and R2 is two-thirds of that, so the ratio is 0.667. Multiply 9 volts by 0.667 and the output is 6 volts, with the remaining 3 volts dropped across R1. Swap to two equal 1,000 ohm resistors and the ratio becomes 0.5, so a 5 volt input gives 2.5 volts out - a clean halving.",
+    regionalVariations:
+      "Resistor physics is the same everywhere, so the math does not change by country. What differs is the labelling convention you may see on parts and schematics: resistor values follow the international E-series (E12, E24, and so on), and color-band codes are standard worldwide. Some regions favor showing values as 4k7 instead of 4.7k, but the number is identical. This calculator works in plain ohms and volts, so enter whatever your parts are marked once you convert any kilohm or megohm values.",
+    commonMistakes: [
+      "Loading the output without accounting for it. The simple formula assumes nothing draws current from Vout. If your load resistance is not much larger than R2, the real output sags below the calculated value.",
+      "Choosing very large resistor values to save power, then finding the divider is too weak to drive the next stage, or that it picks up noise.",
+      "Choosing very small resistor values, which waste power and can overload the source.",
+      "Mixing up which resistor is R1 and which is R2. The output is always measured across the resistor connected to ground, which this calculator treats as R2.",
+      "Forgetting to convert kilohms to ohms, which shifts the answer but, because it is a ratio, often hides the slip until a loaded test reveals it.",
+    ],
+    deadlines:
+      "There is no deadline in electronics, but there is a design check worth making every time: confirm the current through the divider and the power each resistor handles. Power in a resistor is voltage across it times the current through it. A divider that runs hot, or one whose output collapses the moment you connect a load, points to resistor values that are too small or too large for the job. Prototype and measure before committing the values to a board.",
+    faqs: [
+      { question: "What is a voltage divider?", answer: "Two resistors in series across a voltage source. The output, taken from the midpoint, is a fixed fraction of the input set by the ratio of the resistors." },
+      { question: "What is the voltage divider formula?", answer: "Vout = Vin x R2 / (R1 + R2), where R2 is the resistor across which you measure the output (usually the one connected to ground)." },
+      { question: "Why is my real output lower than the calculation?", answer: "The formula assumes no load. Anything you connect to the output draws current and lowers the voltage. Use resistor values much smaller than your load, or buffer the output." },
+      { question: "Can a voltage divider supply power to a circuit?", answer: "Not well. It suits low-current reference and signal-scaling jobs. For powering a load, use a regulator, which holds the voltage steady as the current changes." },
+      { question: "How do I pick the resistor values?", answer: "Pick the ratio you need first, then choose a total resistance that draws a small but stable current - often a few kilohms to tens of kilohms for signal work." },
+      { question: "What voltage appears across R1?", answer: "The input voltage minus the output. The two drops always add up to Vin, because the resistors share the source between them." },
+      { question: "Does it work with AC signals?", answer: "Yes, for purely resistive dividers the ratio holds for AC too. Once capacitors or inductors are involved, the division becomes frequency-dependent." },
+      { question: "Can I divide a voltage to an exact value?", answer: "Standard resistors come in fixed steps, so you usually get close rather than exact. A trimmer potentiometer lets you fine-tune the output." },
+      { question: "Is this safe for mains voltage?", answer: "No. Do not build dividers across mains without proper isolation and training. This tool is for low-voltage DC and signal work." },
+    ],
+  },
+
+  // -------------------------------------------------------------------------
+  // LED Resistor
+  // -------------------------------------------------------------------------
+  "led-resistor": {
+    whoFor:
+      "This LED resistor calculator is for anyone wiring up an LED and wanting it to be bright without burning out. That includes electronics beginners on their first breadboard, makers adding indicator lights to a project, and hobbyists building displays or signage. An LED needs a resistor in series to limit its current, and choosing the wrong value either leaves the LED dim or destroys it in an instant. This tool gives the correct resistor in one step, plus the power that resistor must handle, so you can pick a part that will not overheat.",
+    howItWorks:
+      "An LED drops a roughly fixed voltage when lit, called its forward voltage, and it is brightness is set by the current through it, not the voltage across it. The series resistor soaks up the difference between your supply and the LED's forward voltage. The formula is R = (Vsupply - Vforward) / I, where I is your target current in amps. The calculator subtracts the forward voltage from the supply to find the voltage the resistor must drop, converts your milliamp current to amps, and divides to get the resistance. It then multiplies the voltage across the resistor by the current to show how much power the resistor dissipates, so you can choose a part with enough headroom.",
+    workedExample:
+      "Suppose you run a standard red LED from a 9 volt battery and want 20 milliamps through it. A red LED drops about 2 volts, so the resistor must absorb 9 minus 2, which is 7 volts. Dividing 7 volts by 0.02 amps gives 350 ohms, so pick the next common value at or above that, which is 360 or 390 ohms. The power in the resistor is 7 volts times 20 milliamps, or 140 milliwatts, so a standard quarter-watt (250 milliwatt) resistor is fine with room to spare. Drop the supply to 5 volts at 10 milliamps and the resistor becomes 300 ohms.",
+    regionalVariations:
+      "LEDs behave the same in every country, so the formula does not change. What varies is the typical forward voltage by LED color and type, which is a property of the part, not the region: red and yellow LEDs sit around 1.8 to 2.2 volts, green and blue closer to 3 to 3.4 volts, and white LEDs around 3 to 3.6 volts. Check the datasheet for your exact part. Mains adapters differ by region too, but you should always work from the DC voltage your LED actually sees, not the wall voltage.",
+    commonMistakes: [
+      "Connecting an LED with no resistor at all. Without one, the LED draws far too much current and fails almost instantly.",
+      "Entering current in amps when the field expects milliamps, or vice versa, which throws the resistor value off by a factor of a thousand.",
+      "Using the wrong forward voltage. A blue or white LED needs a different value than a red one, so use the datasheet figure for your color.",
+      "Ignoring the resistor's power rating. The right resistance can still cook if the wattage is too low for the power it dissipates.",
+      "Rounding down to a smaller resistor, which raises the current above your target. Always round up to the next standard value.",
+    ],
+    deadlines:
+      "There is no deadline, but there is a sequence worth following before you power on: confirm the LED's forward voltage and maximum current from its datasheet, calculate the resistor, round up to a standard value, and check the resistor's power rating against the figure shown here. Most small indicator LEDs are happy between 10 and 20 milliamps, and many look plenty bright at less, which also saves power and runs cooler. When in doubt, choose a slightly larger resistor and a little less brightness.",
+    faqs: [
+      { question: "Why does an LED need a resistor?", answer: "An LED's current rises steeply once it is forward voltage is reached, so a small voltage change causes a large current change. The series resistor limits the current to a safe, steady value." },
+      { question: "What current should I use?", answer: "Most standard indicator LEDs run well at 10 to 20 milliamps. Check the datasheet for the maximum, and stay comfortably below it." },
+      { question: "What is forward voltage?", answer: "The roughly fixed voltage an LED drops when lit. It depends on the LED's color and chemistry - around 2 volts for red, near 3 volts or more for blue and white." },
+      { question: "What if my calculated value is not a standard resistor?", answer: "Round up to the next standard value (for example, 350 ohms to 360 or 390). Rounding up slightly lowers the current, which is the safe direction." },
+      { question: "Can I put several LEDs on one resistor?", answer: "If they are in series, yes, and you subtract all their forward voltages from the supply. In parallel, give each LED its own resistor so they share current evenly." },
+      { question: "How do I work out the resistor's power rating?", answer: "Multiply the voltage across the resistor by the current. The calculator shows this in milliwatts; pick a resistor rated well above it, such as a quarter-watt part." },
+      { question: "My LED is dim - what went wrong?", answer: "The resistor is probably too large, so the current is low. Recheck the supply and forward voltage, and confirm you used the right current target." },
+      { question: "Does the resistor go before or after the LED?", answer: "Either side works, because they are in series and the same current flows through both. The order does not change the result." },
+      { question: "Can I use this for high-power LEDs?", answer: "Simple resistor limiting suits small indicator LEDs. High-power LEDs are better driven by a constant-current driver, which is more efficient and more stable with temperature." },
+    ],
+  },
+
+  // -------------------------------------------------------------------------
+  // RC Time Constant
+  // -------------------------------------------------------------------------
+  "rc-time-constant": {
+    whoFor:
+      "This RC time constant calculator is for students and engineers working with resistor-capacitor circuits: timing delays, debounce circuits, smoothing and filtering, and the simple low-pass and high-pass filters at the heart of audio and sensor electronics. If you need to know how fast a capacitor charges through a resistor, how long before a signal settles, or where a filter starts to roll off frequencies, this tool gives all three from two values you already have.",
+    howItWorks:
+      "When a capacitor charges or discharges through a resistor, it does not change instantly. The time constant, written with the Greek letter tau, is the resistance times the capacitance: tau = R x C. After one time constant the capacitor reaches about 63% of the way to its final voltage, and after five time constants it is within about 1%, which engineers treat as fully charged. The same R and C set the cutoff frequency of a simple filter, fc = 1 / (2 x pi x R x C), the point where the filter begins to noticeably cut the signal. The calculator computes the time constant, the practical five-tau settling time, and the cutoff frequency together. It works in kilohms and microfarads, whose product conveniently lands in milliseconds.",
+    workedExample:
+      "Take a 10 kilohm resistor and a 1 microfarad capacitor. The time constant is 10 times 1, which is 10 milliseconds. Five time constants is 50 milliseconds, so the capacitor is effectively fully charged about a twentieth of a second after you apply voltage. The same pair forms a filter with a cutoff of 1 divided by (2 x pi x 10,000 ohms x 0.000001 farads), about 15.9 hertz - low enough to smooth out anything faster while letting slow changes through. Swap in a 1 kilohm resistor with a 100 microfarad capacitor and the time constant jumps to 100 milliseconds, a much slower circuit.",
+    regionalVariations:
+      "Capacitor and resistor behavior is universal, so the formulas are the same everywhere. The conventions you meet on components are international too: capacitor values are often printed as a three-digit code (for example 104 means 100,000 picofarads, or 0.1 microfarads), and tolerance is shown by a letter. Mains frequency differs by region, 50 hertz in much of the world and 60 hertz in North America, which matters when you design a filter to reject mains hum, but the RC math itself does not change.",
+    commonMistakes: [
+      "Mixing units. Kilohms with microfarads gives milliseconds; if you enter plain ohms and farads expecting milliseconds, the result is off by huge factors.",
+      "Assuming the capacitor charges instantly or linearly. The charge curve is exponential, fast at first and then slowing as it approaches the final voltage.",
+      "Treating one time constant as fully charged. It only reaches about 63%; allow about five time constants for the circuit to settle.",
+      "Ignoring the capacitor's tolerance, which is often 10% or 20%, so the real time constant varies from the ideal figure.",
+      "Forgetting the resistance of whatever drives the circuit. A high source resistance adds to R and slows charging beyond the calculated value.",
+    ],
+    deadlines:
+      "Timing in electronics is the point, so the practical rule is to design for about five time constants whenever you need a circuit to settle fully before the next event - whether that is a switch debounce, a reset pulse, or a sample on an analog input. For filters, place the cutoff frequency clearly below the noise you want to remove and clearly above the signal you want to keep, leaving margin for component tolerance so the filter still does its job at the edges of its rated values.",
+    faqs: [
+      { question: "What is the RC time constant?", answer: "It is the resistance times the capacitance, tau = R x C. It sets how quickly a capacitor charges or discharges through the resistor." },
+      { question: "How long until the capacitor is fully charged?", answer: "About five time constants, after which it is within roughly 1% of the final voltage. One time constant alone reaches about 63%." },
+      { question: "Why kilohms and microfarads?", answer: "Their product lands neatly in milliseconds, which is the range most timing and filter circuits use. The calculator handles the unit scaling for you." },
+      { question: "What is the cutoff frequency?", answer: "For a simple RC filter, fc = 1 / (2 x pi x R x C). It is the frequency where the filter starts to noticeably reduce the signal, dropping it by about 30%." },
+      { question: "Is this a high-pass or low-pass filter?", answer: "The same R and C can make either, depending on whether the output is taken across the capacitor (low-pass) or the resistor (high-pass). The cutoff frequency is identical for both." },
+      { question: "Does the charge curve ever truly reach the supply voltage?", answer: "In theory it approaches but never quite reaches it, getting exponentially closer. In practice, five time constants is close enough for almost any circuit." },
+      { question: "How does tolerance affect the result?", answer: "Real resistors and capacitors vary from their marked values, so the actual time constant can differ by 10% or more. Design with margin if timing is critical." },
+      { question: "Can I slow a circuit down without huge components?", answer: "Yes - raise either the resistance or the capacitance. Very large resistors can pick up noise, and very large capacitors take space, so balance the two." },
+      { question: "Does source resistance matter?", answer: "Yes. Whatever drives the circuit adds its own resistance in series, increasing the effective R and lengthening the time constant beyond the calculated figure." },
+    ],
+  },
+
+  // -------------------------------------------------------------------------
+  // Wavelength and Frequency
+  // -------------------------------------------------------------------------
+  "wavelength-frequency": {
+    whoFor:
+      "This wavelength and frequency calculator is for radio amateurs, RF and antenna designers, physics students, and anyone working with light or electromagnetic waves. If you need the wavelength of a radio frequency to cut an antenna to length, or the frequency that matches a known wavelength, this tool converts between the two instantly using the speed of light. It suits homework on the electromagnetic spectrum just as well as a quick check on the bench.",
+    howItWorks:
+      "Every electromagnetic wave in free space travels at the speed of light, about 299,792,458 metres per second. Wavelength and frequency are tied together by that speed: c = wavelength x frequency. So a higher frequency means a shorter wavelength, and the other way around. The calculator lets you pick which one you know. Enter a frequency in megahertz and it returns the wavelength in metres by dividing the speed of light by the frequency; enter a wavelength in metres and it returns the frequency. Because the speed of light is a constant, the conversion is exact for waves travelling through a vacuum or, very nearly, through air.",
+    workedExample:
+      "FM radio around 100 megahertz is a familiar case. Dividing the speed of light by 100 megahertz gives a wavelength of about 3 metres, which is why FM antennas are sized in metres rather than centimetres. Going the other way, a 2 metre wavelength - the name of a popular amateur radio band - corresponds to a frequency of about 150 megahertz. Shorter wavelengths mean higher frequencies: a microwave oven near 2,450 megahertz has a wavelength of only about 12 centimetres.",
+    regionalVariations:
+      "The physics is identical worldwide, but the radio bands allocated to each use are not. The exact frequencies set aside for FM broadcast, amateur radio, Wi-Fi, and mobile networks are decided by national and regional regulators, so a band that is legal to transmit on in one country may be restricted in another. This calculator gives the pure physics relationship; always check your local spectrum rules before transmitting. Note too that waves slow down in materials like glass, water, or coaxial cable, so the wavelength inside a medium is shorter than the free-space figure shown here.",
+    commonMistakes: [
+      "Forgetting the units. This tool uses megahertz and metres; mixing in hertz or centimetres without converting gives answers off by large factors.",
+      "Applying the free-space result inside a cable or material. Signals travel slower there, so the real wavelength is shorter by the velocity factor.",
+      "Confusing wavelength with antenna length. Practical antennas are often a half or a quarter of a wavelength, not a full one.",
+      "Assuming the speed of light applies to sound. Sound is a mechanical wave with a completely different, much slower speed; this formula is only for electromagnetic waves.",
+      "Rounding the speed of light too aggressively for precise RF work, where small differences shift the result.",
+    ],
+    deadlines:
+      "There are no deadlines here, but there is a practical caution: before transmitting on any frequency, confirm it is allocated for your use and that you hold any license your country requires. Antennas cut from a wavelength should account for the velocity factor of the wire or element and for end effects, so treat the calculated wavelength as the starting point and trim to tune. For coaxial cable and waveguides, apply the medium's velocity factor rather than the free-space number.",
+    faqs: [
+      { question: "What is the relationship between wavelength and frequency?", answer: "They multiply to the wave's speed: c = wavelength x frequency. In free space that speed is the speed of light, so higher frequency means shorter wavelength." },
+      { question: "What units does this calculator use?", answer: "Frequency in megahertz and wavelength in metres. Convert gigahertz or kilohertz, and centimetres or millimetres, before entering them." },
+      { question: "Why is the wavelength shorter inside a cable?", answer: "Waves travel slower than the speed of light in any material. The wavelength inside is the free-space value multiplied by the medium's velocity factor." },
+      { question: "How long should my antenna be?", answer: "Antennas are sized as a fraction of a wavelength, commonly a half or a quarter. Use the wavelength here as a guide, then account for velocity factor and trim to tune." },
+      { question: "Does this work for visible light?", answer: "Yes. Visible light is electromagnetic, so the same formula applies, though its frequencies are far higher and wavelengths far shorter, measured in nanometres." },
+      { question: "Can I use it for sound waves?", answer: "No. Sound travels far slower and at a speed that depends on the medium and temperature, so it needs a different speed value, not the speed of light." },
+      { question: "What is the speed of light used here?", answer: "About 299,792,458 metres per second, the speed of electromagnetic waves in a vacuum, which is also very close to their speed in air." },
+      { question: "Why do higher frequencies have shorter wavelengths?", answer: "Because their product is fixed at the speed of light. If one goes up, the other must come down to keep the product constant." },
+    ],
+  },
+
+  // -------------------------------------------------------------------------
+  // Kinetic Energy
+  // -------------------------------------------------------------------------
+  "kinetic-energy": {
+    whoFor:
+      "This kinetic energy calculator is for physics and engineering students, teachers, and anyone who needs the energy or momentum of a moving object. It is useful for homework on mechanics, for rough estimates of impact energy in safety and design work, and for getting an intuitive feel for how energy grows with speed. Enter a mass and a speed and it returns the kinetic energy in joules and kilojoules, plus the momentum, so you can compare how hard something is to stop with how much energy it carries.",
+    howItWorks:
+      "Kinetic energy is the energy an object has because it is moving. The formula is KE = one half times mass times speed squared, written KE = 1/2 x m x v squared, with mass in kilograms and speed in metres per second giving energy in joules. The squared term is the important part: doubling the speed quadruples the energy. The calculator multiplies half the mass by the square of the speed for the energy, divides by a thousand to also show kilojoules, and separately multiplies mass by speed to give momentum in kilogram-metres per second. Momentum grows in step with speed, while energy grows with its square, which is why high speed is so dangerous.",
+    workedExample:
+      "Picture a 1,000 kilogram car moving at 20 metres per second, roughly 72 kilometres per hour. Half of 1,000 is 500, and 20 squared is 400, so the kinetic energy is 500 times 400, which is 200,000 joules, or 200 kilojoules. The momentum is 1,000 times 20, or 20,000 kilogram-metres per second. Now double the speed to 40 metres per second: the momentum doubles to 40,000, but the energy quadruples to 800 kilojoules. That fourfold jump in energy is why stopping distances and crash forces rise so sharply with speed.",
+    regionalVariations:
+      "Physics does not change from place to place, so the result is the same anywhere. The only regional difference is units. This calculator uses SI units - kilograms, metres per second, and joules - which are standard in science worldwide. If you are used to miles per hour, pounds, or foot-pounds, convert to kilograms and metres per second first. As a guide, one metre per second is about 3.6 kilometres per hour or 2.24 miles per hour, and one kilogram is about 2.2 pounds.",
+    commonMistakes: [
+      "Forgetting to square the speed. The speed term is squared, so leaving it out underestimates the energy badly.",
+      "Using the wrong units. Mass must be in kilograms and speed in metres per second to get joules; mixing in grams or kilometres per hour gives a wrong answer.",
+      "Confusing energy with momentum. Momentum rises with speed, but energy rises with the square of speed, so they are not interchangeable.",
+      "Applying this near the speed of light, where the classical formula breaks down and a relativistic version is needed.",
+      "Treating kinetic energy as a vector. Energy is a single number with no direction, unlike momentum and velocity.",
+    ],
+    deadlines:
+      "There is no deadline in mechanics, but there is a safety lesson worth keeping in mind: because energy grows with the square of speed, modest increases in speed produce large increases in impact energy and braking distance. In design and safety work, that square relationship is the reason speed limits and crumple zones matter so much. When estimating impact energy, use realistic masses and speeds, and remember the calculated figure is the energy that must be absorbed somewhere when the object stops.",
+    faqs: [
+      { question: "What is kinetic energy?", answer: "The energy an object has because of its motion. A heavier or faster object carries more, and it is the energy that must be absorbed when the object stops." },
+      { question: "What is the kinetic energy formula?", answer: "KE = 1/2 x m x v squared, with mass in kilograms and speed in metres per second, giving energy in joules." },
+      { question: "Why does speed matter more than mass?", answer: "Because speed is squared in the formula while mass is not. Doubling the mass doubles the energy, but doubling the speed quadruples it." },
+      { question: "What units should I use?", answer: "Kilograms for mass and metres per second for speed, which give energy in joules. Convert other units before entering them." },
+      { question: "What is the difference between energy and momentum?", answer: "Momentum is mass times speed and grows in step with speed; kinetic energy grows with the square of speed. Momentum has direction; energy does not." },
+      { question: "How do I convert from kilometres per hour?", answer: "Divide by 3.6 to get metres per second. For example, 72 kilometres per hour is 20 metres per second." },
+      { question: "Does this work for very high speeds?", answer: "It uses the classical formula, accurate for everyday speeds. Near the speed of light, a relativistic calculation is needed instead." },
+      { question: "What is a joule?", answer: "The SI unit of energy. One joule is roughly the energy needed to lift a small apple one metre; a moving car carries hundreds of thousands of joules." },
+      { question: "Can kinetic energy be negative?", answer: "No. Mass is positive and speed squared is never negative, so kinetic energy is always zero or positive." },
+    ],
+  },
+
+  // -------------------------------------------------------------------------
+  // Data Transfer Time
+  // -------------------------------------------------------------------------
+  "data-transfer-time": {
+    whoFor:
+      "This data transfer time calculator is for developers, system administrators, and anyone moving large files who wants to know how long it will take before they start. It is handy for planning backups and restores, estimating cloud uploads and downloads, sizing migration windows, and sanity-checking whether a connection is fast enough for the job. Enter a file size and a connection speed and it returns the transfer time in seconds, minutes, and hours, with the tricky bits-versus-bytes conversion handled for you.",
+    howItWorks:
+      "The catch with transfer times is that file sizes are quoted in bytes (megabytes, gigabytes) while connection speeds are quoted in bits per second (megabits per second). There are 8 bits in a byte, so a file's size in megabits is eight times its size in megabytes. The calculator converts your file size to megabits, then divides by the connection speed in megabits per second to get the time in seconds, and also shows that in minutes and hours. It uses the common decimal convention where one gigabyte is 1,000 megabytes, matching how internet speeds and storage are usually advertised.",
+    workedExample:
+      "Suppose you upload a 1 gigabyte file over a 100 megabit per second connection. One gigabyte is 1,000 megabytes, which is 8,000 megabits. Divide 8,000 by 100 and you get 80 seconds, or about 1.3 minutes, in the best case. A 500 megabyte file over a slower 50 megabit per second link works out the same way: 500 megabytes is 4,000 megabits, divided by 50 gives 80 seconds again. Notice how halving both the size and the speed leaves the time unchanged - time depends on the ratio of the two.",
+    regionalVariations:
+      "Bits, bytes, and the math are the same everywhere, but advertised internet speeds and their real-world delivery vary widely by country and provider. Some markets quote speeds in megabits per second, others promote gigabit fibre, and actual throughput often falls short of the headline figure because of contention and distance. There is also a labelling subtlety: storage and network marketing use decimal units (1 gigabyte = 1,000 megabytes), while operating systems sometimes report binary units (1 gibibyte = 1,024 mebibytes), which makes measured sizes look slightly different. This calculator uses the decimal convention.",
+    commonMistakes: [
+      "Confusing megabits with megabytes. Speeds are in megabits per second and sizes in megabytes; forgetting the factor of 8 makes the estimate eight times wrong.",
+      "Expecting to hit the advertised speed. Real transfers run slower because of protocol overhead, latency, network congestion, and disk read or write limits.",
+      "Ignoring the slowest link in the chain. The transfer is limited by whichever is slower - your connection, the server, or the storage device.",
+      "Mixing decimal and binary units. A file shown as some number of gibibytes by the operating system is slightly larger in megabytes than the round decimal figure.",
+      "Forgetting overhead on many small files, where per-file delays can dwarf the raw transfer time of the data itself.",
+    ],
+    deadlines:
+      "When you are planning a maintenance or migration window, treat the calculated time as a best case and add generous margin. Real throughput is commonly a good deal lower than the line speed, especially over long distances or busy networks, and transferring many small files is far slower than one large file of the same total size. Test with a representative sample before committing to a schedule, and where possible run large transfers during off-peak hours to get closer to the theoretical figure.",
+    faqs: [
+      { question: "Why multiply the file size by 8?", answer: "File sizes are in bytes and connection speeds are in bits. There are 8 bits in a byte, so converting megabytes to megabits means multiplying by 8." },
+      { question: "Why is my real transfer slower than this estimate?", answer: "The figure is a theoretical best case. Protocol overhead, latency, network congestion, and disk speed all reduce the throughput you actually achieve." },
+      { question: "What is the difference between Mbps and MBps?", answer: "Mbps is megabits per second (used for connection speeds); MBps is megabytes per second (eight times larger). Mixing them up is the most common error." },
+      { question: "Does it use decimal or binary units?", answer: "Decimal, where one gigabyte is 1,000 megabytes, matching how internet speeds and storage are advertised. Operating systems sometimes report binary units, which differ slightly." },
+      { question: "How do I estimate a download instead of an upload?", answer: "The same way - enter the file size and your download speed. Just use the relevant direction's speed, since upload and download rates often differ." },
+      { question: "Why are many small files slower than one big file?", answer: "Each file adds setup and overhead, and storage seeks between them. The raw data math is the same, but the real time is much higher." },
+      { question: "What speed should I enter?", answer: "Use your real measured throughput if you have it; the advertised line speed gives an optimistic best case rather than a realistic one." },
+      { question: "Can I speed up a large transfer?", answer: "Compressing the data, using more parallel streams, or moving to a faster link or closer server all help. The slowest link in the chain sets the limit." },
+    ],
+  },
 };

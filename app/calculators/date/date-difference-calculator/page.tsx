@@ -12,6 +12,8 @@ export default function DateDifferenceCalculator() {
     weeks: number;
     months: number;
     years: number;
+    hours: number;
+    minutes: number;
   } | null>(null);
 
   useEffect(() => {
@@ -30,8 +32,10 @@ export default function DateDifferenceCalculator() {
     const weeks = Math.floor(days / 7);
     const months = Math.floor(days / 30.44);
     const years = Math.floor(days / 365.25);
+    const hours = days * 24;
+    const minutes = hours * 60;
 
-    setResult({ days, weeks, months, years });
+    setResult({ days, weeks, months, years, hours, minutes });
   };
 
   return (
@@ -90,22 +94,30 @@ export default function DateDifferenceCalculator() {
           {result && (
             <div className="mt-8 p-6 bg-indigo-50 rounded-lg border-2 border-indigo-200">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Time Difference</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-white rounded-lg">
-                  <div className="text-sm text-gray-600 mb-1">Days</div>
-                  <div className="text-3xl font-bold text-indigo-600">{result.days}</div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div className="p-4 bg-white rounded-lg text-center border border-indigo-100">
+                  <div className="text-2xl font-bold text-indigo-600">{result.years.toLocaleString()}</div>
+                  <div className="text-xs font-medium text-gray-500 mt-1">Years</div>
                 </div>
-                <div className="p-4 bg-white rounded-lg">
-                  <div className="text-sm text-gray-600 mb-1">Weeks</div>
-                  <div className="text-3xl font-bold text-indigo-600">{result.weeks}</div>
+                <div className="p-4 bg-white rounded-lg text-center border border-indigo-100">
+                  <div className="text-2xl font-bold text-indigo-600">{result.months.toLocaleString()}</div>
+                  <div className="text-xs font-medium text-gray-500 mt-1">Months</div>
                 </div>
-                <div className="p-4 bg-white rounded-lg">
-                  <div className="text-sm text-gray-600 mb-1">Months</div>
-                  <div className="text-3xl font-bold text-indigo-600">{result.months}</div>
+                <div className="p-4 bg-white rounded-lg text-center border border-indigo-100">
+                  <div className="text-2xl font-bold text-indigo-600">{result.weeks.toLocaleString()}</div>
+                  <div className="text-xs font-medium text-gray-500 mt-1">Weeks</div>
                 </div>
-                <div className="p-4 bg-white rounded-lg">
-                  <div className="text-sm text-gray-600 mb-1">Years</div>
-                  <div className="text-3xl font-bold text-indigo-600">{result.years}</div>
+                <div className="p-4 bg-white rounded-lg text-center border border-indigo-100">
+                  <div className="text-2xl font-bold text-purple-600">{result.days.toLocaleString()}</div>
+                  <div className="text-xs font-medium text-gray-500 mt-1">Days</div>
+                </div>
+                <div className="p-4 bg-white rounded-lg text-center border border-indigo-100">
+                  <div className="text-2xl font-bold text-purple-600">{result.hours.toLocaleString()}</div>
+                  <div className="text-xs font-medium text-gray-500 mt-1">Hours</div>
+                </div>
+                <div className="p-4 bg-white rounded-lg text-center border border-indigo-100">
+                  <div className="text-2xl font-bold text-purple-600">{result.minutes.toLocaleString()}</div>
+                  <div className="text-xs font-medium text-gray-500 mt-1">Minutes</div>
                 </div>
               </div>
             </div>

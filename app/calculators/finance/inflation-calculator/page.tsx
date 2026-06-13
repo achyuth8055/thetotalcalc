@@ -3,16 +3,19 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function InflationCalculator() {
   const [amount, setAmount] = useState(1000);
   const [inflationRate, setInflationRate] = useState(3);
   const [years, setYears] = useState(20);
   const [mode, setMode] = useState<"future" | "past">("future");
+  const [showTable, setShowTable] = useState(false);
   const [result, setResult] = useState<{
     adjustedAmount: number;
     purchasingPowerLost: number;
     purchasingPowerPct: number;
+    chartData: { year: number; nominal: number; real: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -27,6 +30,15 @@ export default function InflationCalculator() {
   const calculate = () => {
     if (amount <= 0 || years <= 0) return;
     const factor = Math.pow(1 + inflationRate / 100, years);
+    const chartData: { year: number; nominal: number; real: number }[] = [];
+    for (let yr = 0; yr <= years; yr++) {
+      chartData.push({
+        year: yr,
+        nominal: amount,
+        real: Math.round(amount * Math.pow(1 + inflationRate / 100, yr) * 100) / 100,
+      });
+    }
+
     if (mode === "future") {
       // What will today's amount be worth in the future?
       const futureEquivalent = amount * factor;
@@ -34,6 +46,7 @@ export default function InflationCalculator() {
         adjustedAmount: futureEquivalent,
         purchasingPowerLost: futureEquivalent - amount,
         purchasingPowerPct: ((factor - 1) * 100),
+        chartData,
       });
     } else {
       // What was a past amount worth in today's dollars?
@@ -42,6 +55,7 @@ export default function InflationCalculator() {
         adjustedAmount: todayEquivalent,
         purchasingPowerLost: todayEquivalent - amount,
         purchasingPowerPct: ((factor - 1) * 100),
+        chartData,
       });
     }
   };
@@ -138,6 +152,62 @@ export default function InflationCalculator() {
           )}
         </div>
       </div>
+
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Purchasing Power Over Time</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ Download PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <AreaChart data={result.chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="year" tick={{ fontSize: 11 }} tickFormatter={(v) => `Yr ${v}`} />
+              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v: number) => v >= 1000000 ? '$'+(v/1000000).toFixed(1)+'M' : v >= 1000 ? '$'+(v/1000).toFixed(0)+'k' : '$'+v} />
+              <Tooltip formatter={(value: number, name: string) => [new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(value), name === "nominal" ? "Today's Value" : "Future Cost"]} labelFormatter={(label) => `Year ${label}`} />
+              <Area type="monotone" dataKey="real" stroke="#f97316" fill="#f97316" fillOpacity={0.3} name="real" />
+              <Area type="monotone" dataKey="nominal" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} name="nominal" />
+            </AreaChart>
+          </ResponsiveContainer>
+          <div className="flex gap-4 mt-2 justify-center">
+            <span className="flex items-center gap-1 text-xs text-gray-500"><span className="inline-block w-3 h-3 rounded-sm bg-blue-500"></span>Today's Value</span>
+            <span className="flex items-center gap-1 text-xs text-gray-500"><span className="inline-block w-3 h-3 rounded-sm bg-orange-500"></span>Future Cost</span>
+          </div>
+
+          <div className="mt-4 border-t border-gray-100 pt-4">
+            <button
+              onClick={() => setShowTable((v) => !v)}
+              className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg"
+            >
+              {showTable ? "Hide year-by-year table" : "Show year-by-year table"}
+            </button>
+            {showTable && (
+              <div className="mt-3 overflow-x-auto">
+                <table className="w-full text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="text-left p-2 border border-gray-200 font-semibold text-gray-600">Year</th>
+                      <th className="text-right p-2 border border-gray-200 font-semibold text-gray-600">Today's Value</th>
+                      <th className="text-right p-2 border border-gray-200 font-semibold text-gray-600">Future Cost</th>
+                      <th className="text-right p-2 border border-gray-200 font-semibold text-gray-600">Inflation Impact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {result.chartData.map(({ year, nominal, real }) => (
+                      <tr key={year} className="hover:bg-gray-50">
+                        <td className="p-2 border border-gray-200 text-gray-700">{year}</td>
+                        <td className="p-2 border border-gray-200 text-right text-blue-700">{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(nominal)}</td>
+                        <td className="p-2 border border-gray-200 text-right text-orange-600">{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(real)}</td>
+                        <td className="p-2 border border-gray-200 text-right text-red-600">+{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(real - nominal)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={<p>Inflation erodes purchasing power over time. This calculator shows either how much you'll need in the future to match today's buying power, or what a historical amount is worth in today's dollars.</p>}

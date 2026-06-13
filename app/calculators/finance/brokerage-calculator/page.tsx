@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CurrencySelector from "@/components/CurrencySelector";
 import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 export default function BrokerageCalculator() {
   const [tradeType, setTradeType] = useState<"buy" | "sell">("buy");
@@ -317,6 +318,34 @@ export default function BrokerageCalculator() {
           )}
         </div>
       </div>
+
+      {result && (() => {
+        const barData = [
+          { name: "Brokerage", value: result.brokerage },
+          { name: "STT", value: result.stt },
+          { name: "Exchange", value: result.exchangeTxn },
+          { name: "GST", value: result.gst },
+          { name: "SEBI", value: result.sebiCharges },
+          { name: "Stamp Duty", value: result.stampDuty },
+        ];
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Trading Charges Breakdown</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={barData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="name" tick={{ fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => formatCurrency(v)} />
+                <Tooltip formatter={(value: number) => [formatCurrency(value), "Charge"]} />
+                <Bar dataKey="value" name="Charge Amount" fill="#ef4444" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       {/* Explanation Section */}
       <CalculatorLayout

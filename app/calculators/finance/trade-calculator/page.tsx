@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Cell } from "recharts";
 
 export default function TradeCalculator() {
   const [buyPrice, setBuyPrice] = useState(100);
@@ -17,6 +18,8 @@ export default function TradeCalculator() {
     netProfit: number;
     roi: number;
     breakEven: number;
+    barData: { name: string; value: number }[];
+    scenarioData: { price: string; profit: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -36,7 +39,21 @@ export default function TradeCalculator() {
     const roi = totalInvested > 0 ? (netProfit / totalInvested) * 100 : 0;
     const breakEven = shares > 0 ? (totalInvested + sellFee) / shares : 0;
 
-    setResult({ totalInvested, totalRevenue, grossProfit, netProfit, roi, breakEven });
+    const barData = [
+      { name: "Cost", value: totalInvested },
+      { name: "Revenue", value: totalRevenue },
+      { name: "Net P&L", value: netProfit },
+    ];
+
+    const scenarioData: { price: string; profit: number }[] = [];
+    for (let i = 0; i <= 10; i++) {
+      const sp = sellPrice * (0.5 + i * 0.1);
+      const rev = sp * shares - sellFee;
+      const profit = rev - totalInvested;
+      scenarioData.push({ price: '$' + sp.toFixed(2), profit: Math.round(profit * 100) / 100 });
+    }
+
+    setResult({ totalInvested, totalRevenue, grossProfit, netProfit, roi, breakEven, barData, scenarioData });
   };
 
   const fmt = (v: number) =>
@@ -138,6 +155,45 @@ export default function TradeCalculator() {
           )}
         </div>
       </div>
+
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Trade Overview</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ Download PDF</button>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <p className="text-xs text-gray-500 mb-2 font-medium">Cost vs Revenue vs Net P&L</p>
+              <ResponsiveContainer width="100%" height={220}>
+                <BarChart data={result.barData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis dataKey="name" tick={{ fontSize: 11 }} />
+                  <YAxis tick={{ fontSize: 11 }} tickFormatter={(v: number) => v >= 1000000 ? '$'+(v/1000000).toFixed(1)+'M' : v >= 1000 ? '$'+(v/1000).toFixed(0)+'k' : '$'+v} />
+                  <Tooltip formatter={(value: number) => [new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(value), "Amount"]} />
+                  <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                    {result.barData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={index === 0 ? "#ef4444" : index === 1 ? "#22c55e" : entry.value >= 0 ? "#6366f1" : "#f97316"} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div>
+              <p className="text-xs text-gray-500 mb-2 font-medium">Profit at Different Sell Prices</p>
+              <ResponsiveContainer width="100%" height={220}>
+                <LineChart data={result.scenarioData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <XAxis dataKey="price" tick={{ fontSize: 9 }} interval={1} />
+                  <YAxis tick={{ fontSize: 11 }} tickFormatter={(v: number) => v >= 1000 ? '$'+(v/1000).toFixed(0)+'k' : '$'+v} />
+                  <Tooltip formatter={(value: number) => [new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(value), "Net Profit"]} />
+                  <Line type="monotone" dataKey="profit" stroke="#6366f1" strokeWidth={2} dot={{ r: 3 }} activeDot={{ r: 5 }} name="profit" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      )}
 
       <CalculatorLayout title="" description=""
         explanation={<p>Enter your buy and sell prices, quantity, and any commissions to instantly see profit/loss, ROI, and your break-even point. Works for stocks, crypto, options, forex, and any traded asset.</p>}

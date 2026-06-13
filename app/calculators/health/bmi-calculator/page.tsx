@@ -238,6 +238,26 @@ export default function BMICalculator() {
                   {result.bmi >= 30 && "Consult with a healthcare provider for personalized weight management advice."}
                 </p>
               </div>
+
+              {/* Ideal Weight Range */}
+              {(() => {
+                const hM = unit === "imperial" ? height * 2.54 / 100 : height / 100;
+                const minKg = Math.round(18.5 * hM * hM);
+                const maxKg = Math.round(24.9 * hM * hM);
+                const minLbs = Math.round(minKg * 2.20462);
+                const maxLbs = Math.round(maxKg * 2.20462);
+                return (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-xs text-gray-700">
+                    <p className="font-semibold text-green-700 mb-1">Healthy weight range for your height:</p>
+                    <p className="text-sm font-bold text-green-800">
+                      {unit === "metric"
+                        ? `${minKg} kg – ${maxKg} kg`
+                        : `${minLbs} lbs – ${maxLbs} lbs`}
+                    </p>
+                    <p className="text-gray-500 mt-0.5">Based on BMI 18.5 – 24.9</p>
+                  </div>
+                );
+              })()}
             </div>
           )}
         </div>

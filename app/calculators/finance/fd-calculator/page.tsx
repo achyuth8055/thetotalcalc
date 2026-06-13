@@ -5,6 +5,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CurrencySelector from "@/components/CurrencySelector";
 import { detectCurrency, formatCurrency as formatCurrencyUtil, CurrencyConfig, CURRENCIES } from "@/lib/currency";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 export default function FDCalculator() {
   const [depositAmount, setDepositAmount] = useState(100000);
@@ -18,6 +19,7 @@ export default function FDCalculator() {
     interestEarned: number;
     principalPercentage: number;
     interestPercentage: number;
+    chartData: { period: string; principal: number; interest: number }[];
   } | null>(null);
 
   useEffect(() => {
@@ -52,11 +54,21 @@ export default function FDCalculator() {
       const principalPercentage = (P / maturityAmount) * 100;
       const interestPercentage = (interestEarned / maturityAmount) * 100;
 
+      const chartData = Array.from({ length: t + 1 }, (_, y) => {
+        const balance = y === 0 ? P : P * Math.pow(1 + r / n, n * y);
+        return {
+          period: `Year ${y}`,
+          principal: Math.round(P),
+          interest: Math.max(0, Math.round(balance - P)),
+        };
+      });
+
       setResult({
         maturityAmount: Math.round(maturityAmount),
         interestEarned: Math.round(interestEarned),
         principalPercentage,
         interestPercentage,
+        chartData,
       });
     }
   };
@@ -287,6 +299,27 @@ export default function FDCalculator() {
           )}
         </div>
       </div>
+
+      {/* Growth Chart */}
+      {result && result.chartData.length > 1 && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">FD Growth Over Time</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <AreaChart data={result.chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="period" tick={{ fontSize: 11 }} />
+              <YAxis tickFormatter={(v) => formatCurrency(v)} tick={{ fontSize: 11 }} width={80} />
+              <Tooltip formatter={(value: number, name: string) => [formatCurrency(value), name]} />
+              <Legend />
+              <Area type="monotone" dataKey="principal" stackId="1" stroke="#3b82f6" fill="#93c5fd" name="Principal" />
+              <Area type="monotone" dataKey="interest" stackId="1" stroke="#22c55e" fill="#86efac" name="Interest Earned" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {/* Explanation Section */}
       <CalculatorLayout

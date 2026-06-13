@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, RadialBarChart, RadialBar } from "recharts";
 
 export default function HomeAffordabilityCalculator() {
   const [annualIncome, setAnnualIncome] = useState(90000);
@@ -207,6 +208,64 @@ export default function HomeAffordabilityCalculator() {
           )}
         </div>
       </div>
+
+      {result && (
+        <div className="mt-6 grid md:grid-cols-2 gap-6">
+          {/* Bar chart: monthly budget breakdown */}
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Monthly Budget Breakdown</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={[{
+                name: "Budget",
+                "Housing (PITI)": Math.round(result.monthlyPITI),
+                "Other Debts": monthlyDebts,
+                "Remaining": Math.max(0, Math.round(annualIncome / 12 - result.monthlyPITI - monthlyDebts)),
+              }]} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                <YAxis tickFormatter={(v) => `$${v.toLocaleString()}`} tick={{ fontSize: 11 }} />
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, ""]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Bar dataKey="Housing (PITI)" fill="#22c55e" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Other Debts" fill="#f97316" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Remaining" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Pie chart: down payment vs loan amount */}
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">Purchase Price Breakdown</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <PieChart>
+                <Pie
+                  data={[
+                    { name: "Down Payment", value: Math.max(0, downPayment) },
+                    { name: "Loan Amount", value: Math.max(0, result.loanAmount) },
+                  ]}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={55}
+                  outerRadius={85}
+                  paddingAngle={3}
+                  dataKey="value"
+                >
+                  <Cell fill="#22c55e" />
+                  <Cell fill="#3b82f6" />
+                </Pie>
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, ""]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
 
       <CalculatorLayout
         title=""

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 
 const fmt = (v: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(v);
@@ -319,6 +320,42 @@ export default function PMICalculator() {
           )}
         </div>
       </div>
+
+      {result && result.ltv > 0 && (() => {
+        const loanAmount = homePrice - downPayment;
+        const termMonths = loanTerm * 12;
+        const r = interestRate / 100 / 12;
+        const monthlyPayment = calcMonthlyPayment(loanAmount, interestRate, termMonths);
+        const chartData: { year: number; LTV: number }[] = [];
+        let balance = loanAmount;
+        for (let m = 0; m <= termMonths; m += 12) {
+          const ltv = homePrice > 0 ? Math.round((balance / homePrice) * 100 * 10) / 10 : 0;
+          chartData.push({ year: m / 12, LTV: ltv });
+          for (let i = 0; i < 12 && m + i < termMonths; i++) {
+            const interest = balance * r;
+            const principal = monthlyPayment - interest;
+            balance = Math.max(0, balance - principal);
+          }
+        }
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">LTV Ratio Over Time</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="year" tick={{ fontSize: 11 }} label={{ value: "Year", position: "insideBottom", offset: -2, fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${v}%`} domain={[0, 100]} />
+                <Tooltip formatter={(value: number) => [`${value}%`, "LTV"]} />
+                <ReferenceLine y={80} stroke="#ef4444" strokeDasharray="4 4" label={{ value: "80% PMI threshold", position: "insideTopRight", fontSize: 11, fill: "#ef4444" }} />
+                <Area type="monotone" dataKey="LTV" stroke="#3b82f6" fill="#bfdbfe" fillOpacity={0.5} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       <CalculatorLayout title="" description=""
         explanation={

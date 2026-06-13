@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const HSA_LIMITS = { individual: 4300, family: 8550, catchUp: 1000 };
 
@@ -271,6 +272,38 @@ export default function HSACalculator() {
           )}
         </div>
       </div>
+
+      {result && (() => {
+        const r = investmentReturn / 100;
+        const chartData: { year: number; Contributions: number; "Investment Growth": number }[] = [];
+        let runningBalance = 0;
+        let runningContribs = 0;
+        for (let y = 1; y <= yearsTo65; y++) {
+          runningContribs += result.annualInvested;
+          runningBalance = (runningBalance + result.annualInvested) * (1 + r);
+          const growth = Math.max(0, runningBalance - runningContribs);
+          chartData.push({ year: y, Contributions: Math.round(runningContribs), "Investment Growth": Math.round(growth) });
+        }
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-gray-700">HSA Balance Growth to Age 65</h3>
+              <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+            </div>
+            <ResponsiveContainer width="100%" height={220}>
+              <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="year" tick={{ fontSize: 11 }} label={{ value: "Year", position: "insideBottom", offset: -2, fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]} />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Area type="monotone" dataKey="Contributions" stackId="1" stroke="#3b82f6" fill="#bfdbfe" />
+                <Area type="monotone" dataKey="Investment Growth" stackId="1" stroke="#22c55e" fill="#bbf7d0" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })()}
 
       <CalculatorLayout title="" description=""
         explanation={

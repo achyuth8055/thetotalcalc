@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const fmt = (v: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(v);
@@ -250,6 +251,55 @@ export default function FreelanceTaxCalculator() {
           )}
         </div>
       </div>
+
+      {result && (() => {
+        const totalIncome = freelanceIncome + w2Income;
+        const netTakeHome = Math.max(0, totalIncome - result.totalTax);
+        const pieData = [
+          { name: "Self-Employment Tax", value: Math.round(result.seTax), color: "#f97316" },
+          { name: "Federal Income Tax", value: Math.round(result.federalTax), color: "#ef4444" },
+          { name: "State Income Tax", value: Math.round(result.stateTax), color: "#9ca3af" },
+          { name: "Net Take-Home", value: Math.round(netTakeHome), color: "#22c55e" },
+        ].filter((d) => d.value > 0);
+        const QUARTERLY_DISPLAY = [
+          { q: "Q1 (Apr 15)", amount: result.quarterlyPayment },
+          { q: "Q2 (Jun 17)", amount: result.quarterlyPayment },
+          { q: "Q3 (Sep 16)", amount: result.quarterlyPayment },
+          { q: "Q4 (Jan 15)", amount: result.quarterlyPayment },
+        ];
+        return (
+          <>
+            <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-semibold text-gray-700">Income Breakdown</h3>
+                <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+              </div>
+              <ResponsiveContainer width="100%" height={220}>
+                <PieChart>
+                  <Pie data={pieData} cx="50%" cy="50%" innerRadius={55} outerRadius={90} dataKey="value" nameKey="name">
+                    {pieData.map((entry, index) => (
+                      <Cell key={index} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, undefined]} />
+                  <Legend wrapperStyle={{ fontSize: 12 }} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">Estimated Quarterly Payments</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {QUARTERLY_DISPLAY.map(({ q, amount }) => (
+                  <div key={q} className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-center">
+                    <div className="text-xs text-gray-500 mb-1">{q}</div>
+                    <div className="font-bold text-amber-700 text-sm">{fmt(amount)}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        );
+      })()}
 
       <CalculatorLayout title="" description=""
         explanation={

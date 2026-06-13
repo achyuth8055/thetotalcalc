@@ -115,6 +115,48 @@ export default function GradeCalculator() {
               {result < 0 && (
                 <p className="flex items-center gap-2 text-green-600 font-medium"><FaRegCheckCircle aria-hidden className="flex-shrink-0" /> You&apos;ve already achieved your desired grade!</p>
               )}
+
+              {/* Grade progress visualization */}
+              <div className="mt-5 space-y-3">
+                <div>
+                  <div className="flex justify-between text-xs text-gray-600 mb-1">
+                    <span>Current Grade</span>
+                    <span>{parseFloat(currentGrade).toFixed(1)}%</span>
+                  </div>
+                  <div className="bg-gray-200 rounded-full h-4 overflow-hidden">
+                    <div
+                      className="bg-blue-500 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(100, Math.max(0, parseFloat(currentGrade) || 0))}%` }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-xs text-gray-600 mb-1">
+                    <span>Target Grade</span>
+                    <span>{parseFloat(desiredGrade).toFixed(1)}%</span>
+                  </div>
+                  <div className="bg-gray-200 rounded-full h-4 overflow-hidden">
+                    <div
+                      className="bg-green-500 h-full rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min(100, Math.max(0, parseFloat(desiredGrade) || 0))}%` }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-xs text-gray-600 mb-1">
+                    <span>Score Needed on Final</span>
+                    <span className={result > 100 ? "text-red-600 font-semibold" : result < 0 ? "text-green-600 font-semibold" : "text-purple-600 font-semibold"}>
+                      {result < 0 ? "0%" : result > 100 ? ">100%" : `${result.toFixed(1)}%`}
+                    </span>
+                  </div>
+                  <div className="bg-gray-200 rounded-full h-4 overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-300 ${result > 100 ? "bg-red-500" : result < 0 ? "bg-green-500" : "bg-purple-500"}`}
+                      style={{ width: `${Math.min(100, Math.max(0, result))}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, RadialBarChart, RadialBar } from "recharts";
 
 interface DebtItem {
   id: number;
@@ -234,6 +235,67 @@ export default function DebtToIncomeCalculator() {
           )}
         </div>
       </div>
+
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">DTI Ratio Gauge</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+          </div>
+          {/* Front-end DTI bar */}
+          <div className="mb-4">
+            <div className="flex justify-between text-xs text-gray-500 mb-1">
+              <span>Front-End DTI: {result.frontEndDTI.toFixed(1)}%</span>
+              <span>Limit: 28% (Conv.) / 31% (FHA)</span>
+            </div>
+            <div className="flex h-6 rounded-full overflow-hidden bg-gray-100">
+              <div className={`h-full transition-all ${result.frontEndDTI <= 28 ? 'bg-green-500' : result.frontEndDTI <= 31 ? 'bg-yellow-500' : 'bg-red-500'}`}
+                style={{ width: `${Math.min(100, (result.frontEndDTI / 50) * 100)}%` }} />
+            </div>
+          </div>
+          {/* Back-end DTI bar */}
+          <div>
+            <div className="flex justify-between text-xs text-gray-500 mb-1">
+              <span>Back-End DTI: {result.backEndDTI.toFixed(1)}%</span>
+              <span>Limit: 36-43% (Conv.) / 43% (FHA)</span>
+            </div>
+            <div className="flex h-6 rounded-full overflow-hidden bg-gray-100">
+              <div className={`h-full transition-all ${result.backEndDTI <= 36 ? 'bg-green-500' : result.backEndDTI <= 43 ? 'bg-yellow-500' : 'bg-red-500'}`}
+                style={{ width: `${Math.min(100, (result.backEndDTI / 60) * 100)}%` }} />
+            </div>
+          </div>
+          {/* Scale labels */}
+          <div className="flex justify-between text-xs text-gray-400 mt-2">
+            <span>0%</span><span>Excellent</span><span>Good</span><span>Fair</span><span>High Risk</span>
+          </div>
+        </div>
+      )}
+
+      {result && (
+        <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">Monthly Payment Breakdown</h3>
+            <button onClick={() => window.print()} className="print:hidden text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">↓ PDF</button>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={[{
+              name: "Monthly Budget",
+              "Housing Costs": result.housingDebt,
+              "Other Debts": result.totalDebt - result.housingDebt,
+              "Available Income": Math.max(0, grossIncome - result.totalDebt),
+            }]} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis tickFormatter={(v) => `$${v.toLocaleString()}`} tick={{ fontSize: 11 }} />
+              <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, ""]} />
+              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <Bar dataKey="Housing Costs" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="Other Debts" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="Available Income" fill="#10b981" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       <CalculatorLayout
         title=""

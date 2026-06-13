@@ -635,6 +635,42 @@ export const calculators: Calculator[] = [
     keywords: ["unit conversion", "convert", "measurement"],
     color: "orange",
   },
+  {
+    id: "fuel-cost",
+    name: "Fuel Cost Calculator",
+    description: "Estimate the gas or petrol cost of a trip from distance, fuel economy, and price",
+    category: "everyday",
+    slug: "fuel-cost-calculator",
+    keywords: ["fuel cost calculator", "gas cost calculator", "petrol cost calculator", "trip fuel calculator", "cost of driving", "fuel cost per mile"],
+    color: "orange",
+  },
+  {
+    id: "electricity-cost",
+    name: "Electricity Cost Calculator",
+    description: "Work out the daily, monthly, and yearly running cost of any appliance",
+    category: "everyday",
+    slug: "electricity-cost-calculator",
+    keywords: ["electricity cost calculator", "appliance running cost", "energy cost calculator", "kwh cost", "power consumption cost"],
+    color: "orange",
+  },
+  {
+    id: "unit-price",
+    name: "Unit Price Calculator",
+    description: "Compare two products by price per unit to find the better deal",
+    category: "everyday",
+    slug: "unit-price-calculator",
+    keywords: ["unit price calculator", "cost per unit", "price comparison", "which is cheaper", "price per ounce", "bulk buy comparison"],
+    color: "orange",
+  },
+  {
+    id: "work-hours",
+    name: "Work Hours Calculator",
+    description: "Add up hours worked from start and end times, minus breaks, with optional pay",
+    category: "everyday",
+    slug: "work-hours-calculator",
+    keywords: ["work hours calculator", "time card calculator", "hours worked calculator", "timesheet calculator", "hours between two times"],
+    color: "orange",
+  },
 
   // Developer Calculators
   {

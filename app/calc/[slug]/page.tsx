@@ -70,9 +70,10 @@ export default function GenericCalculatorPage({ params }: { params: { slug: stri
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl px-margin-mobile py-stack-lg md:px-margin-desktop">
+      <main className="mx-auto max-w-5xl px-margin-mobile py-stack-lg md:px-margin-desktop">
         <DynamicCalculator def={def} />
 
+        <div className="mx-auto max-w-3xl">
         {def.faqs && def.faqs.length > 0 && (
           <section className="mt-stack-lg flex flex-col gap-stack-md">
             <h2 className="text-headline-md text-primary">Frequently Asked Questions</h2>
@@ -97,6 +98,7 @@ export default function GenericCalculatorPage({ params }: { params: { slug: stri
           region={def.region as DirectoryRegion}
           currentHref={path}
         />
+        </div>
       </main>
     </>
   );

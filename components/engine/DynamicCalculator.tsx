@@ -6,8 +6,18 @@ import { runCalculator, type FormatLocale } from "@/lib/engine/evaluate";
 import { evaluate, type EvalContext, type EvalValue } from "@/lib/engine/expr";
 import { localeForRegion } from "@/lib/regions";
 import ResultPanel from "./ResultPanel";
+import MobileResultBar from "@/components/calculators/MobileResultBar";
+import type { EligibilityStatus } from "@/lib/engine/types";
 
 type InputState = Record<string, number | string | boolean>;
+
+// Map an eligibility outcome to the mobile bar's tone + short label.
+const STATUS_BAR: Record<EligibilityStatus, { label: string; tone: "positive" | "warning" | "neutral" }> = {
+  likely_qualifies: { label: "Likely qualifies", tone: "positive" },
+  may_qualify: { label: "May qualify", tone: "warning" },
+  likely_not_eligible: { label: "Likely not eligible", tone: "neutral" },
+  need_local_review: { label: "Needs local review", tone: "warning" },
+};
 
 function initialState(def: CalculatorDefinition): InputState {
   const s: InputState = {};
@@ -48,6 +58,20 @@ export default function DynamicCalculator({ def }: { def: CalculatorDefinition }
   const update = (name: string, value: number | string | boolean) =>
     setState((prev) => ({ ...prev, [name]: value }));
 
+  // Derive the headline figure + outcome for the sticky mobile result bar.
+  const primary = result.outputs.find((o) => o.primary) ?? result.outputs[0];
+  const statusBar = result.status ? STATUS_BAR[result.status] : null;
+  const barProps = statusBar
+    ? {
+        label: "Eligibility",
+        value: statusBar.label,
+        tone: statusBar.tone,
+        sub: primary ? `${primary.label}: ${primary.formatted}` : undefined,
+      }
+    : primary
+    ? { label: primary.label, value: primary.formatted, tone: "primary" as const }
+    : null;
+
   return (
     <div className="premium-card relative overflow-hidden rounded-xl bg-white p-stack-lg">
       <div className="summary-accent absolute left-0 right-0 top-0" />
@@ -61,17 +85,34 @@ export default function DynamicCalculator({ def }: { def: CalculatorDefinition }
         )}
       </div>
 
-      {/* Inputs */}
-      <div className="space-y-5">
-        {visibleInputs.map((f) => (
-          <Field key={f.name} field={f} value={state[f.name]} onChange={update} />
-        ))}
+      {/* Side-by-side on desktop (inputs left, live results right); stacked on
+          mobile with the results directly beneath the inputs. */}
+      <div className="grid gap-stack-lg lg:grid-cols-[1fr_360px]">
+        {/* Inputs */}
+        <div className="space-y-5">
+          {visibleInputs.map((f) => (
+            <Field key={f.name} field={f} value={state[f.name]} onChange={update} />
+          ))}
+        </div>
+
+        {/* Results (live) */}
+        <div
+          id="results"
+          className="mt-stack-lg scroll-mt-24 border-t border-surface-border pt-stack-lg lg:mt-0 lg:border-l lg:border-t-0 lg:pl-stack-lg lg:pt-0"
+        >
+          <ResultPanel def={def} result={result} />
+        </div>
       </div>
 
-      {/* Results (live) */}
-      <div className="mt-stack-lg border-t border-surface-border pt-stack-lg">
-        <ResultPanel def={def} result={result} />
-      </div>
+      {barProps && (
+        <MobileResultBar
+          label={barProps.label}
+          value={barProps.value}
+          sub={barProps.sub}
+          tone={barProps.tone}
+          targetId="results"
+        />
+      )}
     </div>
   );
 }

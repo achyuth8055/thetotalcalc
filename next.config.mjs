@@ -11,6 +11,18 @@ const nextConfig = {
   compiler: {
     removeConsole: { exclude: ["error", "warn"] },
   },
+  // Consolidate duplicate calculators so they don't cannibalize each other in
+  // search. The /calculators/finance/... URL is the canonical compound-interest
+  // page; the old /calc/compound-interest path 301s into it.
+  async redirects() {
+    return [
+      {
+        source: "/calc/compound-interest",
+        destination: "/calculators/finance/compound-interest-calculator",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

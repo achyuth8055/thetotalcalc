@@ -110,9 +110,11 @@ export const metadata: Metadata = {
     creator: '@onlinecalc',
     images: ['/calculator.png'],
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
+  // Set NEXT_PUBLIC_GSC_VERIFICATION in your environment to the token Google
+  // Search Console gives you. When unset, no (broken) verification tag is emitted.
+  ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } }
+    : {}),
   alternates: {
     canonical: 'https://online-calc.com',
   },
@@ -130,11 +132,6 @@ const jsonLd = {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'USD',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '2547',
   },
 };
 

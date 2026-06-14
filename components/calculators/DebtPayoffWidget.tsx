@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PrimaryResult, ResultCard, ResultRow, fmtUSD } from "./ui";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import MobileResultBar from "./MobileResultBar";
 
 interface Debt {
   id: number;
@@ -179,7 +180,7 @@ export default function DebtPayoffWidget() {
         </div>
 
         {result.payable ? (
-          <div className="grid gap-stack-md md:grid-cols-2">
+          <div id="results" className="grid gap-stack-md md:grid-cols-2 scroll-mt-24">
             <PrimaryResult label="Debt-free in" value={describeMonths(result.months)} note={`Paying ${fmtUSD(debts.reduce((s, d) => s + d.minPayment, 0) + extra)}/mo total`} />
             <div>
               <ResultRow label="Total balance" value={fmtUSD(totalBalance)} />
@@ -221,6 +222,12 @@ export default function DebtPayoffWidget() {
           </div>
         )}
       </div>
+      <MobileResultBar
+        label="Debt-free in"
+        value={result.payable ? describeMonths(result.months) : "Not on track"}
+        sub={result.payable ? `Total interest ${fmtUSD(result.totalInterest)}` : "Increase your payment"}
+        tone={result.payable ? "positive" : "warning"}
+      />
     </ResultCard>
   );
 }

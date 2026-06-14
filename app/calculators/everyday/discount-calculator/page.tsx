@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import MobileResultBar from "@/components/calculators/MobileResultBar";
 
 export default function DiscountCalculator() {
   const [originalPrice, setOriginalPrice] = useState("100");
@@ -108,7 +109,7 @@ export default function DiscountCalculator() {
           </button>
 
           {result && (
-            <div className="mt-8 p-6 bg-green-50 rounded-lg border-2 border-green-200">
+            <div id="results" className="mt-8 p-6 bg-green-50 rounded-lg border-2 border-green-200 scroll-mt-24">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Results</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-3 border-b border-green-200">
@@ -168,6 +169,14 @@ export default function DiscountCalculator() {
           )}
         </div>
       </CalculatorLayout>
+
+      <MobileResultBar
+        label="Final price"
+        value={result ? `$${result.finalPrice.toFixed(2)}` : ""}
+        sub={result ? `You save $${result.savings.toFixed(2)}` : undefined}
+        tone="positive"
+        show={!!result}
+      />
     </div>
   );
 }

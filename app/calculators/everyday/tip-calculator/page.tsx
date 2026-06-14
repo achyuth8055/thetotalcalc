@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import MobileResultBar from "@/components/calculators/MobileResultBar";
 
 export default function TipCalculator() {
   const [billAmount, setBillAmount] = useState("100");
@@ -155,7 +156,7 @@ export default function TipCalculator() {
           </button>
 
           {result && (
-            <div className="mt-8 space-y-4">
+            <div id="results" className="mt-8 space-y-4 scroll-mt-24">
               <div className="p-6 bg-blue-50 rounded-lg border-2 border-blue-200">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Bill Summary</h3>
                 <div className="space-y-3">
@@ -223,6 +224,13 @@ export default function TipCalculator() {
           )}
         </div>
       </CalculatorLayout>
+
+      <MobileResultBar
+        label="Total bill"
+        value={result ? `$${result.totalBill.toFixed(2)}` : ""}
+        sub={result ? `$${result.perPerson.toFixed(2)} per person` : undefined}
+        show={!!result}
+      />
     </div>
   );
 }

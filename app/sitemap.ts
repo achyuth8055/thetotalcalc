@@ -58,7 +58,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // Engine-driven calculators (use lastVerified as lastmod)
-  const enginePages: MetadataRoute.Sitemap = ENGINE_CALCULATORS.map((def) => ({
+  // "compound-interest" is excluded: that URL now 301s to the canonical
+  // /calculators/finance/compound-interest-calculator page, so a redirecting
+  // URL must not appear in the sitemap.
+  const enginePages: MetadataRoute.Sitemap = ENGINE_CALCULATORS.filter(
+    (def) => def.slug !== "compound-interest"
+  ).map((def) => ({
     url: `${baseUrl}${engineHref(def.slug)}`,
     lastModified: def.lastVerified ? new Date(def.lastVerified) : now,
     changeFrequency: "monthly",

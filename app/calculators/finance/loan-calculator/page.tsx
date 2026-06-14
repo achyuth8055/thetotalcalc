@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import MobileResultBar from "@/components/calculators/MobileResultBar";
 
 interface MonthRow {
   month: number;
@@ -240,7 +241,7 @@ export default function LoanCalculator() {
 
         {/* Results */}
         {result && (
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200 print:shadow-none print:border-gray-300">
+          <div id="results" className="scroll-mt-24 bg-white rounded-xl shadow-md p-6 border border-gray-200 print:shadow-none print:border-gray-300">
             <div className="space-y-4">
               <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-5 text-center">
                 <div className="text-sm text-gray-600 mb-1">Monthly Payment</div>
@@ -484,6 +485,13 @@ export default function LoanCalculator() {
           </div>
         </div>
       </CalculatorLayout>
+
+      <MobileResultBar
+        label="Monthly payment"
+        value={result ? fmt(result.monthly) : ""}
+        sub={result ? `Total interest ${fmt(result.totalInterest)}` : undefined}
+        show={!!result}
+      />
     </div>
   );
 }

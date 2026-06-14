@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
+import { JsonLd, faqSchema } from "@/components/seo/JsonLd";
 
 interface CalculatorLayoutProps {
   title: string;
@@ -52,6 +53,10 @@ export default function CalculatorLayout({
           </div>
           <div className="max-w-none">{explanation}</div>
         </div>
+      )}
+
+      {faqs && faqs.length > 0 && (
+        <JsonLd id="schema-faq" data={faqSchema(faqs)} />
       )}
 
       {faqs && faqs.length > 0 && (

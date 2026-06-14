@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { FaExclamationTriangle } from "react-icons/fa";
+
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description:
+    "The terms of service for OnlineCalc. Read the rules, disclaimers, and conditions for using our free online calculators and tools.",
+  alternates: { canonical: "/terms" },
+};
 
 export default function TermsOfServicePage() {
   return (

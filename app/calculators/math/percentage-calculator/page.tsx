@@ -108,7 +108,7 @@ export default function PercentageCalculator() {
         </div>
 
         {/* Right Side - Results */}
-        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        <div id="results" className="scroll-mt-24 bg-white rounded-xl shadow-md p-6 border border-gray-200">
           {results && (
             <div className="space-y-4">
               {/* Percentage Of */}

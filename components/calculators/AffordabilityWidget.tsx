@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { NumberField, PrimaryResult, ResultCard, ResultRow, fmtUSD } from "./ui";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import MobileResultBar from "./MobileResultBar";
 
 // Estimate the home price you can afford from income, debts, and a back-end DTI.
 export default function AffordabilityWidget() {
@@ -37,7 +38,7 @@ export default function AffordabilityWidget() {
           <NumberField label="Debt-to-income limit" value={dti} onChange={setDti} min={20} max={50} step={1} suffix="%" help="Lenders commonly use 36% (back-end). Some allow up to 43-45%." />
         </div>
 
-        <div className="flex flex-col gap-stack-md">
+        <div id="results" className="flex flex-col gap-stack-md scroll-mt-24">
           <PrimaryResult label="Estimated home price you can afford" value={fmtUSD(maxPrice)} note={`Based on a ${dti}% debt-to-income limit`} />
           <div>
             <ResultRow label="Max total monthly debt" value={fmtUSD(maxTotalDebt)} />
@@ -77,6 +78,11 @@ export default function AffordabilityWidget() {
           )}
         </div>
       </div>
+      <MobileResultBar
+        label="Home price you can afford"
+        value={fmtUSD(maxPrice)}
+        sub={`Max loan ${fmtUSD(maxLoan)}`}
+      />
     </ResultCard>
   );
 }

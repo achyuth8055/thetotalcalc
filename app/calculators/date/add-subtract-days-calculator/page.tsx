@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import MobileResultBar from "@/components/calculators/MobileResultBar";
+import { scrollToResults } from "@/lib/ui/scrollToResults";
 
 export default function AddSubtractDaysCalculator() {
   const [startDate, setStartDate] = useState("");
@@ -98,20 +100,29 @@ export default function AddSubtractDaysCalculator() {
           </div>
 
           <button
-            onClick={calculate}
+            onClick={() => {
+              calculate();
+              requestAnimationFrame(() => scrollToResults());
+            }}
             className="w-full bg-primary-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors"
           >
             Calculate
           </button>
 
           {result && (
-            <div className="mt-8 p-6 bg-indigo-50 rounded-lg border-2 border-indigo-200 text-center">
+            <div id="results" className="mt-8 p-6 bg-indigo-50 rounded-lg border-2 border-indigo-200 text-center scroll-mt-24">
               <h3 className="text-xl font-bold text-gray-900 mb-2">Result</h3>
               <div className="text-2xl font-bold text-indigo-600">{result}</div>
             </div>
           )}
         </div>
       </CalculatorLayout>
+
+      <MobileResultBar
+        label="Result date"
+        value={result || ""}
+        show={!!result}
+      />
     </div>
   );
 }

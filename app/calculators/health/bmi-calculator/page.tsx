@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import MobileResultBar from "@/components/calculators/MobileResultBar";
 
 export default function BMICalculator() {
   const [weight, setWeight] = useState(70);
@@ -169,7 +170,7 @@ export default function BMICalculator() {
         </div>
 
         {/* Right Side - Results */}
-        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        <div id="results" className="scroll-mt-24 bg-white rounded-xl shadow-md p-6 border border-gray-200">
           {result && (
             <div className="space-y-5">
               {/* BMI Value - Highlight */}
@@ -289,11 +290,23 @@ export default function BMICalculator() {
         faqs={[
           {
             question: "What is a healthy BMI?",
-            answer: "A healthy BMI for adults is typically between 18.5 and 24.9. However, BMI doesn't account for muscle mass, bone density, or overall body composition.",
+            answer: "A healthy BMI for most adults falls between 18.5 and 24.9. Below 18.5 is considered underweight, 25 to 29.9 is overweight, and 30 or above is classified as obese. These ranges apply to adults aged 20 and over, regardless of sex.",
+          },
+          {
+            question: "How do I calculate my BMI?",
+            answer: "BMI is your weight in kilograms divided by the square of your height in metres (BMI = kg / m²). In imperial units, multiply your weight in pounds by 703, then divide by your height in inches squared. This calculator does both for you automatically.",
           },
           {
             question: "Is BMI accurate?",
-            answer: "BMI is a useful screening tool but has limitations. It doesn't distinguish between muscle and fat, and may not be accurate for athletes, elderly, or pregnant women.",
+            answer: "BMI is a useful, quick screening tool but it has limits. It doesn't distinguish muscle from fat or account for bone density, so it can overestimate body fat in athletes and underestimate it in older adults. Treat it as a starting point, not a diagnosis.",
+          },
+          {
+            question: "What is a good BMI for my age?",
+            answer: "For adults, the healthy 18.5–24.9 range is not adjusted by age. For children and teens, BMI is interpreted using age- and sex-specific percentile charts instead, so this adult calculator should not be used for anyone under 20.",
+          },
+          {
+            question: "How can I lower my BMI?",
+            answer: "BMI falls as you reduce body weight through a sustained calorie deficit and regular activity. A gradual loss of about 0.5–1 kg (1–2 lb) per week is widely considered safe. Use our Calorie and BMR calculators to set realistic daily targets.",
           },
         ]}
         relatedCalculators={[
@@ -304,6 +317,19 @@ export default function BMICalculator() {
       >
         <div></div>
       </CalculatorLayout>
+
+      <MobileResultBar
+        label="Your BMI"
+        value={result ? `${result.bmi.toFixed(1)} · ${result.category}` : ""}
+        tone={
+          result?.category === "Normal weight"
+            ? "positive"
+            : result?.category === "Obese"
+            ? "neutral"
+            : "warning"
+        }
+        show={!!result}
+      />
     </div>
   );
 }

@@ -445,6 +445,23 @@ export default function CompoundInterestCalculator() {
             <li>n = Compounding frequency per year</li>
             <li>t = Time in years</li>
           </ul>
+          <div className="mt-6 border-t border-gray-200 pt-4">
+            <h3 className="text-sm font-semibold text-gray-900 mb-1">Sources &amp; methodology</h3>
+            <p className="text-xs text-gray-600">
+              This calculator uses the standard compound-interest formula above. Results are
+              estimates; actual investment returns are not guaranteed and may be higher or lower.
+              Reference:{" "}
+              <a
+                href="https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator"
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                className="text-primary underline"
+              >
+                Compound Interest Calculator, U.S. SEC (Investor.gov)
+              </a>
+              .
+            </p>
+          </div>
         </div>
       </CalculatorLayout>
     </div>

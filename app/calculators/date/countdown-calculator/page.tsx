@@ -51,12 +51,54 @@ export default function CountdownCalculator() {
         title="Countdown Calculator"
         description="Count down the days, hours, minutes, and seconds until a future date."
         explanation={
-          <div>
-            <p>Use this countdown calculator for birthdays, vacations, weddings, holidays, or any important event.</p>
+          <div className="space-y-4">
+            <p>
+              A countdown turns a far-off date into something you can feel. Enter any future date and time - a birthday,
+              a wedding, a holiday, a product launch, a retirement day, or an exam - and this calculator breaks the time
+              remaining into days, hours, minutes, and seconds. Seeing the gap counted out in real units makes planning
+              concrete: a deadline that is &quot;sometime next month&quot; becomes &quot;26 days and 14 hours,&quot; which is far easier to
+              act on.
+            </p>
+            <h3 className="text-lg font-semibold text-gray-900">How it works</h3>
+            <p>
+              The calculator compares your target date and time with the current moment on your device and finds the
+              difference. It then divides that gap into whole days first, then the leftover hours, then the leftover
+              minutes, and finally the remaining seconds. That is why the hours, minutes, and seconds shown are the
+              remainder after the larger units are taken out, not the total time expressed in each unit. If the target you
+              choose has already passed, the countdown simply reads zero across the board, since there is no future time
+              left to count.
+            </p>
+            <h3 className="text-lg font-semibold text-gray-900">A worked example</h3>
+            <p>
+              Suppose it is noon on 1 December and you set a target of midnight on 25 December. The countdown shows 23
+              days, 12 hours, 0 minutes, and 0 seconds remaining. As time passes, the seconds and minutes tick down first,
+              then the hours, and each midnight removes another day. Because the calculation is based on the clock on your
+              own device, the figure reflects your local time, which is what you want for a personal countdown.
+            </p>
+            <h3 className="text-lg font-semibold text-gray-900">Tips for an accurate countdown</h3>
+            <ul className="list-disc space-y-1 pl-6">
+              <li>Set the exact time, not just the date. Counting to midnight is different from counting to a 9 a.m. start, and the hours and minutes will reflect that.</li>
+              <li>Check that your device clock and time zone are correct, since the countdown is measured against your local time.</li>
+              <li>For an event in another time zone, convert its start to your own local time first, so the remaining hours are right for you.</li>
+              <li>Remember that the hours, minutes, and seconds are what is left after the full days are counted, not the entire span re-expressed.</li>
+            </ul>
+            <h3 className="text-lg font-semibold text-gray-900">Countdown or total duration?</h3>
+            <p>
+              A countdown answers &quot;how much time is left until this moment?&quot; If you instead want the total span between
+              two fixed dates expressed several ways - in weeks or months, say - the Date Difference Calculator is the
+              better tool. Use a countdown for anticipation and deadlines, and a date difference for measuring a known
+              start and end.
+            </p>
           </div>
         }
         faqs={[
-          { question: "How accurate is the countdown?", answer: "The countdown is calculated to the second based on your current time and the target date you set." },
+          { question: "How accurate is the countdown?", answer: "It is calculated to the second from your device's current time and the target you set. Because it reads your local clock, make sure your device time and time zone are correct for the most reliable result." },
+          { question: "What happens if the target date has already passed?", answer: "The countdown shows zero days, hours, minutes, and seconds. There is no negative count, because a countdown only measures time remaining until a future moment." },
+          { question: "Why are the hours and minutes smaller than I expected?", answer: "The hours, minutes, and seconds shown are the remainder after the whole days are removed, not the entire duration expressed in each unit. So a 23-day countdown shows the leftover hours within the final partial day, not 552 hours in total." },
+          { question: "Does it handle events in a different time zone?", answer: "The countdown is based on your local time. For an event happening in another time zone, convert its start time to your own local time before entering it, so the remaining time is accurate for where you are." },
+          { question: "Can I use it for recurring events like birthdays?", answer: "Yes. Set the next occurrence of the date as your target. Once that date passes, set the following year's date to start a fresh countdown to the next one." },
+          { question: "Does the countdown update on its own?", answer: "The figure is calculated from the current moment each time you run it, giving an accurate snapshot of the time remaining. For a continuously ticking display, refresh or recalculate, and the days, hours, minutes, and seconds will reflect the latest time." },
+          { question: "Why set a time as well as a date?", answer: "Many deadlines hinge on the hour, not just the day. A submission due at 9 a.m. leaves far less time than one due at midnight on the same date. Setting the exact target time makes the hours and minutes remaining meaningful rather than approximate." },
         ]}
         relatedCalculators={[
           { name: "Age Calculator", href: "/calculators/date/age-calculator" },

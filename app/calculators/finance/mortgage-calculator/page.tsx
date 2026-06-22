@@ -458,7 +458,7 @@ export default function MortgageCalculator() {
           {
             question: "What is a good down payment?",
             answer:
-              "20% is the traditional benchmark — it avoids Private Mortgage Insurance (PMI). However, many loans allow 3–5% down for first-time buyers.",
+              "20% is the traditional benchmark - it avoids Private Mortgage Insurance (PMI). However, many loans allow 3–5% down for first-time buyers.",
           },
           {
             question: "How does the loan term affect my payment?",
@@ -468,12 +468,12 @@ export default function MortgageCalculator() {
           {
             question: "How do I download the amortization schedule?",
             answer:
-              "Click the 'Download PDF' button to open your browser's print dialog. Select 'Save as PDF' — the year-by-year breakdown is included automatically.",
+              "Click the 'Download PDF' button to open your browser's print dialog. Select 'Save as PDF' - the year-by-year breakdown is included automatically.",
           },
           {
             question: "Why does so much of my early payment go to interest?",
             answer:
-              "Early in the loan the balance is highest, so interest charges are largest. Over time, each payment chips away more at principal — this is amortization.",
+              "Early in the loan the balance is highest, so interest charges are largest. Over time, each payment chips away more at principal - this is amortization.",
           },
         ]}
         relatedCalculators={[
@@ -490,7 +490,7 @@ export default function MortgageCalculator() {
             <p className="text-xs text-gray-500 mt-2">P = loan amount · r = monthly rate · n = total months</p>
           </div>
           <p className="text-sm text-gray-700">
-            Early payments are mostly interest; as years pass, more goes to principal — this is called amortization. Switch to the Month-by-Month tab to see exactly how each payment splits.
+            Early payments are mostly interest; as years pass, more goes to principal - this is called amortization. Switch to the Month-by-Month tab to see exactly how each payment splits.
           </p>
         </div>
       </CalculatorLayout>

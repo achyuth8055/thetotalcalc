@@ -13,6 +13,7 @@ export type DetectableRegion =
   | "AU"
   | "RU"
   | "EU"
+  | "JP"
   | "Global";
 
 const PREF_KEY = "preferredRegion"; // explicit user choice (wins)
@@ -29,6 +30,7 @@ export const REGION_NAMES: Record<DetectableRegion, string> = {
   AU: "Australia",
   RU: "Russia",
   EU: "Europe",
+  JP: "Japan",
   Global: "All Regions",
 };
 
@@ -46,6 +48,7 @@ export const REGION_ORDER: DetectableRegion[] = [
   "AU",
   "RU",
   "EU",
+  "JP",
   "Global",
 ];
 
@@ -63,6 +66,7 @@ const COUNTRY_TO_REGION: Record<string, DetectableRegion> = {
   NZ: "NZ",
   AU: "AU",
   RU: "RU",
+  JP: "JP",
 };
 
 const CA_TIMEZONES = [
@@ -104,6 +108,7 @@ function timezoneRegion(): DetectableRegion {
     if (CA_TIMEZONES.includes(tz)) return "CA";
     if (tz.startsWith("America/")) return "US";
     if (tz.startsWith("Europe/")) return "EU";
+    if (tz === "Asia/Tokyo") return "JP";
   } catch {
     /* ignore */
   }

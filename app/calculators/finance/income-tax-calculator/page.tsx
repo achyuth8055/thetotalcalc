@@ -270,9 +270,9 @@ export default function IncomeTaxCalculator() {
       <CalculatorLayout title="" description=""
         explanation={<div><p className="mb-2">This calculator uses 2024 US federal tax brackets. It applies the standard deduction unless you enter higher itemized deductions.</p><p className="text-xs text-gray-500 mt-2">⚠️ This is an estimate only. State taxes, FICA, credits, and other factors are not included. Consult a tax professional for filing.</p></div>}
         faqs={[
-          { question: "What is the difference between effective and marginal tax rate?", answer: "Your marginal rate is the rate on your last dollar earned. Your effective rate is total tax divided by total income — usually much lower than marginal." },
+          { question: "What is the difference between effective and marginal tax rate?", answer: "Your marginal rate is the rate on your last dollar earned. Your effective rate is total tax divided by total income - usually much lower than marginal." },
           { question: "What is the standard deduction?", answer: "A flat amount the IRS lets you deduct without itemizing. In 2024 it's $14,600 for single filers and $29,200 for married filing jointly." },
-          { question: "Does this include state taxes?", answer: "No — this only estimates federal income tax. State tax rates vary significantly by state." },
+          { question: "Does this include state taxes?", answer: "No - this only estimates federal income tax. State tax rates vary significantly by state." },
         ]}
         relatedCalculators={[
           { name: "Paycheck Calculator", href: "/calculators/finance/paycheck-calculator" },
@@ -282,7 +282,7 @@ export default function IncomeTaxCalculator() {
       >
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-gray-900">How Tax Brackets Work</h2>
-          <p className="text-sm text-gray-700">The US uses a progressive tax system — you pay a lower rate on the first dollars earned and a higher rate only on income above each threshold. Only the income <em>within</em> each bracket is taxed at that rate.</p>
+          <p className="text-sm text-gray-700">The US uses a progressive tax system - you pay a lower rate on the first dollars earned and a higher rate only on income above each threshold. Only the income <em>within</em> each bracket is taxed at that rate.</p>
         </div>
       </CalculatorLayout>
     </div>

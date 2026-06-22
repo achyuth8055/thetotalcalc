@@ -468,7 +468,7 @@ export default function LoanCalculator() {
           {
             question: "Does this work for car loans?",
             answer:
-              "Yes — this is a generic amortizing loan calculator. Enter any loan amount, rate, and term. For car-specific features, also try our Car Loan EMI calculator.",
+              "Yes - this is a generic amortizing loan calculator. Enter any loan amount, rate, and term. For car-specific features, also try our Car Loan EMI calculator.",
           },
         ]}
         relatedCalculators={[

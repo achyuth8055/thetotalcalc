@@ -113,6 +113,101 @@ export default function UsChildTaxCreditPage() {
           <article className="flex flex-col gap-stack-lg md:col-span-6">
             <DynamicCalculator def={def} />
 
+            <section className="flex flex-col gap-stack-md text-body-md leading-relaxed text-on-surface-variant">
+              <div className="flex flex-col gap-stack-sm">
+                <h2 className="text-headline-md text-primary">How to use this calculator</h2>
+                <p>
+                  The estimator turns four pieces of information into a credit figure: your filing status, the number of
+                  qualifying children under 17, the number of other dependents, and your income. Two income boxes matter,
+                  and people often confuse them. Adjusted gross income (AGI) is your total income after adjustments, and it
+                  decides whether the credit starts to phase out at the top. Earned income is your wages and net
+                  self-employment income, and it decides how much of the credit can come back as a refund if your tax bill
+                  is small. Enter both honestly, because using one in place of the other is the most common reason an
+                  estimate comes out wrong.
+                </p>
+                <p>
+                  Once you enter those figures, the result splits into two numbers worth reading separately: the total
+                  credit you could claim, and the slice of it that could be refundable. The first reduces the tax you owe.
+                  The second can be paid to you as cash even when you owe little or no tax. Understanding why those two
+                  numbers differ is the whole point of the tool.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-stack-sm">
+                <h2 className="text-headline-md text-primary">The four tests a qualifying child must pass</h2>
+                <p>
+                  For the full $2,200 credit, a child has to meet every one of the IRS tests, not just one or two. Getting
+                  a single test wrong is enough to lose the credit for that child, so it is worth checking each:
+                </p>
+                <ul className="list-disc space-y-2 pl-6">
+                  <li>
+                    Age: the child must have been under 17 at the end of the tax year. A child who turned 17 during the
+                    year is over the limit for the main credit, though they may still bring the $500 Credit for Other
+                    Dependents.
+                  </li>
+                  <li>
+                    Relationship: the child must be your son, daughter, stepchild, foster child, sibling, half-sibling,
+                    step-sibling, or a descendant of any of these, such as a grandchild, niece, or nephew.
+                  </li>
+                  <li>
+                    Residency and support: the child must have lived with you for more than half the year and not have
+                    provided more than half of their own support.
+                  </li>
+                  <li>
+                    Identification: the child needs a Social Security number valid for work, issued before your return&apos;s
+                    due date. Without it, the child does not count for the main credit.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="flex flex-col gap-stack-sm">
+                <h2 className="text-headline-md text-primary">How the phase-out works</h2>
+                <p>
+                  The credit is generous well into the upper-middle class, but it does not last forever. Once your AGI
+                  passes $200,000 (or $400,000 if you are married filing jointly), the credit begins to taper. The
+                  reduction is mechanical: for every $1,000 of income above your threshold, and any part of a thousand
+                  counts as a whole step, you lose $50 of credit. A married couple earning $410,000 with two children sees
+                  ten steps of reduction, or $500 off their $4,400 base, leaving $3,900. Most families never reach the
+                  phase-out at all, which is why the refundable rules below usually matter more.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-stack-sm">
+                <h2 className="text-headline-md text-primary">A worked example of the refundable part</h2>
+                <p>
+                  Suppose you have three qualifying children and $20,000 of earned income, with little or no income tax
+                  owed. The base credit is three times $2,200, or $6,600, but a low tax bill means most of it cannot be
+                  used as a non-refundable credit. The refundable Additional Child Tax Credit steps in, and it is capped two
+                  ways. First, it cannot exceed $1,700 per child, here a ceiling of $5,100. Second, it is limited to 15% of
+                  earned income above $2,500. With $20,000 of earnings, that is 15% of $17,500, or $2,625. The lower of the
+                  two caps wins, so the refund is limited to about $2,625, not the $5,100 ceiling. The lesson is that earned
+                  income, not just the number of children, drives the refund for lower-income families.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-stack-sm">
+                <h2 className="text-headline-md text-primary">Other dependents and state credits</h2>
+                <p>
+                  Dependents who do not meet the under-17 test, such as a 17-year-old, a college student, or a qualifying
+                  relative you support, can still bring the $500 Credit for Other Dependents. It is non-refundable, so it
+                  reduces tax you owe but is not paid out as cash, yet families routinely forget to claim it. Separately,
+                  more than a dozen states run their own child tax credit on top of the federal one, and several are
+                  refundable, so it is worth checking your state&apos;s rules after you estimate the federal figure.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-stack-sm">
+                <h2 className="text-headline-md text-primary">Mistakes that quietly cost families money</h2>
+                <ul className="list-disc space-y-2 pl-6">
+                  <li>Assuming the whole $2,200 per child comes back as cash. Only up to $1,700 is refundable, and only if earnings support it.</li>
+                  <li>Using take-home pay instead of AGI to judge the phase-out, which can over- or under-state the credit.</li>
+                  <li>Overlooking the $500 Credit for Other Dependents for older children and qualifying relatives.</li>
+                  <li>Confusing this credit with the Child and Dependent Care Credit, which offsets childcare costs and can be claimed alongside it for the same child.</li>
+                  <li>Letting a child&apos;s Social Security number lapse or filing after the due date without the required identification.</li>
+                </ul>
+              </div>
+            </section>
+
             {def.faqs && def.faqs.length > 0 && (
               <section className="flex flex-col gap-stack-md">
                 <h3 className="text-headline-md text-primary">Frequently Asked Questions</h3>

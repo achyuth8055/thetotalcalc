@@ -208,7 +208,7 @@ export default function CarLeaseVsBuyCalculator() {
           {result && (
             <div className="space-y-4">
               <div className={`border-2 rounded-lg p-4 text-center ${result.cheaper === "buy" ? "bg-green-50 border-green-200" : "bg-blue-50 border-blue-200"}`}>
-                <div className="text-sm text-gray-600 mb-1">{yearsToKeep}-Year Total — {result.cheaper === "lease" ? "Leasing" : "Buying"} is Cheaper</div>
+                <div className="text-sm text-gray-600 mb-1">{yearsToKeep}-Year Total - {result.cheaper === "lease" ? "Leasing" : "Buying"} is Cheaper</div>
                 <div className={`text-4xl font-bold ${result.cheaper === "buy" ? "text-green-600" : "text-blue-600"}`}>
                   {fmt(result.difference)}
                 </div>
@@ -304,7 +304,7 @@ export default function CarLeaseVsBuyCalculator() {
         faqs={[
           { question: "Why does leasing often appear cheaper short-term but more expensive long-term?", answer: "Lease payments are lower because you're only paying for the car's depreciation during the lease period, not its full value. But you never build equity, and perpetual leasing means perpetual payments. After 5–7 years of ownership, a purchased car is paid off and you drive for free." },
           { question: "What is a residual value?", answer: "The residual value is the car's projected worth at the end of the lease term, set by the leasing company. A higher residual (e.g., 55–60%) means lower monthly payments because you're financing less depreciation. It also determines the buyout price if you want to purchase the car at lease end." },
-          { question: "How do mileage overages affect lease cost?", answer: "Most leases allow 10,000–15,000 miles per year. Going over typically costs $0.15–$0.30 per mile. At $0.25/mile, driving 5,000 miles over a 3-year lease costs an extra $3,750 — significantly affecting the lease vs buy calculation." },
+          { question: "How do mileage overages affect lease cost?", answer: "Most leases allow 10,000–15,000 miles per year. Going over typically costs $0.15–$0.30 per mile. At $0.25/mile, driving 5,000 miles over a 3-year lease costs an extra $3,750 - significantly affecting the lease vs buy calculation." },
           { question: "Is it ever smarter to lease?", answer: "Leasing makes sense if you want a new car every 2–3 years, drive under the mileage limit, don't want maintenance worries (new car warranty), or use it for business (lease payments may be deductible). If you keep cars long-term or drive many miles, buying is almost always better financially." },
         ]}
         relatedCalculators={[
@@ -315,7 +315,7 @@ export default function CarLeaseVsBuyCalculator() {
       >
         <div className="space-y-3">
           <h2 className="text-2xl font-bold text-gray-900">Understanding Lease vs Buy</h2>
-          <p className="text-sm text-gray-700">This calculator uses the concept of total cost of ownership — every dollar you spend (or avoid spending) over the comparison period.</p>
+          <p className="text-sm text-gray-700">This calculator uses the concept of total cost of ownership - every dollar you spend (or avoid spending) over the comparison period.</p>
         </div>
       </CalculatorLayout>
     </div>

@@ -457,7 +457,7 @@ export default function CompoundInterestPage() {
           <div className="premium-card rounded-xl p-6 flex flex-col gap-5">
             <h2 className="text-headline-sm text-primary">Results</h2>
 
-            {/* Future Value — hero number */}
+            {/* Future Value - hero number */}
             <div className="rounded-xl bg-surface-container-low p-4 text-center">
               <p className="text-label-md text-on-surface-variant">
                 Future Value
@@ -767,7 +767,7 @@ export default function CompoundInterestPage() {
               {
                 question: "What is compound interest?",
                 answer:
-                  "Compound interest is interest calculated on both the initial principal and the accumulated interest from previous periods. Unlike simple interest, it causes your balance to grow exponentially over time — often described as 'interest on interest'. The more frequently it compounds, the faster your money grows.",
+                  "Compound interest is interest calculated on both the initial principal and the accumulated interest from previous periods. Unlike simple interest, it causes your balance to grow exponentially over time - often described as 'interest on interest'. The more frequently it compounds, the faster your money grows.",
               },
               {
                 question: "How does compounding frequency affect my returns?",
@@ -782,7 +782,7 @@ export default function CompoundInterestPage() {
               {
                 question: "Does making regular monthly contributions make a big difference?",
                 answer:
-                  "Yes — dramatically so. Even modest monthly contributions benefit from compound growth over a long horizon. For example, $10,000 at 7% for 30 years grows to about $76k. Adding just $200/month turns that into ~$308k. This is because every contribution immediately starts compounding, and earlier contributions compound for more periods.",
+                  "Yes - dramatically so. Even modest monthly contributions benefit from compound growth over a long horizon. For example, $10,000 at 7% for 30 years grows to about $76k. Adding just $200/month turns that into ~$308k. This is because every contribution immediately starts compounding, and earlier contributions compound for more periods.",
               },
               {
                 question: "Is this calculator suitable for retirement planning?",

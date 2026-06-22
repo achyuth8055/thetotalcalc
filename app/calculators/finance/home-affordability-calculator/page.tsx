@@ -272,13 +272,13 @@ export default function HomeAffordabilityCalculator() {
         description=""
         explanation={
           <div>
-            <p className="mb-4">The home affordability calculator uses two standard underwriting rules. The <strong>28% front-end rule</strong> says your monthly housing costs (principal, interest, taxes, insurance — PITI) should not exceed 28% of your gross monthly income. The <strong>36% back-end rule</strong> says your total monthly debt payments should not exceed 36% of gross income. Your maximum home price is determined by whichever limit is lower.</p>
+            <p className="mb-4">The home affordability calculator uses two standard underwriting rules. The <strong>28% front-end rule</strong> says your monthly housing costs (principal, interest, taxes, insurance - PITI) should not exceed 28% of your gross monthly income. The <strong>36% back-end rule</strong> says your total monthly debt payments should not exceed 36% of gross income. Your maximum home price is determined by whichever limit is lower.</p>
             <p>A higher down payment directly increases how much home you can afford because it reduces the loan amount and monthly P&I payment. Improving your credit score can also lower your interest rate and expand your budget significantly.</p>
           </div>
         }
         faqs={[
           { question: "What is the 28/36 rule?", answer: "The 28/36 rule is a common guideline used by lenders. It states that no more than 28% of your gross monthly income should go to housing costs (front-end ratio), and no more than 36% should go to all debt payments combined (back-end ratio)." },
-          { question: "What does PITI mean?", answer: "PITI stands for Principal, Interest, Taxes, and Insurance — the four components of a typical monthly mortgage payment. This calculator includes all four in the affordability assessment." },
+          { question: "What does PITI mean?", answer: "PITI stands for Principal, Interest, Taxes, and Insurance - the four components of a typical monthly mortgage payment. This calculator includes all four in the affordability assessment." },
           { question: "Is PMI included?", answer: "Private Mortgage Insurance (PMI) is not included. If your down payment is less than 20%, you may owe an additional 0.5–1% of the loan annually, which would reduce the maximum home price you can afford." },
           { question: "How can I afford more house?", answer: "You can afford more home by increasing your income, reducing existing monthly debts, saving a larger down payment, or securing a lower interest rate by improving your credit score." },
         ]}

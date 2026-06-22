@@ -185,7 +185,7 @@ export default function DebtToIncomeCalculator() {
                   {result.backEndDTI.toFixed(1)}%
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
-                  {result.backEndDTI < 36 ? "Excellent — well within limits" : result.backEndDTI <= 43 ? "Acceptable — near conventional limit" : "High — may affect loan approval"}
+                  {result.backEndDTI < 36 ? "Excellent - well within limits" : result.backEndDTI <= 43 ? "Acceptable - near conventional limit" : "High - may affect loan approval"}
                 </div>
               </div>
 
@@ -226,9 +226,9 @@ export default function DebtToIncomeCalculator() {
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm">
                 <div className="font-semibold text-blue-800 mb-1">DTI Benchmarks</div>
                 <div className="space-y-1 text-xs text-blue-700">
-                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-green-500 inline-block"></span> Under 36% — Excellent</div>
-                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> 36–43% — Acceptable</div>
-                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-red-500 inline-block"></span> Over 43% — High risk</div>
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-green-500 inline-block"></span> Under 36% - Excellent</div>
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> 36–43% - Acceptable</div>
+                  <div className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-red-500 inline-block"></span> Over 43% - High risk</div>
                 </div>
               </div>
             </div>

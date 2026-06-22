@@ -319,7 +319,7 @@ export default function FourOhOneKCalculator() {
         <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
           {result.moneyLeftOnTable > 0 && (
             <div className="mb-3 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2 text-sm text-amber-800 font-medium">
-              Employer match: {fmt(result.employerAnnualContribution)}/yr — don&apos;t leave this money on the table!
+              Employer match: {fmt(result.employerAnnualContribution)}/yr - don&apos;t leave this money on the table!
             </div>
           )}
           <div className="flex items-center justify-between mb-3">
@@ -359,13 +359,13 @@ export default function FourOhOneKCalculator() {
         description=""
         explanation={
           <div>
-            <p className="mb-4">A 401(k) is an employer-sponsored retirement savings plan that lets you contribute pre-tax dollars, reducing your taxable income today. Your investments grow tax-deferred until withdrawal in retirement. Many employers offer a matching contribution — free money that dramatically accelerates your balance.</p>
-            <p className="mb-2">The <strong>2025 IRS contribution limit</strong> is $23,500 (under 50) or $31,000 (50 and older, including $7,500 catch-up). The tax savings shown assume a 22% federal marginal rate — your actual savings depend on your specific tax situation.</p>
+            <p className="mb-4">A 401(k) is an employer-sponsored retirement savings plan that lets you contribute pre-tax dollars, reducing your taxable income today. Your investments grow tax-deferred until withdrawal in retirement. Many employers offer a matching contribution - free money that dramatically accelerates your balance.</p>
+            <p className="mb-2">The <strong>2025 IRS contribution limit</strong> is $23,500 (under 50) or $31,000 (50 and older, including $7,500 catch-up). The tax savings shown assume a 22% federal marginal rate - your actual savings depend on your specific tax situation.</p>
           </div>
         }
         faqs={[
-          { question: "How much should I contribute to my 401(k)?", answer: "At minimum, contribute enough to capture your full employer match — that's an immediate 50–100% return. Beyond that, aim for 10–15% of your salary including the match. Max out if you can." },
-          { question: "What is an employer match?", answer: "An employer match means your employer contributes to your 401(k) based on what you contribute, up to a limit. A common structure is '50% match on up to 6% of salary' — meaning if you put in 6%, your employer adds another 3%." },
+          { question: "How much should I contribute to my 401(k)?", answer: "At minimum, contribute enough to capture your full employer match - that's an immediate 50–100% return. Beyond that, aim for 10–15% of your salary including the match. Max out if you can." },
+          { question: "What is an employer match?", answer: "An employer match means your employer contributes to your 401(k) based on what you contribute, up to a limit. A common structure is '50% match on up to 6% of salary' - meaning if you put in 6%, your employer adds another 3%." },
           { question: "What is the 2025 contribution limit?", answer: "For 2025, you can contribute up to $23,500 to a 401(k). If you are 50 or older, the catch-up contribution limit brings the total to $31,000." },
           { question: "Traditional vs Roth 401(k)?", answer: "A traditional 401(k) reduces your taxes now (pre-tax contributions). A Roth 401(k) uses after-tax dollars but grows and withdraws tax-free. The better option depends on whether you expect to be in a higher or lower tax bracket in retirement." },
         ]}

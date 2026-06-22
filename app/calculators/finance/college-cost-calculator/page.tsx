@@ -362,16 +362,16 @@ export default function CollegeCostCalculator() {
         description=""
         explanation={
           <div>
-            <p className="mb-4">College costs have historically risen at 5–6% per year — significantly faster than general inflation. This means a school that costs $50,000/year today will cost over $81,000/year in 10 years at 5% inflation.</p>
+            <p className="mb-4">College costs have historically risen at 5–6% per year - significantly faster than general inflation. This means a school that costs $50,000/year today will cost over $81,000/year in 10 years at 5% inflation.</p>
             <p className="mb-3">This calculator projects total cost using compound inflation, then shows how your current savings and monthly contributions (growing at your expected investment return) compare to the projected need.</p>
-            <p>A 529 plan is the most tax-efficient way to save for college — contributions grow tax-free and withdrawals for qualified education expenses are federal tax-free.</p>
+            <p>A 529 plan is the most tax-efficient way to save for college - contributions grow tax-free and withdrawals for qualified education expenses are federal tax-free.</p>
           </div>
         }
         faqs={[
           { question: "What is a 529 plan and should I use one?", answer: "A 529 is a tax-advantaged savings plan designed for education expenses. Your contributions grow tax-free and qualified withdrawals (tuition, room & board, books) are federal tax-free. Most states offer an additional state income tax deduction for contributions. This makes 529 plans the most efficient vehicle for college savings for most families." },
           { question: "How much should I save monthly for college?", answer: "A common rule of thumb is to save 1/3 through savings (529 contributions), expect 1/3 from future income (scholarships, part-time work, parent income at time of college), and finance 1/3 through student loans. This calculator can help you determine the savings piece based on your specific situation." },
           { question: "What if my child doesn't go to college?", answer: "529 funds can be transferred to another family member without penalty, used for vocational schools, used for K-12 tuition (up to $10,000/year), or withdrawn for non-education purposes (subject to taxes and a 10% penalty on earnings). The SECURE 2.0 Act also allows rolling unused 529 funds into a Roth IRA for the beneficiary (subject to limits and rules)." },
-          { question: "Should I include financial aid in this estimate?", answer: "This calculator shows the gross cost before financial aid, scholarships, or grants. Financial aid depends heavily on your family's income, assets, and the specific school. Use this figure as a conservative upper bound — many students receive significant aid that can reduce the actual out-of-pocket cost substantially." },
+          { question: "Should I include financial aid in this estimate?", answer: "This calculator shows the gross cost before financial aid, scholarships, or grants. Financial aid depends heavily on your family's income, assets, and the specific school. Use this figure as a conservative upper bound - many students receive significant aid that can reduce the actual out-of-pocket cost substantially." },
         ]}
         relatedCalculators={[
           { name: "Investment Calculator", href: "/calculators/finance/investment-calculator" },

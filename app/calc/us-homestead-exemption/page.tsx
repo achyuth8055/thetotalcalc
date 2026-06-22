@@ -36,7 +36,7 @@ const STATE_DATA: Record<string, {
   ME: { name: "Maine", effRate: 1.09, base: 25000, senior: 0, seniorIncomeLimit: 0, veteran: 6000, disability: 0, notes: "$6k additional exemption for veterans." },
   MD: { name: "Maryland", effRate: 1.07, base: 0, senior: 0, seniorIncomeLimit: 0, veteran: 0, disability: 0, notes: "Maryland caps annual assessment increases at 10% (Homestead Tax Credit) rather than a fixed exemption." },
   MA: { name: "Massachusetts", effRate: 1.12, base: 100000, senior: 175000, seniorIncomeLimit: 0, veteran: 400, disability: 0, notes: "Clause 41C gives seniors up to $175k exemption." },
-  MI: { name: "Michigan", effRate: 1.54, base: 0, senior: 0, seniorIncomeLimit: 0, veteran: 0, disability: 0, notes: "Michigan's Principal Residence Exemption caps school millage — reduces school tax portion significantly." },
+  MI: { name: "Michigan", effRate: 1.54, base: 0, senior: 0, seniorIncomeLimit: 0, veteran: 0, disability: 0, notes: "Michigan's Principal Residence Exemption caps school millage - reduces school tax portion significantly." },
   MN: { name: "Minnesota", effRate: 1.02, base: 0, senior: 0, seniorIncomeLimit: 0, veteran: 0, disability: 0, notes: "Homestead classification reduces taxable market value by up to 33%. No fixed dollar exemption." },
   MS: { name: "Mississippi", effRate: 0.65, base: 300, senior: 0, seniorIncomeLimit: 0, veteran: 0, disability: 0, notes: "$300 homestead credit off tax bill." },
   MO: { name: "Missouri", effRate: 0.93, base: 0, senior: 30000, seniorIncomeLimit: 30000, veteran: 0, disability: 0, notes: "Senior Circuit Breaker for income ≤ $30k." },
@@ -53,7 +53,7 @@ const STATE_DATA: Record<string, {
   OK: { name: "Oklahoma", effRate: 0.85, base: 1000, senior: 0, seniorIncomeLimit: 0, veteran: 0, disability: 0, notes: "$1,000 homestead exemption; additional senior freeze program available." },
   OR: { name: "Oregon", effRate: 0.82, base: 0, senior: 0, seniorIncomeLimit: 26280, veteran: 0, disability: 0, notes: "Property Tax Deferral for seniors/disabled with income ≤ $26,280." },
   PA: { name: "Pennsylvania", effRate: 1.49, base: 0, senior: 0, seniorIncomeLimit: 45000, veteran: 0, disability: 0, notes: "Homestead exclusion varies by school district; Senior Rebate for income ≤ $45k." },
-  RI: { name: "Rhode Island", effRate: 1.53, base: 0, senior: 0, seniorIncomeLimit: 0, veteran: 0, disability: 0, notes: "Exemptions vary by municipality — check your city/town." },
+  RI: { name: "Rhode Island", effRate: 1.53, base: 0, senior: 0, seniorIncomeLimit: 0, veteran: 0, disability: 0, notes: "Exemptions vary by municipality - check your city/town." },
   SC: { name: "South Carolina", effRate: 0.55, base: 50000, senior: 0, seniorIncomeLimit: 0, veteran: 0, disability: 0, notes: "$50k exemption for legal residence." },
   SD: { name: "South Dakota", effRate: 1.14, base: 0, senior: 0, seniorIncomeLimit: 16000, veteran: 0, disability: 0, notes: "Freeze program for low-income seniors." },
   TN: { name: "Tennessee", effRate: 0.66, base: 25000, senior: 0, seniorIncomeLimit: 43560, veteran: 0, disability: 0, notes: "Income ≤ $43,560 required for base exemption." },
@@ -190,7 +190,7 @@ export default function HomesteadExemptionPage() {
           </nav>
           <h1 className="mb-unit text-headline-lg text-primary">Homestead Exemption Checker</h1>
           <p className="max-w-3xl text-body-md text-on-surface-variant">
-            Answer a few questions to see which property tax exemptions you likely qualify for in your state — including senior, veteran, and disability programs.
+            Answer a few questions to see which property tax exemptions you likely qualify for in your state - including senior, veteran, and disability programs.
           </p>
         </div>
       </header>
@@ -324,7 +324,7 @@ export default function HomesteadExemptionPage() {
               <div className="mb-stack-md rounded-xl border-2 border-surface-border bg-surface-container-low p-stack-md text-center">
                 <p className="text-headline-md text-primary">No standard homestead exemption in your state</p>
                 <p className="mt-unit text-body-md text-on-surface-variant">
-                  {stateName} may offer other forms of property tax relief — see the state notes below.
+                  {stateName} may offer other forms of property tax relief - see the state notes below.
                 </p>
               </div>
             )}
@@ -340,7 +340,7 @@ export default function HomesteadExemptionPage() {
 
             {/* State notes */}
             <div className="mt-stack-md rounded-lg bg-surface-container-low p-stack-md">
-              <p className="mb-unit text-label-md text-primary">{stateName} — State Notes</p>
+              <p className="mb-unit text-label-md text-primary">{stateName} - State Notes</p>
               <p className="text-body-md text-on-surface-variant">{stateData.notes}</p>
             </div>
           </div>
@@ -354,7 +354,7 @@ export default function HomesteadExemptionPage() {
               {[
                 "Contact your county assessor's office to obtain the homestead exemption application.",
                 "Submit your application with the required supporting documents.",
-                "Typical deadline: April 1 (varies by state — check with your local assessor).",
+                "Typical deadline: April 1 (varies by state - check with your local assessor).",
               ].map((step, i) => (
                 <li key={i} className="flex items-start gap-stack-sm">
                   <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-primary text-label-sm font-bold text-on-primary">
@@ -475,7 +475,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "What if my state isn't showing an exemption?",
-    a: "Some states — like Michigan, Minnesota, and Vermont — provide property tax relief through percentage reductions or caps on assessment increases rather than a fixed dollar exemption. Others have income-based programs that may still provide significant savings. Always check with your local assessor's office.",
+    a: "Some states - like Michigan, Minnesota, and Vermont - provide property tax relief through percentage reductions or caps on assessment increases rather than a fixed dollar exemption. Others have income-based programs that may still provide significant savings. Always check with your local assessor's office.",
   },
   {
     q: "Can I claim multiple exemptions?",

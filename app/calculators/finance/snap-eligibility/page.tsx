@@ -346,7 +346,7 @@ export default function SnapEligibilityCalculator() {
           { question: "What counts as income for SNAP?", answer: "Most income counts: wages, self-employment, Social Security, SSI, SSDI, pension, child support, and more. Some types like TANF, energy assistance, and student financial aid may be excluded." },
           { question: "Are assets counted for SNAP eligibility?", answer: "Most households must have assets below $2,750 (or $4,250 if a member is elderly/disabled). However, households where all members receive SSI or TANF may be categorically eligible and skip asset tests." },
           { question: "How often do SNAP benefits update?", answer: "SNAP benefits are typically loaded to an EBT card on a set day each month. Benefits must be used for eligible food items and cannot be used for alcohol, tobacco, vitamins, or hot prepared foods." },
-          { question: "Can college students get SNAP?", answer: "Generally no — most students enrolled at least half-time are ineligible unless they work 20+ hours per week, have dependents, or meet other exemptions." },
+          { question: "Can college students get SNAP?", answer: "Generally no - most students enrolled at least half-time are ineligible unless they work 20+ hours per week, have dependents, or meet other exemptions." },
         ]}
         relatedCalculators={[
           { name: "Medicaid Eligibility", href: "/calculators/finance/medicaid-eligibility" },

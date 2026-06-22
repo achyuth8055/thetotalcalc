@@ -424,10 +424,10 @@ export default function MedicareCostCalculator() {
           </div>
         }
         faqs={[
-          { question: "When should I enroll in Medicare?", answer: "Your Initial Enrollment Period starts 3 months before your 65th birthday and ends 3 months after. Missing this window may result in late enrollment penalties — 10% per year for Part B, 1% per month for Part D." },
+          { question: "When should I enroll in Medicare?", answer: "Your Initial Enrollment Period starts 3 months before your 65th birthday and ends 3 months after. Missing this window may result in late enrollment penalties - 10% per year for Part B, 1% per month for Part D." },
           { question: "What is the Medicare late enrollment penalty?", answer: "Part B: 10% added to your premium for each full 12-month period you were eligible but didn't enroll. Part D: 1% of the national base beneficiary premium per month you went without creditable coverage." },
           { question: "Can I use an HSA with Medicare?", answer: "Once you enroll in any part of Medicare, you can no longer contribute to an HSA (Health Savings Account). However, you can continue to spend existing HSA funds on Medicare premiums and medical expenses." },
-          { question: "What is Medigap (Medicare Supplement)?", answer: "Medigap policies sold by private insurers help cover costs that Original Medicare doesn't cover — deductibles, copayments, and coinsurance. They cannot be used alongside Medicare Advantage plans." },
+          { question: "What is Medigap (Medicare Supplement)?", answer: "Medigap policies sold by private insurers help cover costs that Original Medicare doesn't cover - deductibles, copayments, and coinsurance. They cannot be used alongside Medicare Advantage plans." },
         ]}
         relatedCalculators={[
           { name: "Retirement Calculator", href: "/calculators/finance/retirement-calculator" },

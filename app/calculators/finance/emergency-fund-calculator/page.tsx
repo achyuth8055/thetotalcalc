@@ -245,16 +245,16 @@ export default function EmergencyFundCalculator() {
         description=""
         explanation={
           <div>
-            <p className="mb-4">An emergency fund is a dedicated cash reserve set aside for unexpected expenses — job loss, medical emergencies, major car repairs, or home repairs. It's the foundation of any sound financial plan.</p>
+            <p className="mb-4">An emergency fund is a dedicated cash reserve set aside for unexpected expenses - job loss, medical emergencies, major car repairs, or home repairs. It's the foundation of any sound financial plan.</p>
             <p className="mb-3">Financial experts recommend saving 3–6 months of essential expenses. If you have an unstable income, work in a volatile industry, or have dependents, aim for 6–12 months.</p>
             <p>Essential expenses are your true survival costs: housing, food, utilities, transportation, and insurance. Discretionary spending like dining out, subscriptions, or entertainment is intentionally excluded.</p>
           </div>
         }
         faqs={[
           { question: "How much should I have in an emergency fund?", answer: "The standard recommendation is 3–6 months of essential living expenses. If you are self-employed, have one income in your household, work in a volatile industry, or have dependents with special needs, aim for 9–12 months. Single-income households and those with variable income should lean toward the higher end." },
-          { question: "Where should I keep my emergency fund?", answer: "A high-yield savings account (HYSA) is ideal — it's FDIC insured, liquid (accessible within 1–2 business days), and earns more interest than a traditional savings account. Avoid investing emergency funds in stocks or long-term bonds, as you may need to access the money when markets are down." },
+          { question: "Where should I keep my emergency fund?", answer: "A high-yield savings account (HYSA) is ideal - it's FDIC insured, liquid (accessible within 1–2 business days), and earns more interest than a traditional savings account. Avoid investing emergency funds in stocks or long-term bonds, as you may need to access the money when markets are down." },
           { question: "Should I pay off debt or build an emergency fund first?", answer: "Build a small emergency fund ($1,000–$2,000) first, then aggressively pay off high-interest debt. Without a small buffer, any unexpected expense derails your debt payoff plan and pushes you further into debt. Once high-interest debt is cleared, build the full 3–6 month fund." },
-          { question: "What counts as an emergency?", answer: "True emergencies are unexpected, necessary, and urgent: job loss, medical bills, car breakdown needed for work, urgent home repairs (burst pipe, broken heating). Planned expenses (vacations, holiday gifts, car insurance) are not emergencies — those belong in dedicated sinking funds." },
+          { question: "What counts as an emergency?", answer: "True emergencies are unexpected, necessary, and urgent: job loss, medical bills, car breakdown needed for work, urgent home repairs (burst pipe, broken heating). Planned expenses (vacations, holiday gifts, car insurance) are not emergencies - those belong in dedicated sinking funds." },
         ]}
         relatedCalculators={[
           { name: "Net Worth Calculator", href: "/calculators/finance/net-worth-calculator" },

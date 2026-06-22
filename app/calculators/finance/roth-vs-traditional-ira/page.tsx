@@ -132,7 +132,7 @@ export default function RothVsTraditionalIRA() {
         <p className="text-base text-gray-600">Compare after-tax wealth between Roth and Traditional IRA strategies</p>
       </div>
 
-      {/* Inputs — centered single column */}
+      {/* Inputs - centered single column */}
       <div className="max-w-2xl mx-auto mb-6">
         <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200 space-y-5">
           <div>
@@ -247,12 +247,12 @@ export default function RothVsTraditionalIRA() {
           <div className={`rounded-xl p-4 border-2 ${result.rothBetter ? "bg-green-50 border-green-200" : retirementTaxRate === currentTaxRate ? "bg-yellow-50 border-yellow-200" : "bg-blue-50 border-blue-200"}`}>
             <div className="text-sm font-semibold text-gray-900">
               {retirementTaxRate > currentTaxRate
-                ? "Roth IRA is better — you expect to be in a higher tax bracket in retirement. Pay taxes now at the lower rate."
+                ? "Roth IRA is better - you expect to be in a higher tax bracket in retirement. Pay taxes now at the lower rate."
                 : retirementTaxRate < currentTaxRate
-                ? "Traditional IRA is better — you expect to be in a lower tax bracket in retirement. Defer taxes until then."
-                : "It's a tie — your current and retirement tax rates are equal. Either account gives the same after-tax result. Consider Roth for the added flexibility of tax-free withdrawals."}
+                ? "Traditional IRA is better - you expect to be in a lower tax bracket in retirement. Defer taxes until then."
+                : "It's a tie - your current and retirement tax rates are equal. Either account gives the same after-tax result. Consider Roth for the added flexibility of tax-free withdrawals."}
             </div>
-            <div className="text-xs text-gray-500 mt-1">Break-even tax rate: {result.breakEvenTaxRate}% — if your retirement rate equals your current rate, both accounts yield the same wealth.</div>
+            <div className="text-xs text-gray-500 mt-1">Break-even tax rate: {result.breakEvenTaxRate}% - if your retirement rate equals your current rate, both accounts yield the same wealth.</div>
           </div>
 
           {/* Additional metrics */}
@@ -314,7 +314,7 @@ export default function RothVsTraditionalIRA() {
         description=""
         explanation={
           <div>
-            <p className="mb-4">Both Roth and Traditional IRAs let your investments grow inside a tax-advantaged account — the key difference is <em>when</em> you pay taxes. With a <strong>Traditional IRA</strong>, contributions may be tax-deductible now, reducing your taxable income today, but withdrawals in retirement are taxed as ordinary income. With a <strong>Roth IRA</strong>, you contribute after-tax dollars and owe nothing on qualified withdrawals — including all the growth.</p>
+            <p className="mb-4">Both Roth and Traditional IRAs let your investments grow inside a tax-advantaged account - the key difference is <em>when</em> you pay taxes. With a <strong>Traditional IRA</strong>, contributions may be tax-deductible now, reducing your taxable income today, but withdrawals in retirement are taxed as ordinary income. With a <strong>Roth IRA</strong>, you contribute after-tax dollars and owe nothing on qualified withdrawals - including all the growth.</p>
             <p className="mb-2">The winning strategy depends entirely on your tax rates. If you're in a low bracket now and expect to be in a higher one in retirement (common early in a career), Roth wins. If you're at your peak earning years and expect lower income in retirement, Traditional is usually better.</p>
             <p className="text-xs text-gray-500">Note: This calculator uses end-of-year contributions and assumes the same nominal contribution for both accounts. In practice, a Traditional IRA lets you invest more (the tax savings), but the comparison shown is on equal nominal contributions.</p>
           </div>

@@ -47,12 +47,52 @@ export default function SplitBillCalculator() {
         title="Split Bill Calculator"
         description="Easily split a bill among multiple people with automatic tip calculation."
         explanation={
-          <div>
-            <p>Split restaurant bills, group expenses, or any shared costs evenly among any number of people.</p>
+          <div className="space-y-4">
+            <p>
+              The split bill calculator takes a total, adds a tip if you want one, and divides the result evenly across
+              the group, so everyone pays a fair, identical share. It is built for the moment the check lands and nobody
+              wants to do mental math: a restaurant dinner, a shared taxi, a group gift, a utility bill between
+              housemates, or the cost of a weekend away. Enter the bill, choose a tip percentage and the number of people,
+              and it shows the per-person amount along with the tip and grand total.
+            </p>
+            <h3 className="text-lg font-semibold text-gray-900">How it works</h3>
+            <p>
+              The math is straightforward, which is exactly why it is easy to get wrong after a long meal. The calculator
+              first works out the tip as a percentage of the bill, adds it to the original amount to get the grand total,
+              and then divides that total by the number of people. Doing the steps in that order matters: tipping on the
+              pre-tip bill and then splitting gives everyone an equal share of both the cost and the gratuity, with no one
+              quietly underpaying.
+            </p>
+            <h3 className="text-lg font-semibold text-gray-900">A worked example</h3>
+            <p>
+              Suppose dinner for four comes to $120 and you want to leave an 18% tip. The tip is 18% of $120, which is
+              $21.60, making the grand total $141.60. Split four ways, that is $35.40 each. Without a tip, the same $120
+              divided by four is $30 each. Seeing both the per-person figure and the total helps the group sanity-check
+              the bill before anyone pays, and it settles the awkward &quot;who owes what&quot; question in seconds.
+            </p>
+            <h3 className="text-lg font-semibold text-gray-900">Tips for splitting fairly</h3>
+            <ul className="list-disc space-y-1 pl-6">
+              <li>Decide whether to tip on the pre-tax or post-tax amount; tipping on the pre-tax subtotal is common and slightly cheaper.</li>
+              <li>Round the per-person amount up to the nearest dollar if you are paying cash, so the tip is never short.</li>
+              <li>For groups, check whether the venue already added a service charge, which means you may not need to tip again.</li>
+              <li>When one person pays the whole bill on a card, have the others send their exact share so no one is left out of pocket.</li>
+            </ul>
+            <h3 className="text-lg font-semibold text-gray-900">When an even split is not fair</h3>
+            <p>
+              An equal split works best when everyone consumed roughly the same. If one person had a starter and three
+              courses while another just had a salad, or if a few people drank and others did not, a strict even split
+              quietly overcharges the lighter spenders. In those cases, total each person&apos;s own items first, then apply
+              the tip proportionally, rather than dividing the whole bill equally. This calculator handles the common
+              even-split case; for very uneven groups, tally individual portions before sharing the tip.
+            </p>
           </div>
         }
         faqs={[
-          { question: "Can I split the bill unevenly?", answer: "This calculator splits the bill evenly. For uneven splits, you'll need to calculate individual portions separately." },
+          { question: "Can I split the bill unevenly?", answer: "This calculator splits the total evenly across the group. For uneven splits, total each person's own items first, then add a proportional share of the tip to each. An even split is best when everyone consumed roughly the same amount." },
+          { question: "Should I tip on the amount before or after tax?", answer: "Either is acceptable, but many people tip on the pre-tax subtotal, which is slightly less than tipping on the taxed total. Decide as a group, then apply the same basis for everyone so the split stays fair." },
+          { question: "Does the calculator add the tip before or after splitting?", answer: "It adds the tip to the bill first, then divides the grand total by the number of people. That way each person pays an equal share of both the cost and the gratuity." },
+          { question: "How do I handle a service charge that is already included?", answer: "If the venue has already added a service charge or gratuity, you usually do not need to tip again. Enter a tip of zero and simply split the total, or reduce the tip to top up only if you wish." },
+          { question: "What if the per-person amount has awkward cents?", answer: "Rounding each share up to the nearest dollar is a simple fix, especially when paying cash. It ensures the tip is never short and avoids the group coming up a few cents below the total." },
         ]}
         relatedCalculators={[
           { name: "Tip Calculator", href: "/calculators/everyday/tip-calculator" },

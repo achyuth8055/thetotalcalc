@@ -1,5 +1,5 @@
 // Lightweight, category-aware inline SVG illustration for calculator pages.
-// No external image asset — renders instantly, themes with the design tokens,
+// No external image asset - renders instantly, themes with the design tokens,
 // and gives each tool a relevant visual without bloat.
 
 const MOTIF: Record<string, { label: string; glyph: string; accent: string }> = {

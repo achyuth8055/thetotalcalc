@@ -156,7 +156,7 @@ export default function InvestmentCalculator() {
       >
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-gray-900">The Power of Compounding</h2>
-          <p className="text-sm text-gray-700">Starting early is more powerful than investing more later. Time in the market is the biggest factor — even a few extra years can double your final value.</p>
+          <p className="text-sm text-gray-700">Starting early is more powerful than investing more later. Time in the market is the biggest factor - even a few extra years can double your final value.</p>
         </div>
       </CalculatorLayout>
     </div>

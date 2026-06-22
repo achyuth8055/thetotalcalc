@@ -306,11 +306,11 @@ export default function FreelanceTaxCalculator() {
           <div>
             <p className="mb-2">As a freelancer or 1099 contractor, you pay self-employment (SE) tax on top of regular income tax. SE tax covers both the employee and employer portions of Social Security (12.4%) and Medicare (2.9%), totaling 15.3% on 92.35% of net earnings.</p>
             <p className="mb-2">The good news: you can deduct half of SE tax from your income, reducing your AGI. Business expenses, retirement contributions (SEP-IRA up to 25% of net earnings, or Solo 401k), and the standard deduction all help lower your taxable income.</p>
-            <p className="text-xs text-gray-500 mt-2">Based on 2025 tax brackets and limits. This is an estimate — consult a CPA for your specific situation.</p>
+            <p className="text-xs text-gray-500 mt-2">Based on 2025 tax brackets and limits. This is an estimate - consult a CPA for your specific situation.</p>
           </div>
         }
         faqs={[
-          { question: "What is self-employment tax?", answer: "SE tax is 15.3% of your net self-employment income (after business expenses). It covers Social Security (12.4%) and Medicare (2.9%). Employees only pay half (7.65%) because employers pay the other half — freelancers pay both." },
+          { question: "What is self-employment tax?", answer: "SE tax is 15.3% of your net self-employment income (after business expenses). It covers Social Security (12.4%) and Medicare (2.9%). Employees only pay half (7.65%) because employers pay the other half - freelancers pay both." },
           { question: "How do I pay quarterly taxes?", answer: "Use IRS Form 1040-ES to estimate and pay quarterly. Due dates are typically April 15, June 15, September 15, and January 15. Underpayment penalties apply if you owe more than $1,000 and don't pay enough quarterly." },
           { question: "What business expenses can I deduct?", answer: "Common deductions include home office, equipment, software, phone/internet (business portion), professional development, health insurance premiums, and business travel. Keep receipts and documentation for everything." },
           { question: "Should I set up an S-Corp to reduce SE tax?", answer: "At higher income levels (typically $50,000+ net profit), electing S-Corp status lets you pay yourself a reasonable salary and take remaining profit as distributions (not subject to SE tax). Consult a CPA to assess whether the savings justify the added complexity and costs." },

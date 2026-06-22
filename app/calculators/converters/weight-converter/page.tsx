@@ -43,6 +43,58 @@ export default function WeightConverterPage() {
     <CalculatorLayout
       title="Weight Converter"
       description="Convert between different weight units: kg, lb, g, oz, ton, stone and more"
+      explanation={
+        <div className="space-y-4">
+          <p>
+            This weight converter changes a measurement from one unit of mass into another - kilograms to pounds, grams to
+            ounces, stone to kilograms, and many more - instantly and in both directions. It is built for the everyday
+            moments when two systems collide: a recipe in grams when your scale reads ounces, a suitcase limit in
+            kilograms when the airline app shows pounds, or a body weight in stone that a form wants in kilograms. Enter a
+            value, choose the units, and read the converted figure.
+          </p>
+          <h3 className="text-lg font-semibold text-gray-900">Metric and imperial, side by side</h3>
+          <p>
+            Most of the world measures mass in metric units - grams, kilograms, and tonnes - while the United States and,
+            for body weight, the United Kingdom still lean on imperial units like ounces, pounds, and stone. The two
+            systems meet through fixed conversion factors. A kilogram is exactly 1,000 grams, and a pound is defined as
+            0.45359237 kilograms, which is the anchor that ties the systems together. From that single relationship every
+            other conversion follows.
+          </p>
+          <h3 className="text-lg font-semibold text-gray-900">Key conversions worth remembering</h3>
+          <ul className="list-disc space-y-1 pl-6">
+            <li>1 kilogram = 1,000 grams = about 2.205 pounds</li>
+            <li>1 pound = 16 ounces = about 0.454 kilograms</li>
+            <li>1 ounce = about 28.35 grams</li>
+            <li>1 stone = 14 pounds = about 6.35 kilograms</li>
+            <li>1 metric tonne = 1,000 kilograms = about 2,205 pounds</li>
+          </ul>
+          <h3 className="text-lg font-semibold text-gray-900">A worked example</h3>
+          <p>
+            Suppose a recipe calls for 250 grams of flour and your kitchen scale only shows ounces. Since one ounce is
+            about 28.35 grams, 250 grams divided by 28.35 gives roughly 8.8 ounces. Going the other way, a 150-pound
+            person weighs about 68 kilograms, because 150 multiplied by 0.454 is close to 68. The converter does this
+            arithmetic for you and keeps the decimal places, which matters most when you are scaling a recipe or measuring
+            a dose where small differences add up.
+          </p>
+          <h3 className="text-lg font-semibold text-gray-900">Mass versus weight</h3>
+          <p>
+            Strictly speaking, the units here measure mass, the amount of matter in an object, while weight is the force
+            gravity exerts on that mass. In everyday use on Earth the two track each other closely, so people use the
+            words interchangeably and this tool follows that convention. The distinction only becomes practical in
+            physics problems or off the planet, where the same mass would &quot;weigh&quot; less on the Moon even though its
+            kilograms do not change.
+          </p>
+        </div>
+      }
+      faqs={[
+        { question: "How many pounds are in a kilogram?", answer: "One kilogram is approximately 2.205 pounds. To convert kilograms to pounds, multiply by 2.205; to convert pounds to kilograms, multiply by 0.454 (or divide by 2.205)." },
+        { question: "What is the difference between an ounce and a fluid ounce?", answer: "An ounce is a unit of weight (mass), equal to about 28.35 grams. A fluid ounce measures volume, not weight, so the two are not interchangeable. This converter handles weight ounces only; use a volume converter for fluid ounces." },
+        { question: "How many pounds are in a stone?", answer: "One stone equals exactly 14 pounds, or about 6.35 kilograms. Stone is still commonly used for body weight in the United Kingdom and Ireland." },
+        { question: "Is a metric tonne the same as a US ton?", answer: "No. A metric tonne is 1,000 kilograms (about 2,205 pounds). A US short ton is 2,000 pounds (about 907 kilograms), and a UK long ton is 2,240 pounds. Check which ton a figure refers to before converting." },
+        { question: "Does this converter measure mass or weight?", answer: "It converts units of mass, such as kilograms, grams, pounds, and ounces. On Earth, mass and weight track each other closely, so for everyday purposes the result is what people mean when they say weight." },
+        { question: "How do I convert grams to ounces for cooking?", answer: "Divide the number of grams by about 28.35 to get ounces. For example, 200 grams is roughly 7.05 ounces. For dry baking ingredients, weighing in grams is usually more accurate than measuring by volume, which is why many recipes now list both." },
+        { question: "Why do imperial units use 16 ounces in a pound?", answer: "The imperial system grew from historical trade measures rather than a base-ten logic, so a pound is 16 ounces and a stone is 14 pounds. That is why converting within imperial units is less tidy than metric, where everything scales by powers of ten, and why a converter saves time." },
+      ]}
     >
       <Breadcrumbs
         items={[

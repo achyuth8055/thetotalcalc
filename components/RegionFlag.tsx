@@ -16,6 +16,7 @@ const FLAG_CODE: Record<DetectableRegion, string> = {
   AU: "AU",
   RU: "RU",
   EU: "EU",
+  JP: "JP",
   Global: "",
 };
 

@@ -168,7 +168,7 @@ export default function CalorieCalculator() {
         return (
           <div className="mt-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
             <h3 className="text-sm font-semibold text-gray-700 mb-1">Macronutrient Targets (Maintenance)</h3>
-            <p className="text-xs text-gray-500 mb-3">Based on {calories} cal/day — Protein 25% · Carbs 50% · Fat 25%</p>
+            <p className="text-xs text-gray-500 mb-3">Based on {calories} cal/day - Protein 25% · Carbs 50% · Fat 25%</p>
             <ResponsiveContainer width="100%" height={200}>
               <PieChart>
                 <Pie

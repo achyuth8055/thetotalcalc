@@ -110,7 +110,7 @@ export const creditCardPayoff: CalculatorDefinition = {
     { name: "totalInterest", expr: { op: "max", args: [0, { op: "-", args: [{ op: "*", args: [{ var: "months" }, { var: "monthlyPayment" }] }, { var: "balance" }] }] } },
   ],
   outputs: [
-    { name: "months", label: "Months to pay off", expr: { var: "months" }, format: "number", primary: true, note: "If 0, your monthly payment doesn't cover the interest — increase it to make progress." },
+    { name: "months", label: "Months to pay off", expr: { var: "months" }, format: "number", primary: true, note: "If 0, your monthly payment doesn't cover the interest - increase it to make progress." },
     { name: "totalInterest", label: "Estimated total interest", expr: { var: "totalInterest" }, format: "currency" },
     { name: "monthlyInterest", label: "This month's interest charge", expr: { var: "monthlyInterest" }, format: "currency" },
   ],
@@ -189,7 +189,7 @@ export const usIncomeTax2025: CalculatorDefinition = {
   slug: "us-income-tax",
   title: "US Federal Income Tax Calculator (2025)",
   description:
-    "Estimate your 2025 federal income tax and take-home pay using the standard deduction and the 2025 tax brackets. Federal income tax only — excludes FICA, state tax, and credits.",
+    "Estimate your 2025 federal income tax and take-home pay using the standard deduction and the 2025 tax brackets. Federal income tax only - excludes FICA, state tax, and credits.",
   taxYear: 2025,
   inputs: [
     {
@@ -238,7 +238,7 @@ export const usIncomeTax2025: CalculatorDefinition = {
     { name: "effectiveRate", expr: { if: { cmp: ">", left: { var: "gross" }, right: 0 }, then: { op: "*", args: [{ op: "/", args: [{ var: "tax" }, { var: "gross" }] }, 100] }, else: 0 } },
   ],
   outputs: [
-    { name: "tax", label: "Estimated federal income tax", expr: { var: "tax" }, format: "currency", primary: true, note: "Federal income tax only — excludes FICA (Social Security/Medicare), state tax, and any credits." },
+    { name: "tax", label: "Estimated federal income tax", expr: { var: "tax" }, format: "currency", primary: true, note: "Federal income tax only - excludes FICA (Social Security/Medicare), state tax, and any credits." },
     { name: "takeHome", label: "After federal income tax", expr: { var: "takeHome" }, format: "currency" },
     { name: "taxable", label: "Taxable income (after standard deduction)", expr: { var: "taxable" }, format: "currency" },
     { name: "effectiveRate", label: "Effective federal rate", expr: { var: "effectiveRate" }, format: "percent" },
@@ -246,7 +246,7 @@ export const usIncomeTax2025: CalculatorDefinition = {
   sources: [
     { title: "Federal income tax rates and brackets", url: "https://www.irs.gov/filing/federal-income-tax-rates-and-brackets", publisher: "Internal Revenue Service", retrieved: "2026-06-09" },
   ],
-  disclaimer: "Estimate only — federal income tax with the standard deduction. Excludes FICA, state/local tax, itemized deductions, and credits. Not tax advice.",
+  disclaimer: "Estimate only - federal income tax with the standard deduction. Excludes FICA, state/local tax, itemized deductions, and credits. Not tax advice.",
   version: "1.0.0",
   effectiveYear: 2025,
   lastVerified: "2026-06-09",

@@ -172,7 +172,7 @@ export default function RMDCalculator() {
               <div className="text-5xl">📅</div>
               <div className="text-xl font-bold text-gray-700">RMDs Begin at Age 73</div>
               <p className="text-gray-500 text-sm max-w-xs">
-                Under the SECURE 2.0 Act, required minimum distributions now start at age 73 (increased from 72). You're currently {age} years old — RMDs will begin in {73 - age} year{73 - age !== 1 ? "s" : ""}.
+                Under the SECURE 2.0 Act, required minimum distributions now start at age 73 (increased from 72). You're currently {age} years old - RMDs will begin in {73 - age} year{73 - age !== 1 ? "s" : ""}.
               </p>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-800 w-full">
                 No RMD required until age 73
@@ -265,8 +265,8 @@ export default function RMDCalculator() {
         }
         faqs={[
           { question: "What happens if I miss my RMD deadline?", answer: "Missing an RMD triggers a 25% excise tax (reduced from 50% by the SECURE 2.0 Act) on the amount you should have withdrawn but didn't. The IRS may waive this penalty under specific circumstances, but it's important to take RMDs on time. The deadline is December 31, except for your first RMD which can be delayed until April 1 of the following year." },
-          { question: "Do Roth IRAs have RMDs?", answer: "No! Roth IRAs do not have RMDs during the original account owner's lifetime. This is one of the major advantages of Roth accounts — your money can continue growing tax-free as long as you live. However, inherited Roth IRAs are subject to RMD rules for beneficiaries." },
-          { question: "Can I withdraw more than the RMD?", answer: "Yes, you can always withdraw more than the RMD amount. The RMD is the minimum required — not a maximum. However, withdrawals beyond the RMD are still subject to ordinary income tax (and potentially the 10% early withdrawal penalty if under 59½)." },
+          { question: "Do Roth IRAs have RMDs?", answer: "No! Roth IRAs do not have RMDs during the original account owner's lifetime. This is one of the major advantages of Roth accounts - your money can continue growing tax-free as long as you live. However, inherited Roth IRAs are subject to RMD rules for beneficiaries." },
+          { question: "Can I withdraw more than the RMD?", answer: "Yes, you can always withdraw more than the RMD amount. The RMD is the minimum required - not a maximum. However, withdrawals beyond the RMD are still subject to ordinary income tax (and potentially the 10% early withdrawal penalty if under 59½)." },
           { question: "What if I have multiple retirement accounts?", answer: "If you have multiple IRAs, you calculate an RMD for each, but you can take the total from any one IRA or combination of IRAs. For 401(k)s and 403(b)s, however, you must calculate and take separate RMDs from each individual plan." },
         ]}
         relatedCalculators={[
@@ -277,7 +277,7 @@ export default function RMDCalculator() {
       >
         <div className="space-y-3">
           <h2 className="text-2xl font-bold text-gray-900">Understanding Required Minimum Distributions</h2>
-          <p className="text-sm text-gray-700">The IRS Uniform Lifetime Table assigns a distribution period to each age, which decreases over time — requiring you to withdraw a larger percentage of your balance each year.</p>
+          <p className="text-sm text-gray-700">The IRS Uniform Lifetime Table assigns a distribution period to each age, which decreases over time - requiring you to withdraw a larger percentage of your balance each year.</p>
         </div>
       </CalculatorLayout>
     </div>

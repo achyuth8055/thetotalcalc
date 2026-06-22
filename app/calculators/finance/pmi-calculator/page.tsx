@@ -37,7 +37,7 @@ function simulatePMI(
   const targetBalance = homePrice - targetEquity;
 
   if (loanAmount <= targetBalance) {
-    return { monthsWithPMI: 0, totalPMI: 0, dropOffDate: "N/A — LTV already ≤ 80%", monthlyPayment: calcMonthlyPayment(loanAmount, interestRate, termMonths) };
+    return { monthsWithPMI: 0, totalPMI: 0, dropOffDate: "N/A - LTV already ≤ 80%", monthlyPayment: calcMonthlyPayment(loanAmount, interestRate, termMonths) };
   }
 
   const monthlyPayment = calcMonthlyPayment(loanAmount, interestRate, termMonths);
@@ -247,7 +247,7 @@ export default function PMICalculator() {
                   {result.ltv > 80 ? fmtDec(result.monthlyPMI) : "$0"}
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
-                  {result.ltv > 80 ? `PMI required — LTV is ${result.ltv.toFixed(1)}%` : "No PMI — LTV is " + result.ltv.toFixed(1) + "%"}
+                  {result.ltv > 80 ? `PMI required - LTV is ${result.ltv.toFixed(1)}%` : "No PMI - LTV is " + result.ltv.toFixed(1) + "%"}
                 </div>
               </div>
 
@@ -360,7 +360,7 @@ export default function PMICalculator() {
       <CalculatorLayout title="" description=""
         explanation={
           <div>
-            <p className="mb-2">Private Mortgage Insurance (PMI) is required by most lenders when your down payment is less than 20% of the home's purchase price. PMI protects the lender — not you — if you default. It typically costs 0.5%–1.5% of the loan amount per year.</p>
+            <p className="mb-2">Private Mortgage Insurance (PMI) is required by most lenders when your down payment is less than 20% of the home's purchase price. PMI protects the lender - not you - if you default. It typically costs 0.5%–1.5% of the loan amount per year.</p>
             <p className="mb-2">Under the Homeowners Protection Act, lenders must automatically cancel PMI when your loan balance reaches 78% of the original home value (based on the original amortization schedule). You can request cancellation at 80% LTV, which may require a new appraisal.</p>
             <p className="text-xs text-gray-500 mt-2">This calculator assumes 0% home appreciation for conservative estimates. Your actual PMI cancellation date may be sooner if your home appreciates.</p>
           </div>

@@ -288,14 +288,14 @@ export default function SocialSecurityCalculator() {
         description=""
         explanation={
           <div>
-            <p className="mb-4">Social Security benefits are based on your <strong>Average Indexed Monthly Earnings (AIME)</strong> — essentially your average lifetime monthly earnings. The AIME is then run through a <strong>bend-point formula</strong> to calculate your Primary Insurance Amount (PIA), which is what you receive at your Full Retirement Age (FRA, assumed 67).</p>
+            <p className="mb-4">Social Security benefits are based on your <strong>Average Indexed Monthly Earnings (AIME)</strong> - essentially your average lifetime monthly earnings. The AIME is then run through a <strong>bend-point formula</strong> to calculate your Primary Insurance Amount (PIA), which is what you receive at your Full Retirement Age (FRA, assumed 67).</p>
             <p className="mb-2">Claiming early at 62 permanently reduces your benefit by up to 30%. Delaying past FRA earns you 8% more per year, up to age 70, for a 24% bonus. The break-even age tells you at what point the higher monthly amount catches up with the years of missed payments.</p>
             <p className="text-xs text-gray-500 mt-2">Disclaimer: This is a simplified estimate. Your actual benefit depends on your full 35-year earnings history indexed for inflation. Use the SSA's My Social Security portal for an official estimate.</p>
           </div>
         }
         faqs={[
           { question: "What is the best age to claim Social Security?", answer: "It depends on your health, financial need, and life expectancy. If you expect to live past ~78-80, delaying to 70 is typically advantageous. If you need income immediately or have health concerns, claiming at 62 may be better." },
-          { question: "What is a PIA?", answer: "PIA stands for Primary Insurance Amount — the monthly benefit you receive if you claim at your Full Retirement Age (FRA). Early claiming reduces this; delayed claiming increases it." },
+          { question: "What is a PIA?", answer: "PIA stands for Primary Insurance Amount - the monthly benefit you receive if you claim at your Full Retirement Age (FRA). Early claiming reduces this; delayed claiming increases it." },
           { question: "What are bend points?", answer: "Bend points are thresholds in the Social Security formula where the replacement rate changes. The first dollars of AIME are replaced at 90%, the next portion at 32%, and anything above the upper bend point at 15%. This makes Social Security more generous to lower earners." },
           { question: "Does working more years help?", answer: "Yes. Social Security is calculated on your highest 35 years of earnings. If you have fewer than 35 years, zeros are averaged in, reducing your benefit. Working more years replaces those zeros with actual earnings." },
         ]}

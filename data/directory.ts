@@ -19,7 +19,7 @@ export type DirectoryCategory =
   | "everyday"
   | "converters";
 
-export type DirectoryRegion = "US" | "UK" | "CA" | "Global";
+export type DirectoryRegion = "US" | "UK" | "CA" | "JP" | "Global";
 
 export interface DirectoryEntry {
   id: string;
@@ -390,6 +390,58 @@ const engineEntries: DirectoryEntry[] = [
     icon: "trending_up",
     live: true,
     cta: "Open Calculator",
+  },
+  {
+    id: "japan-consumption-tax",
+    name: "Japan Consumption Tax Calculator",
+    description: "Calculate Japanese consumption tax at 10% standard or 8% reduced rate. Essential for shopping, business, and the Invoice System (インボイス制度).",
+    href: "/calculators/japan/consumption-tax-calculator",
+    category: "tax",
+    region: "JP",
+    minutes: 2,
+    badge: "official",
+    icon: "receipt_long",
+    live: true,
+    cta: "Calculate Tax",
+  },
+  {
+    id: "japan-income-tax",
+    name: "Japan Income Tax Calculator",
+    description: "Estimate Japan income tax, residence tax, and surtax based on annual salary. Covers employment deductions and dependents.",
+    href: "/calculators/japan/income-tax-calculator",
+    category: "tax",
+    region: "JP",
+    minutes: 4,
+    badge: "official",
+    icon: "account_balance",
+    live: true,
+    cta: "Calculate Tax",
+  },
+  {
+    id: "japan-salary",
+    name: "Japan Take-Home Pay Calculator",
+    description: "Calculate your Japanese 手取り (take-home pay) after health insurance, pension, unemployment insurance, and income tax.",
+    href: "/calculators/japan/salary-calculator",
+    category: "salary",
+    region: "JP",
+    minutes: 3,
+    badge: "official",
+    icon: "account_balance_wallet",
+    live: true,
+    cta: "Calculate Salary",
+  },
+  {
+    id: "japan-furusato-nozei",
+    name: "Furusato Nozei Limit Calculator",
+    description: "Calculate your maximum tax-deductible hometown tax donation (ふるさと納税) and net cost for gifts.",
+    href: "/calculators/japan/furusato-nozei-calculator",
+    category: "tax",
+    region: "JP",
+    minutes: 2,
+    badge: "official",
+    icon: "volunteer_activism",
+    live: true,
+    cta: "Calculate Limit",
   },
 ];
 

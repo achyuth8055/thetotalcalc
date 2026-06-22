@@ -109,7 +109,7 @@ export default function MedicaidEligibilityCalculator() {
     if (incomePct <= limit.pct) {
       eligible = "likely";
     } else if (incomePct <= limit.pct * 1.10) {
-      eligible = "may"; // within 10% — state rules may vary
+      eligible = "may"; // within 10% - state rules may vary
     } else {
       eligible = "unlikely";
     }
@@ -387,13 +387,13 @@ export default function MedicaidEligibilityCalculator() {
         explanation={
           <div className="space-y-2 text-sm text-gray-700">
             <p><strong>Medicaid expansion:</strong> Under the ACA, states that expanded Medicaid cover adults up to 138% of the Federal Poverty Level (FPL). As of 2025, some states still have not expanded, limiting coverage for adults.</p>
-            <p><strong>CHIP (Children Health Insurance Program):</strong> Covers children in families with income too high for Medicaid but who can't afford private insurance — generally up to 200% FPL, with some states going higher.</p>
+            <p><strong>CHIP (Children Health Insurance Program):</strong> Covers children in families with income too high for Medicaid but who can't afford private insurance - generally up to 200% FPL, with some states going higher.</p>
             <p><strong>Marketplace subsidies:</strong> If you earn 100–400% FPL and aren't eligible for Medicaid, you likely qualify for premium tax credits on healthcare.gov marketplace plans.</p>
           </div>
         }
         faqs={[
           { question: "What is the difference between Medicaid and Medicare?", answer: "Medicaid is a state/federal program for low-income individuals of any age. Medicare is a federal program primarily for people 65+ or with certain disabilities, regardless of income." },
-          { question: "Can I have both Medicaid and Medicare?", answer: "Yes — 'dual eligible' individuals qualify for both programs. Medicaid can help cover Medicare premiums, deductibles, and copays." },
+          { question: "Can I have both Medicaid and Medicare?", answer: "Yes - 'dual eligible' individuals qualify for both programs. Medicaid can help cover Medicare premiums, deductibles, and copays." },
           { question: "Does immigration status affect Medicaid eligibility?", answer: "Yes. US citizens and many qualified immigrants are eligible. Undocumented individuals generally are not eligible for full Medicaid, though emergency services are covered. DACA recipients are not eligible for full Medicaid in most states." },
           { question: "What is the Medicaid asset test?", answer: "Some Medicaid categories (like long-term care) have asset limits in addition to income limits. ACA expansion Medicaid for adults generally does not have an asset test." },
         ]}

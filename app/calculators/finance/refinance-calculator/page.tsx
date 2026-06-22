@@ -237,7 +237,7 @@ export default function RefinanceCalculator() {
         description=""
         explanation={
           <div>
-            <p className="mb-4">A refinance break-even calculator helps you determine whether refinancing your mortgage makes financial sense. You pay closing costs upfront in exchange for a lower interest rate — the break-even point is when your cumulative monthly savings equal those closing costs.</p>
+            <p className="mb-4">A refinance break-even calculator helps you determine whether refinancing your mortgage makes financial sense. You pay closing costs upfront in exchange for a lower interest rate - the break-even point is when your cumulative monthly savings equal those closing costs.</p>
             <p className="mb-3">The key formula: <strong>Break-Even Months = Closing Costs / Monthly Savings</strong></p>
             <p>If you plan to stay in the home longer than the break-even period, refinancing is generally beneficial. Cash-out refinancing lets you borrow additional equity but increases your loan balance and may reduce monthly savings.</p>
           </div>

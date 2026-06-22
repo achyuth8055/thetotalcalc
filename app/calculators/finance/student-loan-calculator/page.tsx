@@ -378,10 +378,10 @@ export default function StudentLoanCalculator() {
                       <span>{planLabels[plan]}</span>
                       {isCheapest && <span className="ml-2 text-xs bg-green-200 text-green-800 px-1.5 py-0.5 rounded-full">Cheapest</span>}
                     </td>
-                    <td className="py-2.5 text-right text-blue-600">{r ? fmtD(r.monthly) : "—"}</td>
-                    <td className="py-2.5 text-right text-gray-700">{r ? fmt(r.totalPaid) : "—"}</td>
-                    <td className="py-2.5 text-right text-red-500">{r ? fmt(r.totalInterest) : "—"}</td>
-                    <td className="py-2.5 text-right text-gray-600">{r?.payoffDate || "—"}</td>
+                    <td className="py-2.5 text-right text-blue-600">{r ? fmtD(r.monthly) : "-"}</td>
+                    <td className="py-2.5 text-right text-gray-700">{r ? fmt(r.totalPaid) : "-"}</td>
+                    <td className="py-2.5 text-right text-red-500">{r ? fmt(r.totalInterest) : "-"}</td>
+                    <td className="py-2.5 text-right text-gray-600">{r?.payoffDate || "-"}</td>
                   </tr>
                 );
               })}
@@ -430,8 +430,8 @@ export default function StudentLoanCalculator() {
       <CalculatorLayout title="" description=""
         explanation={
           <div className="space-y-2 text-sm text-gray-700">
-            <p><strong>Standard Plan:</strong> Fixed payments over 10 years — lowest total interest but highest monthly payment.</p>
-            <p><strong>Extended Plan:</strong> Lower monthly payments spread over 25 years — significantly more interest paid over time.</p>
+            <p><strong>Standard Plan:</strong> Fixed payments over 10 years - lowest total interest but highest monthly payment.</p>
+            <p><strong>Extended Plan:</strong> Lower monthly payments spread over 25 years - significantly more interest paid over time.</p>
             <p><strong>SAVE/IDR Plan:</strong> Payments based on 10% of discretionary income (income above 150% of the federal poverty line for your family size). Remaining balance forgiven after 20–25 years. PSLF borrowers can get forgiveness after 120 qualifying payments.</p>
             <p><strong>Graduated Plan:</strong> Payments start lower and increase roughly 2% every two years, designed for borrowers expecting income growth.</p>
           </div>
@@ -439,8 +439,8 @@ export default function StudentLoanCalculator() {
         faqs={[
           { question: "What is SAVE and how is it different from IBR?", answer: "SAVE (Saving on a Valuable Education) is the newest IDR plan. It calculates payments on 10% of discretionary income defined as income above 225% of the poverty line for undergrad loans (we use 150% for the standard SAVE formula). It replaced REPAYE and generally has lower payments than older IDR plans." },
           { question: "What is Public Service Loan Forgiveness (PSLF)?", answer: "PSLF forgives the remaining balance on Direct Loans after 120 qualifying monthly payments (10 years) while working full-time for a qualifying government or non-profit employer. You must be on an IDR plan." },
-          { question: "Can I switch repayment plans?", answer: "Yes — federal student loan borrowers can switch between repayment plans at any time by contacting their servicer or via studentaid.gov." },
-          { question: "Does refinancing affect IDR eligibility?", answer: "Yes — refinancing federal loans with a private lender removes eligibility for IDR plans, PSLF, and federal protections. Consider this carefully before refinancing." },
+          { question: "Can I switch repayment plans?", answer: "Yes - federal student loan borrowers can switch between repayment plans at any time by contacting their servicer or via studentaid.gov." },
+          { question: "Does refinancing affect IDR eligibility?", answer: "Yes - refinancing federal loans with a private lender removes eligibility for IDR plans, PSLF, and federal protections. Consider this carefully before refinancing." },
         ]}
         relatedCalculators={[
           { name: "Loan Calculator", href: "/calculators/finance/loan-calculator" },

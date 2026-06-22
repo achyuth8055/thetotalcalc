@@ -1,4 +1,4 @@
-// Blog posts — original long-form articles (1,000–1,200 words each), each on a
+// Blog posts - original long-form articles (1,000–1,200 words each), each on a
 // distinct topic with no shared/templated copy. Body is structured into sections
 // so the post page can render headings, paragraphs, and lists.
 
@@ -20,6 +20,262 @@ export interface BlogPost {
 }
 
 export const POSTS: BlogPost[] = [
+  {
+    slug: "compound-interest-why-starting-early-wins",
+    title: "Compound interest: why starting early beats saving more",
+    description:
+      "Compound interest rewards time more than effort, which is why a small amount saved in your twenties can outgrow a larger amount saved later. Here is how compounding actually works, the rule that estimates it in your head, and the real cost of waiting.",
+    date: "2026-06-21",
+    readingMinutes: 6,
+    category: "Saving & Investing",
+    related: { name: "Compound Interest Calculator", href: "/calculators/finance/compound-interest-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "There is a reason compound interest gets called the most powerful force in personal finance, and it is not marketing. It is the simple, slightly counterintuitive fact that money left to grow earns returns on its returns, so the longer it compounds, the faster it moves. The effect is gentle at first and then startling, which is exactly why so many people underestimate it and start later than they should.",
+          "Understanding compounding does not require any math you cannot do on a napkin. What it requires is seeing clearly that time, not the size of each contribution, is the input that matters most. Once that lands, the case for starting now rather than waiting until you can afford more becomes hard to argue with.",
+        ],
+      },
+      {
+        heading: "Simple interest versus compound interest",
+        paragraphs: [
+          "Simple interest pays you only on the money you originally put in. Put $1,000 in an account paying 5% simple interest and you earn $50 every year, forever, on that same $1,000. After 30 years you would have your $1,000 back plus $1,500 in interest.",
+          "Compound interest pays you on your original money and on the interest you have already earned. That same $1,000 at 5% compounded annually earns $50 in year one, but in year two it earns 5% on $1,050, not $1,000. Each year the base grows, so each year's interest is a little larger than the last. After 30 years the account holds about $4,322, not $2,500. The extra came entirely from interest earning interest.",
+        ],
+      },
+      {
+        heading: "The rule that estimates it in your head",
+        paragraphs: [
+          "You do not need a spreadsheet to get a feel for compounding. The rule of 72 says that dividing 72 by your annual return gives the rough number of years it takes for money to double. At 6% a year, money doubles in about 12 years; at 8%, in about 9 years; at 4%, in about 18.",
+          "The rule is an approximation, but it is close enough to be useful and it makes the power of higher returns and longer time concrete. Money that doubles every nine years doubles roughly three times in a 27-year career, turning one dollar into eight. The doublings late in the run are the biggest, which is why the final years of a long investment do the heaviest lifting.",
+        ],
+      },
+      {
+        heading: "Why the early saver wins",
+        paragraphs: [
+          "Consider two savers. The first invests $300 a month from age 25 to 35, ten years, then stops and never adds another dollar. The second waits, then invests $300 a month from age 35 all the way to 65, thirty years. Assuming the same steady return, the first saver, who contributed for only ten years, often ends up with more at 65 than the second, who contributed for thirty.",
+          "It feels wrong, because the second saver put in three times as much money. But the first saver's contributions had an extra decade to compound, and that decade at the start is worth more than three decades of contributions added later. The lesson is blunt: a small amount invested early can beat a larger amount invested late, because you cannot buy back lost time.",
+        ],
+      },
+      {
+        heading: "What makes compounding work harder",
+        list: [
+          "Time in the market. Years are the raw material of compounding, so the single biggest lever is simply starting sooner rather than waiting for a perfect moment.",
+          "A higher rate of return, within reason. A few percentage points compounded over decades produces a far larger gap than the same difference over a few years.",
+          "Frequency of compounding. Interest that compounds monthly or daily grows slightly faster than the same rate compounded once a year.",
+          "Reinvesting, not withdrawing. Spending the interest or dividends along the way breaks the chain; leaving them in is what lets returns earn returns.",
+          "Avoiding high fees. A 1% annual fee does not sound like much, but compounded over a lifetime it can quietly consume a large slice of the final balance.",
+        ],
+      },
+      {
+        heading: "The same force can work against you",
+        paragraphs: [
+          "Compounding is neutral about direction. The mechanism that grows your investments is the same one that grows debt, which is why a credit card balance at 22% can feel impossible to escape. Unpaid interest is added to the balance, then charged interest itself, so the debt accelerates exactly the way savings do, only against you.",
+          "This symmetry is worth holding in mind. High-interest debt compounding against you usually outruns any investment compounding for you, which is why paying off expensive debt is often the best guaranteed return available. The decision to invest or pay down debt is really a question of which compounding force is stronger.",
+        ],
+      },
+      {
+        heading: "See it on your own numbers",
+        paragraphs: [
+          "The cleanest way to believe in compounding is to project it. Enter a starting amount, a regular contribution, an assumed rate of return, and a number of years, and look at how much of the final balance is your own money versus growth. Over a long horizon, the growth portion usually dwarfs the contributions, and that crossover is the whole point.",
+          "These projections rest on an assumed steady return that real markets never deliver in a straight line, so treat them as estimates rather than promises, and nothing here is financial advice. But the underlying truth holds regardless of the exact numbers: time is the ingredient you can least afford to waste, and the best day to start compounding was years ago. The second best is today.",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "how-much-house-can-you-actually-afford",
+    title: "How much house can you actually afford?",
+    description:
+      "A lender's maximum loan and a comfortable monthly payment are rarely the same number. Here is how the 28/36 rule works, the costs beyond the mortgage that buyers forget, and how to find a payment you can live with.",
+    date: "2026-06-20",
+    readingMinutes: 6,
+    category: "Home Buying",
+    related: { name: "Mortgage Affordability Calculator", href: "/calculators/finance/mortgage-affordability-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "When you ask a lender how much house you can afford, they answer a narrow question: how large a loan will we approve based on your income and debts? That number is often surprisingly high, and it is easy to mistake it for the amount you should actually spend. The two are not the same, and the gap between them is where a lot of household stress is born.",
+          "Affordability is really two questions stacked on top of each other. The first is how much a bank will lend you. The second, and more important, is how much you can repay every month for years without your life feeling squeezed. A sensible budget answers the second question first and lets it cap the first.",
+        ],
+      },
+      {
+        heading: "The 28/36 rule lenders lean on",
+        paragraphs: [
+          "Most affordability math starts with two ratios known together as the 28/36 rule. The first says your housing costs - mortgage principal and interest, property tax, homeowners insurance, and any association dues - should stay at or below 28% of your gross monthly income. On a $6,000 monthly income, that points to a housing budget of about $1,680.",
+          "The second ratio looks at total debt. It says all your monthly debt payments combined - housing plus car loans, student loans, credit card minimums, and the like - should stay at or below 36% of gross income. The same $6,000 earner would aim to keep all debt payments under roughly $2,160. Whichever ratio is tighter for your situation sets the real ceiling, and existing debts can pull the housing number well below the 28% figure.",
+        ],
+      },
+      {
+        heading: "Gross income hides the real squeeze",
+        paragraphs: [
+          "Notice that both ratios use gross income, the figure before any tax or deduction comes out. Your actual take-home pay is smaller, sometimes much smaller once income tax, payroll tax, retirement contributions, and health premiums are removed. A payment that looks like 28% of gross can be a much larger share of the money that actually lands in your account.",
+          "This is the single most common reason a mortgage that was approved on paper feels tight in practice. The honest move is to test any target payment against your take-home pay, not your salary, and ask what share of the money you really receive it would consume each month.",
+        ],
+      },
+      {
+        heading: "The costs the sticker price hides",
+        list: [
+          "Property tax, which can add hundreds a month and rises over time as assessments climb.",
+          "Homeowners insurance, required by lenders and increasingly expensive in many regions.",
+          "Private mortgage insurance, charged on many loans with a down payment under 20% until you build enough equity.",
+          "Maintenance and repairs, often estimated at around 1% of the home's value a year, which never stops and tends to arrive in lumps.",
+          "Association or condo fees, utilities that are larger than in a rental, and the closing costs you pay just to complete the purchase.",
+        ],
+      },
+      {
+        heading: "Why the down payment changes everything",
+        paragraphs: [
+          "The size of your down payment moves affordability on several fronts at once. A larger down payment shrinks the loan, which lowers the monthly payment directly. It can also lift you past the 20% threshold that removes private mortgage insurance, cutting another recurring cost. And a stronger down payment sometimes earns a better interest rate, which compounds the saving over the life of the loan.",
+          "The trade-off is liquidity. Pouring every dollar into a down payment can leave you house-rich and cash-poor, with nothing left for the emergency fund a homeowner needs more than a renter does. The goal is a down payment large enough to make the payment comfortable while still leaving a cushion for the repairs and surprises that ownership guarantees.",
+        ],
+      },
+      {
+        heading: "Interest rates set the ceiling more than price",
+        paragraphs: [
+          "Buyers fixate on the home's price, but the interest rate often does more to the monthly payment than a swing in price would. Because a mortgage is repaid over decades, even a one percentage point change in the rate can move the payment by hundreds of dollars and change the total interest by tens of thousands over the loan's life.",
+          "This is why the same buyer can afford a noticeably more expensive home when rates are low and far less when rates are high, even though their income has not changed. Running your budget at the current rate, rather than the rate you wish existed, keeps the target realistic.",
+        ],
+      },
+      {
+        heading: "Find a number you can live with",
+        paragraphs: [
+          "The most useful exercise before house hunting is to work backward from a comfortable monthly payment to a price, rather than starting from a price you hope to justify. Enter your income, your existing debts, your expected down payment, the current interest rate, and estimates for tax and insurance, and look at the price that keeps you safely inside both ratios with room to breathe.",
+          "These figures are estimates that depend on rates, taxes, and insurance costs that vary by location and change over time, and nothing here is financial advice. But choosing a payment you can sustain in a bad month, not just a good one, is what separates a home you enjoy from one that owns you. The bank's maximum is a limit, not a target.",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "when-to-claim-social-security",
+    title: "When to claim Social Security: the eight-year decision",
+    description:
+      "You can start Social Security any time from 62 to 70, and the age you pick can change your monthly check by more than 70%. Here is how early and delayed claiming really work, what break-even age means, and the factors that should drive the choice.",
+    date: "2026-06-19",
+    readingMinutes: 6,
+    category: "Retirement",
+    related: { name: "Social Security Calculator", href: "/calculators/finance/social-security-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "Few financial choices are as consequential, or as irreversible, as when to start Social Security. You can claim as early as 62 or as late as 70, and the date you pick is locked in for the rest of your life, setting the size of a monthly check that often becomes the backbone of retirement income. Get it right and you add a meaningful cushion; get it wrong and you can leave years of higher payments on the table.",
+          "The decision is built around a single fact: the longer you wait, within the allowed window, the larger each monthly payment becomes. Everything else is about weighing that larger-but-later check against a smaller-but-sooner one, in light of your own health, savings, and circumstances.",
+        ],
+      },
+      {
+        heading: "Full retirement age is the anchor",
+        paragraphs: [
+          "Social Security is built around your full retirement age, the point at which you receive 100% of the benefit you have earned. For anyone born in 1960 or later, that age is 67. Claiming exactly then gives you your full, unreduced amount, and the system measures early and late claiming as adjustments away from that anchor.",
+          "Your benefit amount itself is based on your highest 35 years of earnings, adjusted for wage growth. Years with no earnings count as zeros in that average, which is why a few extra working years late in a career can nudge the benefit up by replacing an early low or zero year.",
+        ],
+      },
+      {
+        heading: "Claiming early shrinks the check permanently",
+        paragraphs: [
+          "Start before full retirement age and your benefit is reduced for life. Claiming at 62, the earliest age, cuts the monthly amount by about 30% for someone whose full retirement age is 67. That reduction does not go away when you later reach 67; it is permanent, baked into every check you receive thereafter.",
+          "There is also an earnings test for people who claim early and keep working. If your wages exceed an annual limit before full retirement age, part of your benefit is temporarily withheld, though it is effectively returned later through a higher payment. For someone still earning a normal salary, claiming at 62 can mean giving up much of the check anyway.",
+        ],
+      },
+      {
+        heading: "Delaying past full retirement age pays a bonus",
+        paragraphs: [
+          "Waiting beyond full retirement age earns delayed retirement credits, which increase your benefit by about 8% for each year you postpone, up to age 70. Push from 67 to 70 and your monthly payment grows by roughly 24%. After 70 the credits stop, so there is no reason to wait any longer than that.",
+          "Stack the ends of the range together and the spread is large. The benefit at 70 can be more than 70% higher than the benefit at 62 for the same person, simply because of when they chose to start. That is an unusually generous, guaranteed increase for patience, effectively a return the government pays you for waiting.",
+        ],
+      },
+      {
+        heading: "Break-even is the heart of the math",
+        paragraphs: [
+          "Claiming early gives you more checks, but smaller ones. Claiming late gives you fewer checks, but larger ones. The break-even age is the point where the two strategies have paid out the same total. Live past it and waiting wins; die before it and claiming early wins. For many people the break-even between claiming at 62 and waiting until full retirement age lands somewhere in the late seventies to early eighties.",
+          "Break-even analysis is useful but incomplete, because it treats the decision as a bet on your lifespan alone. In reality, a larger delayed check is also insurance against the risk of living a very long time and running short, which is a different kind of value than simply maximizing total dollars.",
+        ],
+      },
+      {
+        heading: "What should actually drive the choice",
+        list: [
+          "Your health and family longevity. If you expect a long life, delaying usually pays more over the full retirement; serious health concerns argue for claiming earlier.",
+          "Whether you are still working. Earning a salary before full retirement age can trigger the earnings test, often making early claiming pointless.",
+          "Other income and savings. If you can live on savings for a few years, delaying buys a larger guaranteed check for the rest of your life.",
+          "Marital status. A higher earner who delays leaves a larger survivor benefit for a spouse, which can outlast the higher earner by many years.",
+          "Your need for cash now. If the income is essential to cover basic costs at 62, the theoretical gains from waiting may not be a real option.",
+        ],
+      },
+      {
+        heading: "Run your own numbers first",
+        paragraphs: [
+          "Because the choice is permanent, it is worth modeling before you commit. Estimate your monthly benefit at 62, at full retirement age, and at 70, then look at the lifetime totals under different assumptions about how long you live. Seeing the break-even age and the size of the survivor benefit side by side turns an abstract decision into a concrete one.",
+          "These estimates depend on your earnings record and on rules that Congress can change, so confirm your actual figures with the Social Security Administration before deciding, and treat any projection as an estimate rather than a guarantee. Nothing here is financial advice. But understanding the eight-year window, and what you gain or give up at each end of it, is what lets you claim on purpose rather than by default.",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "the-freelancers-self-employment-tax-surprise",
+    title: "The freelancer's tax surprise: self-employment tax",
+    description:
+      "New freelancers often discover they owe far more tax than expected, and the culprit is self-employment tax. Here is what the 15.3% really covers, why an employer used to pay half of it, and how quarterly payments keep you out of trouble.",
+    date: "2026-06-18",
+    readingMinutes: 6,
+    category: "Self-Employment",
+    related: { name: "Freelance Tax Calculator", href: "/calculators/finance/freelance-tax-calculator" },
+    body: [
+      {
+        paragraphs: [
+          "The first tax bill as a freelancer is often a genuine shock. You set aside what you assumed was enough for income tax, only to find the total is far larger than a comparable salaried worker would owe on the same earnings. The extra is not a penalty or a mistake. It is self-employment tax, and not knowing it exists is one of the most expensive surprises of going independent.",
+          "The good news is that self-employment tax is entirely predictable once you understand it. It runs on a fixed rate, it covers something you were already paying as an employee without noticing, and there are deductions that soften it. The trouble only comes from being blindsided, and that is avoidable.",
+        ],
+      },
+      {
+        heading: "What the 15.3% actually covers",
+        paragraphs: [
+          "Self-employment tax is the self-employed version of the payroll tax that funds Social Security and Medicare. It is charged at 15.3% of your net self-employment earnings, made up of 12.4% for Social Security and 2.9% for Medicare. This is entirely separate from federal income tax, which you still owe on top.",
+          "The Social Security portion applies only up to an annual wage base, $176,100 in 2025, after which the 12.4% piece stops. The 2.9% Medicare portion has no ceiling and applies to all your net earnings, with an additional 0.9% added on earnings above $200,000 for single filers. For most freelancers, the full 15.3% is the number that matters.",
+        ],
+      },
+      {
+        heading: "Why employees never see this",
+        paragraphs: [
+          "A salaried worker pays exactly the same Social Security and Medicare taxes, but only half of them appear on their paystub. The employer quietly pays the other half, 7.65%, directly to the government. Most employees have no idea this second contribution exists, because it never touches their take-home pay.",
+          "When you become self-employed, you are both the worker and the employer, so you owe both halves. That is why the rate is 15.3% rather than the 7.65% an employee sees. You are not being taxed more harshly than everyone else; you are simply seeing the full cost that an employer used to hide on your behalf.",
+        ],
+      },
+      {
+        heading: "The deductions that soften the blow",
+        paragraphs: [
+          "Two built-in adjustments make the real burden lighter than the headline rate suggests. First, self-employment tax is calculated on 92.35% of your net profit, not the full amount, which slightly shrinks the base it applies to. Second, you can deduct one-half of your self-employment tax when figuring your income tax, mirroring the fact that the employer's half was never taxable income to an employee.",
+          "On top of these, self-employment tax is charged on your net profit, meaning revenue minus legitimate business expenses, not your gross income. Every deductible business cost - software, equipment, mileage, a home office that qualifies - lowers the profit that both self-employment tax and income tax are calculated on. Tracking expenses carefully is one of the highest-value habits a freelancer can build.",
+        ],
+      },
+      {
+        heading: "Quarterly payments are not optional",
+        paragraphs: [
+          "Employees have tax withheld from every paycheck automatically. Freelancers have no one doing that for them, so the tax system expects you to pay as you go through estimated quarterly payments, typically due in April, June, September, and January. These cover both your income tax and your self-employment tax.",
+          "Skip them and you can face an underpayment penalty even if you pay the full amount at filing time, because the system wants the money throughout the year, not all at once. A common rule of thumb is to set aside somewhere between a quarter and a third of every payment you receive into a separate account for taxes, so the quarterly bills are already funded when they arrive.",
+        ],
+      },
+      {
+        heading: "Mistakes that cost freelancers money",
+        list: [
+          "Saving only for income tax and forgetting the 15.3% self-employment tax entirely.",
+          "Spending gross income as if it were take-home pay, then scrambling when the bill comes due.",
+          "Missing quarterly deadlines and triggering underpayment penalties on top of the tax.",
+          "Failing to track deductible business expenses, which inflates the profit that gets taxed twice over.",
+          "Overlooking a retirement account for the self-employed, which can lower taxable income while building savings.",
+        ],
+      },
+      {
+        heading: "Estimate before the bill arrives",
+        paragraphs: [
+          "The way to defuse the surprise is to estimate the tax as income comes in, rather than at year end. Enter your expected net profit, and look at the self-employment tax and income tax separately, so you can see how much of each payment truly belongs to you and how much belongs to the government. Knowing the combined effective rate lets you set the right amount aside from day one.",
+          "These figures are estimates that depend on your full tax situation, your state, and deductions a calculator cannot see, so treat them as a starting point and confirm with the IRS or a tax professional before filing. Nothing here is tax advice. But the freelancers who never get blindsided are simply the ones who priced self-employment tax into their rates and their savings from the very first invoice.",
+        ],
+      },
+    ],
+  },
+
   {
     slug: "401k-match-is-free-money",
     title: "The 401(k) match is free money, and most people leave some behind",
@@ -167,7 +423,7 @@ export const POSTS: BlogPost[] = [
       {
         heading: "Income decides whether you keep the full amount",
         paragraphs: [
-          "The credit is generous well into the upper-middle class, but it does not last forever. Once your adjusted gross income passes $200,000 as a single filer, or $400,000 if you are married filing jointly, the credit begins to taper. The taper is mechanical: for every $1,000 of income above your threshold — and any part of a thousand counts as a whole step — you lose $50 of credit. A married couple earning $410,000 with two children, for example, sees ten steps of reduction, or $500 off their $4,400 base, leaving $3,900.",
+          "The credit is generous well into the upper-middle class, but it does not last forever. Once your adjusted gross income passes $200,000 as a single filer, or $400,000 if you are married filing jointly, the credit begins to taper. The taper is mechanical: for every $1,000 of income above your threshold - and any part of a thousand counts as a whole step - you lose $50 of credit. A married couple earning $410,000 with two children, for example, sees ten steps of reduction, or $500 off their $4,400 base, leaving $3,900.",
           "Most families never reach the phase-out at all, which is why the more important question for them is not income but the second factor: how the refundable portion works.",
         ],
       },
@@ -175,7 +431,7 @@ export const POSTS: BlogPost[] = [
         heading: "The refundable portion is where low earners win or lose",
         paragraphs: [
           "A non-refundable credit can only erase tax you owe. If your tax bill is small, a $4,400 credit that is purely non-refundable would be wasted past the point where your tax hits zero. This is exactly the situation many working families face, and it is why the Additional Child Tax Credit exists. It lets you receive part of the credit as a cash refund even when you owe little or no income tax.",
-          "The refundable amount is capped two ways. First, it cannot exceed $1,700 per child. Second, it is calculated as 15% of your earned income above $2,500. That second rule is the one that quietly limits large, low-income families: a parent of three earning $20,000 has only $17,500 of earnings above the $2,500 floor, and 15% of that is $2,625 — well below the $5,100 per-child ceiling for three children. Their refund is limited by their wages, not by the number of children.",
+          "The refundable amount is capped two ways. First, it cannot exceed $1,700 per child. Second, it is calculated as 15% of your earned income above $2,500. That second rule is the one that quietly limits large, low-income families: a parent of three earning $20,000 has only $17,500 of earnings above the $2,500 floor, and 15% of that is $2,625 - well below the $5,100 per-child ceiling for three children. Their refund is limited by their wages, not by the number of children.",
           "The takeaway is that earned income, not just the number of dependents, drives the refund. A family that picks up additional earned income often unlocks more refundable credit, up to the caps.",
         ],
       },
@@ -194,7 +450,7 @@ export const POSTS: BlogPost[] = [
         paragraphs: [
           "The most useful thing you can do before filing is run your real figures rather than relying on a remembered amount. Enter your filing status, the number of qualifying children, your income, and your earned income, and look at two outputs: the total credit after any phase-out, and the slice of it that could be refundable. If the refundable number is lower than you expected, the usual cause is earned income below the level needed to reach the per-child cap.",
           "It is also worth separating this credit from others it is often confused with. The Child and Dependent Care Credit, which offsets the cost of childcare so you can work, is entirely different and can be claimed alongside the Child Tax Credit for the same child. The Earned Income Tax Credit is different again, and many families qualify for all three at once.",
-          "None of this is tax advice, and a complete return can shift the final figure. But understanding the two levers — income for the phase-out, earned income for the refund — puts you ahead of most filers, and makes it far less likely you leave money on the table.",
+          "None of this is tax advice, and a complete return can shift the final figure. But understanding the two levers - income for the phase-out, earned income for the refund - puts you ahead of most filers, and makes it far less likely you leave money on the table.",
         ],
       },
     ],
@@ -220,7 +476,7 @@ export const POSTS: BlogPost[] = [
         heading: "A credit that grows before it shrinks",
         paragraphs: [
           "Most benefits start at a maximum and fade as you earn more. The EITC does the opposite at first. It phases in: as you earn your first dollars of wages or self-employment income, the credit grows with every dollar, at a rate that depends on family size. With one child the phase-in rate is 34 cents per dollar; with two it is 40 cents; with three or more it is 45 cents. So the credit rewards work on the way up.",
-          "Then it plateaus at a maximum — in 2025, that is $649 with no children, $4,328 with one, $7,152 with two, and $8,046 with three or more. The plateau holds across a band of income. Only after a higher threshold does the credit begin to phase out, falling gradually to zero at the income limit for your situation. This rise-plateau-fall shape is why a worker can earn more and, past a point, see the credit shrink slightly even as take-home pay rises.",
+          "Then it plateaus at a maximum - in 2025, that is $649 with no children, $4,328 with one, $7,152 with two, and $8,046 with three or more. The plateau holds across a band of income. Only after a higher threshold does the credit begin to phase out, falling gradually to zero at the income limit for your situation. This rise-plateau-fall shape is why a worker can earn more and, past a point, see the credit shrink slightly even as take-home pay rises.",
         ],
       },
       {
@@ -233,14 +489,14 @@ export const POSTS: BlogPost[] = [
       {
         heading: "The rule that disqualifies people instantly",
         paragraphs: [
-          "There is one cliff worth knowing about. The EITC has an investment-income limit — $11,950 in 2025 — and it is a hard cutoff, not a gentle taper. Earn a dollar of investment income above that line and the entire credit disappears, no matter how low your wages are. Investment income here includes interest, dividends, capital gains, and certain rental and royalty income. For most low-wage workers this never comes into play, but for someone with a brokerage account or a rental property, it can quietly erase a credit they would otherwise receive.",
+          "There is one cliff worth knowing about. The EITC has an investment-income limit - $11,950 in 2025 - and it is a hard cutoff, not a gentle taper. Earn a dollar of investment income above that line and the entire credit disappears, no matter how low your wages are. Investment income here includes interest, dividends, capital gains, and certain rental and royalty income. For most low-wage workers this never comes into play, but for someone with a brokerage account or a rental property, it can quietly erase a credit they would otherwise receive.",
           "A second trap is filing status: married couples generally cannot claim the EITC if they file separately. And everyone on the return usually needs a valid Social Security number.",
         ],
       },
       {
         heading: "Why the money goes unclaimed",
         list: [
-          "People assume childless workers are excluded — they are not.",
+          "People assume childless workers are excluded - they are not.",
           "First-time filers and those who recently started working do not realize they crossed into eligibility.",
           "Workers who are not required to file skip filing entirely, and you cannot get the credit without a return.",
           "Self-employed people underestimate that their net earnings count.",
@@ -270,27 +526,27 @@ export const POSTS: BlogPost[] = [
       {
         paragraphs: [
           "Almost everyone has had the experience of being thrilled by a salary figure and then deflated by the first paycheck. The gap between the two is not a mistake or a hidden fee; it is the predictable result of several different taxes, each working in its own way. Understanding them turns a confusing deduction line into something you can anticipate and plan around.",
-          "Broadly, two kinds of federal tax come out of a typical paycheck, and they behave very differently from each other. Add a third layer — state tax — and you have the full picture of why the headline salary is never what lands in your account.",
+          "Broadly, two kinds of federal tax come out of a typical paycheck, and they behave very differently from each other. Add a third layer - state tax - and you have the full picture of why the headline salary is never what lands in your account.",
         ],
       },
       {
         heading: "Federal income tax is progressive",
         paragraphs: [
-          "The first deduction is federal income tax, and it works in slices. After subtracting the standard deduction — $15,750 for a single filer in 2025 — your remaining taxable income is split across brackets, each taxed at its own rate, from 10% on the first slice up to 37% at the very top. Crucially, only the income that falls within a bracket is taxed at that bracket's rate. So being 'in the 22% bracket' does not mean 22% of everything; it means your last dollars are taxed at 22% while earlier dollars were taxed less.",
-          "This is why your effective rate — total income tax divided by total income — is always lower than your top bracket. A single person earning $60,000 pays around $5,072 in federal income tax, an effective rate under 9%, despite touching the 12% bracket.",
+          "The first deduction is federal income tax, and it works in slices. After subtracting the standard deduction - $15,750 for a single filer in 2025 - your remaining taxable income is split across brackets, each taxed at its own rate, from 10% on the first slice up to 37% at the very top. Crucially, only the income that falls within a bracket is taxed at that bracket's rate. So being 'in the 22% bracket' does not mean 22% of everything; it means your last dollars are taxed at 22% while earlier dollars were taxed less.",
+          "This is why your effective rate - total income tax divided by total income - is always lower than your top bracket. A single person earning $60,000 pays around $5,072 in federal income tax, an effective rate under 9%, despite touching the 12% bracket.",
         ],
       },
       {
         heading: "FICA is flat, and it is the part people forget",
         paragraphs: [
-          "The second federal deduction is FICA, the payroll tax that funds Social Security and Medicare. Unlike income tax, it does not care about brackets or deductions. Social Security takes 6.2% of your wages up to an annual ceiling — $176,100 in 2025 — and nothing above that. Medicare takes 1.45% of every dollar of wages with no ceiling at all, and adds an extra 0.9% on wages above $200,000 for singles or $250,000 for couples.",
-          "For most workers, FICA is a bigger surprise than income tax, because it starts from the first dollar and has no standard deduction to soften it. On that $60,000 salary, FICA alone is $4,590 — nearly as much as the income tax. Your employer quietly matches the Social Security and Medicare portions, which is part of why hiring you costs more than your salary.",
+          "The second federal deduction is FICA, the payroll tax that funds Social Security and Medicare. Unlike income tax, it does not care about brackets or deductions. Social Security takes 6.2% of your wages up to an annual ceiling - $176,100 in 2025 - and nothing above that. Medicare takes 1.45% of every dollar of wages with no ceiling at all, and adds an extra 0.9% on wages above $200,000 for singles or $250,000 for couples.",
+          "For most workers, FICA is a bigger surprise than income tax, because it starts from the first dollar and has no standard deduction to soften it. On that $60,000 salary, FICA alone is $4,590 - nearly as much as the income tax. Your employer quietly matches the Social Security and Medicare portions, which is part of why hiring you costs more than your salary.",
         ],
       },
       {
         heading: "Putting it together",
         paragraphs: [
-          "On a $60,000 single salary, roughly $5,072 of federal income tax and $4,590 of FICA come to about $9,662, leaving around $50,338 of federal take-home — just under $4,195 a month. And that is before state tax, retirement contributions, and health premiums, all of which come out too.",
+          "On a $60,000 single salary, roughly $5,072 of federal income tax and $4,590 of FICA come to about $9,662, leaving around $50,338 of federal take-home - just under $4,195 a month. And that is before state tax, retirement contributions, and health premiums, all of which come out too.",
           "State tax is where outcomes diverge sharply. A worker in Texas or Florida, which levy no state income tax, keeps that $50,338. The same worker in California or New York hands over a few thousand more. This single difference can outweigh a modest salary bump when comparing offers in different states, which is why take-home, not headline pay, is the number that matters.",
         ],
       },
@@ -307,7 +563,7 @@ export const POSTS: BlogPost[] = [
       {
         heading: "A note on refunds",
         paragraphs: [
-          "Many people treat a big tax refund as a windfall, but it usually means you over-withheld and lent the government money interest-free all year. The opposite — a surprise bill — means you under-withheld. The goal is to land close to zero, keeping more of each paycheck and avoiding shocks at filing time. Estimating your take-home pay first, then comparing it to your actual paystub, is the simplest way to spot when your withholding has drifted and needs a tweak.",
+          "Many people treat a big tax refund as a windfall, but it usually means you over-withheld and lent the government money interest-free all year. The opposite - a surprise bill - means you under-withheld. The goal is to land close to zero, keeping more of each paycheck and avoiding shocks at filing time. Estimating your take-home pay first, then comparing it to your actual paystub, is the simplest way to spot when your withholding has drifted and needs a tweak.",
         ],
       },
     ],
@@ -325,28 +581,28 @@ export const POSTS: BlogPost[] = [
     body: [
       {
         paragraphs: [
-          "Most household bills are fixed: you cannot negotiate your electricity rate or talk your way out of a parking fine. Property tax is the unusual exception. It is large, recurring, and — to a degree that surprises many homeowners — contestable. Between exemptions you may not have claimed and assessments that may be too high, a meaningful number of owners are paying more than they need to, year after year.",
+          "Most household bills are fixed: you cannot negotiate your electricity rate or talk your way out of a parking fine. Property tax is the unusual exception. It is large, recurring, and - to a degree that surprises many homeowners - contestable. Between exemptions you may not have claimed and assessments that may be too high, a meaningful number of owners are paying more than they need to, year after year.",
           "Understanding how the bill is built is the first step to lowering it. Property tax is, at heart, a value multiplied by a rate. Change either side of that equation in your favor and the bill falls.",
         ],
       },
       {
         heading: "Why identical homes pay wildly different taxes",
         paragraphs: [
-          "The 'rate' side of the equation is intensely local. It is set not by one government but by the overlapping layers — county, city, school district, and special districts — that each levy a piece. Combine them and you get an effective rate, the share of your home's value you pay each year. That rate ranges from well under 1% in low-tax states to over 2% in the highest.",
+          "The 'rate' side of the equation is intensely local. It is set not by one government but by the overlapping layers - county, city, school district, and special districts - that each levy a piece. Combine them and you get an effective rate, the share of your home's value you pay each year. That rate ranges from well under 1% in low-tax states to over 2% in the highest.",
           "The practical consequence is that location matters more than price. A $300,000 home in Texas, at an effective rate near 1.68%, carries about $5,040 in annual tax; the same home in California, near 0.71%, runs closer to $2,130. Neither owner can change their state's rate, but knowing your effective rate tells you whether your bill is in a normal range or worth investigating.",
         ],
       },
       {
         heading: "Exemptions: money you may be leaving unclaimed",
         paragraphs: [
-          "The 'value' side is where most savings hide, and the biggest lever is the homestead exemption. It removes a slice of your home's value from taxation if the property is your primary residence. Florida exempts up to $50,000 of value; Texas offers a substantial school-district exemption; other states structure theirs differently. On a home in a state with a 1% effective rate, a $50,000 exemption is worth about $500 a year — every year you hold the home.",
+          "The 'value' side is where most savings hide, and the biggest lever is the homestead exemption. It removes a slice of your home's value from taxation if the property is your primary residence. Florida exempts up to $50,000 of value; Texas offers a substantial school-district exemption; other states structure theirs differently. On a home in a state with a 1% effective rate, a $50,000 exemption is worth about $500 a year - every year you hold the home.",
           "The catch is that exemptions are usually not automatic. You typically apply once, through your county assessor, and many owners simply never do. On top of the general homestead exemption, many states layer additional relief for people over 65, veterans, surviving spouses, and people with disabilities, sometimes freezing the assessed value so it cannot rise. Each has its own eligibility test and deadline, often early in the year.",
         ],
       },
       {
         heading: "Appealing an assessment that is too high",
         paragraphs: [
-          "If your home's assessed value looks higher than what comparable homes are selling for, you can appeal. The process varies by county but generally involves gathering recent sales of similar nearby properties, documenting any condition issues that reduce your home's value, and filing within a short window — often 30 to 60 days after the assessment notice. A successful appeal lowers the value the rate is applied to, and the saving repeats every year until the next reassessment.",
+          "If your home's assessed value looks higher than what comparable homes are selling for, you can appeal. The process varies by county but generally involves gathering recent sales of similar nearby properties, documenting any condition issues that reduce your home's value, and filing within a short window - often 30 to 60 days after the assessment notice. A successful appeal lowers the value the rate is applied to, and the saving repeats every year until the next reassessment.",
           "Appeals are not guaranteed, and not every assessment is wrong. But assessors work at scale and rely on mass models, so individual homes are sometimes misvalued. The cost of checking is low, and the potential saving compounds.",
         ],
       },
@@ -389,37 +645,37 @@ export const POSTS: BlogPost[] = [
         heading: "Your maximum award is built from blocks",
         paragraphs: [
           "Everything starts with the standard allowance, a monthly amount that depends only on your age and whether you claim as a single person or a couple. For 2025/26 it ranges from £316.98 for a single person under 25 up to £628.10 for a couple where at least one partner is 25 or over. This is the foundation.",
-          "On top of the standard allowance, you add elements for your circumstances. The most common is the child element — £333.33 a month for an eligible first child and £287.92 for others — though the two-child limit restricts this for most children born after April 2017. Further elements exist for housing costs, childcare, disability, and caring responsibilities. Add them all and you get your maximum award: the most you could receive if you had no income at all.",
+          "On top of the standard allowance, you add elements for your circumstances. The most common is the child element - £333.33 a month for an eligible first child and £287.92 for others - though the two-child limit restricts this for most children born after April 2017. Further elements exist for housing costs, childcare, disability, and caring responsibilities. Add them all and you get your maximum award: the most you could receive if you had no income at all.",
         ],
       },
       {
         heading: "The taper: how earnings reduce the award",
         paragraphs: [
-          "Universal Credit is designed so that work always pays, which is why it tapers rather than cutting off. If you have children or a limited capability for work, you get a work allowance — an amount you can earn each month before anything is deducted. Above that allowance, every £1 of take-home earnings reduces your award by 55p. That is the taper, and the 55% rate is the single most important number in the system.",
-          "Other income — such as certain other benefits — generally reduces the award pound for pound rather than through the taper. And savings matter too: capital over £16,000 usually rules out Universal Credit entirely, while savings between £6,000 and £16,000 reduce the award through an assumed income.",
+          "Universal Credit is designed so that work always pays, which is why it tapers rather than cutting off. If you have children or a limited capability for work, you get a work allowance - an amount you can earn each month before anything is deducted. Above that allowance, every £1 of take-home earnings reduces your award by 55p. That is the taper, and the 55% rate is the single most important number in the system.",
+          "Other income - such as certain other benefits - generally reduces the award pound for pound rather than through the taper. And savings matter too: capital over £16,000 usually rules out Universal Credit entirely, while savings between £6,000 and £16,000 reduce the award through an assumed income.",
         ],
       },
       {
         heading: "A worked example",
         paragraphs: [
           "Picture a single parent aged 25 or over with one child, taking home £800 a month. Their standard allowance of £400.14 plus a £333.33 child element gives a maximum of £733.47. Because they have a child, a work allowance of £411 applies, so only the £389 of earnings above it is tapered. At 55%, that is about £214, which is subtracted from the maximum to leave roughly £519 a month.",
-          "Notice what happens at the edges. Earn less, and the award climbs toward the £733.47 maximum. Earn more, and the taper takes a bit more — but never all of it, so each extra hour of work still leaves you better off overall. That gradual reduction is the whole point of the design.",
+          "Notice what happens at the edges. Earn less, and the award climbs toward the £733.47 maximum. Earn more, and the taper takes a bit more - but never all of it, so each extra hour of work still leaves you better off overall. That gradual reduction is the whole point of the design.",
         ],
       },
       {
         heading: "What trips people up",
         list: [
-          "Confusing gross pay with take-home pay — the taper applies to earnings after tax and National Insurance.",
+          "Confusing gross pay with take-home pay - the taper applies to earnings after tax and National Insurance.",
           "Forgetting the two-child limit when counting child elements.",
           "Not realizing housing and childcare support can add substantially to the award.",
           "Overlooking the £16,000 savings limit, which ends entitlement entirely.",
-          "Assuming the first payment is immediate — it usually arrives about five weeks after claiming.",
+          "Assuming the first payment is immediate - it usually arrives about five weeks after claiming.",
         ],
       },
       {
         heading: "Estimate first, then claim",
         paragraphs: [
-          "Because so much depends on your exact circumstances, the honest advice is to treat any quick estimate as a starting point rather than a promise. A simplified calculation that covers the standard allowance, child elements, and the taper will tell you whether a claim is likely worthwhile and roughly what scale of support to expect. From there, the official service — or a detailed benefits calculator that factors in housing, childcare, and disability — gives the accurate figure.",
+          "Because so much depends on your exact circumstances, the honest advice is to treat any quick estimate as a starting point rather than a promise. A simplified calculation that covers the standard allowance, child elements, and the taper will tell you whether a claim is likely worthwhile and roughly what scale of support to expect. From there, the official service - or a detailed benefits calculator that factors in housing, childcare, and disability - gives the accurate figure.",
           "Universal Credit will never be simple, but it is not arbitrary. Entitlement built from blocks, reduced by a single taper rate, is a model you can reason about. And reasoning about it beats guessing, especially when the difference is hundreds of pounds a month.",
         ],
       },
@@ -438,35 +694,35 @@ export const POSTS: BlogPost[] = [
     body: [
       {
         paragraphs: [
-          "Two of the most valuable benefits a Canadian household can receive arrive almost invisibly. There is no monthly application, no interview, no queue — just deposits that show up if you have filed your taxes. The Canada Child Benefit and the GST/HST credit are both tied to your tax return, and both are tax-free, which makes the humble act of filing one of the highest-return chores in personal finance.",
+          "Two of the most valuable benefits a Canadian household can receive arrive almost invisibly. There is no monthly application, no interview, no queue - just deposits that show up if you have filed your taxes. The Canada Child Benefit and the GST/HST credit are both tied to your tax return, and both are tax-free, which makes the humble act of filing one of the highest-return chores in personal finance.",
           "Because they run off income, both benefits also shift each July, when the Canada Revenue Agency recalculates them using your previous year's return. Understanding how they are built helps you anticipate the change and, occasionally, catch a payment you were owed.",
         ],
       },
       {
         heading: "The Canada Child Benefit: large, and income-tested",
         paragraphs: [
-          "The Canada Child Benefit is the bigger of the two for families with children. For the July 2025 to June 2026 benefit year, the maximum is $7,997 per year for each child under six and $6,748 for each child aged six to seventeen. If your adjusted family net income is at or below $37,487, you receive the full amount — a substantial, tax-free monthly deposit.",
+          "The Canada Child Benefit is the bigger of the two for families with children. For the July 2025 to June 2026 benefit year, the maximum is $7,997 per year for each child under six and $6,748 for each child aged six to seventeen. If your adjusted family net income is at or below $37,487, you receive the full amount - a substantial, tax-free monthly deposit.",
           "Above that threshold, the benefit reduces on a two-tier basis. Income between $37,487 and $81,222 is reduced at a first rate that depends on how many children you have; income above $81,222 is reduced by a fixed amount plus a second, lower rate. The result is a benefit that fades gradually rather than cutting off, so even middle-income families often receive something.",
         ],
       },
       {
         heading: "A quick example",
         paragraphs: [
-          "A family with two children under six and an adjusted family net income of $30,000 sits below the threshold, so they receive the full maximum: two times $7,997, or $15,994 a year — about $1,333 every month, tax-free. A family with one young child and one older child and an income of $50,000 starts from a maximum of $14,745 but, being in the first reduction tier, loses about 13.5% of the income above $37,487, leaving roughly $13,056. Same country, very different cheques, driven entirely by income and the ages of the children.",
+          "A family with two children under six and an adjusted family net income of $30,000 sits below the threshold, so they receive the full maximum: two times $7,997, or $15,994 a year - about $1,333 every month, tax-free. A family with one young child and one older child and an income of $50,000 starts from a maximum of $14,745 but, being in the first reduction tier, loses about 13.5% of the income above $37,487, leaving roughly $13,056. Same country, very different cheques, driven entirely by income and the ages of the children.",
         ],
       },
       {
         heading: "The GST/HST credit: small, broad, and easy to miss",
         paragraphs: [
           "The GST/HST credit is quieter but reaches far more people, because it is aimed at offsetting the sales tax that lower-income households pay. For 2025–26 it is worth up to roughly $533 a year for a single adult and $698 for a couple, plus about $184 for each child under nineteen. It is paid quarterly, in July, October, January, and April.",
-          "Like the child benefit, it phases out with income — reduced by 5% of adjusted family net income above about $45,521 — but its real quirk is how invisible it is. Most people are considered automatically when they file, so the only way to miss it is to not file at all. Newcomers to Canada are the exception: they usually need to complete a specific form to start receiving it rather than waiting for automatic enrolment.",
+          "Like the child benefit, it phases out with income - reduced by 5% of adjusted family net income above about $45,521 - but its real quirk is how invisible it is. Most people are considered automatically when they file, so the only way to miss it is to not file at all. Newcomers to Canada are the exception: they usually need to complete a specific form to start receiving it rather than waiting for automatic enrolment.",
         ],
       },
       {
         heading: "Why filing is the whole game",
         list: [
           "Both benefits are recalculated every July from your prior-year return, so filing on time keeps payments uninterrupted.",
-          "You must file even with no income — non-filers simply do not get assessed.",
+          "You must file even with no income - non-filers simply do not get assessed.",
           "Both partners in a couple need to file for the family to be assessed correctly.",
           "Provincial top-ups, such as the Ontario Child Benefit or the BC Family Benefit, often ride alongside the federal amounts.",
           "Newcomers should apply rather than wait for automatic enrolment.",
@@ -476,7 +732,7 @@ export const POSTS: BlogPost[] = [
         heading: "Plan around the July reset",
         paragraphs: [
           "Because both benefits change each July using last year's income, a big income swing takes time to show up. A year of lower income raises next July's payments; a strong year lowers them. Families planning around parental leave, a job change, or a move can use this lag to anticipate what is coming rather than being surprised by it.",
-          "The simplest way to stay ahead is to estimate both benefits whenever your income or family situation changes. Knowing roughly what the Canada Child Benefit and the GST/HST credit should be — and confirming the figure once the CRA recalculates — turns two invisible deposits into something you can actually budget around. And the single action that protects both is the same: file your taxes, every year, on time.",
+          "The simplest way to stay ahead is to estimate both benefits whenever your income or family situation changes. Knowing roughly what the Canada Child Benefit and the GST/HST credit should be - and confirming the figure once the CRA recalculates - turns two invisible deposits into something you can actually budget around. And the single action that protects both is the same: file your taxes, every year, on time.",
         ],
       },
     ],

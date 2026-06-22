@@ -266,7 +266,7 @@ export default function HSACalculator() {
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-blue-700">
                 <p className="font-semibold mb-1">Triple Tax Advantage</p>
-                <p>Contributions are pre-tax, growth is tax-free, and qualified medical withdrawals are tax-free. After age 65, your HSA acts like a Traditional IRA — withdrawals for any reason are taxed as ordinary income, but there's no 20% penalty.</p>
+                <p>Contributions are pre-tax, growth is tax-free, and qualified medical withdrawals are tax-free. After age 65, your HSA acts like a Traditional IRA - withdrawals for any reason are taxed as ordinary income, but there's no 20% penalty.</p>
               </div>
             </div>
           )}
@@ -308,7 +308,7 @@ export default function HSACalculator() {
       <CalculatorLayout title="" description=""
         explanation={
           <div>
-            <p className="mb-2">An HSA is only available when you're enrolled in a High-Deductible Health Plan (HDHP). Contributions reduce your taxable income, funds grow tax-free, and withdrawals for qualified medical expenses are tax-free — a rare triple tax advantage.</p>
+            <p className="mb-2">An HSA is only available when you're enrolled in a High-Deductible Health Plan (HDHP). Contributions reduce your taxable income, funds grow tax-free, and withdrawals for qualified medical expenses are tax-free - a rare triple tax advantage.</p>
             <p className="mb-2">The 2025 contribution limits are $4,300 for self-only coverage and $8,550 for family coverage. If you're 55 or older, you can contribute an additional $1,000 as a catch-up contribution. Your employer's contributions count toward the limit.</p>
             <p className="text-xs text-gray-500 mt-2">Note: This calculator estimates potential savings. Consult a tax professional for personalized advice.</p>
           </div>
@@ -326,7 +326,7 @@ export default function HSACalculator() {
         ]}
       >
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gray-900">HSA — The Triple Tax Advantage Account</h2>
+          <h2 className="text-2xl font-bold text-gray-900">HSA - The Triple Tax Advantage Account</h2>
           <p className="text-sm text-gray-700">No other savings vehicle offers a triple tax benefit: pre-tax contributions, tax-free growth, and tax-free qualified withdrawals.</p>
         </div>
       </CalculatorLayout>

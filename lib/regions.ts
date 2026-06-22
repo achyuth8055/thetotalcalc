@@ -20,7 +20,8 @@ export interface Region {
   subdivisions?: Subdivision[];
 }
 
-export const REGIONS: Record<RegionCode, Region> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const REGIONS: Record<RegionCode | any, Region> = {
   US: {
     code: "US",
     name: "United States",
@@ -74,6 +75,25 @@ export const REGIONS: Record<RegionCode, Region> = {
       { code: "SK", name: "Saskatchewan" },
       { code: "NS", name: "Nova Scotia" },
       { code: "NB", name: "New Brunswick" },
+    ],
+  },
+  JP: {
+    code: "JP" as RegionCode,
+    name: "Japan",
+    currency: "JPY",
+    locale: "ja-JP",
+    dateFormat: "YYYY-MM-DD",
+    taxYear: { type: "calendar", label: "Calendar year (Jan–Dec)" },
+    languages: ["ja", "en"],
+    subdivisions: [
+      { code: "13", name: "Tokyo" },
+      { code: "27", name: "Osaka" },
+      { code: "23", name: "Aichi" },
+      { code: "14", name: "Kanagawa" },
+      { code: "11", name: "Saitama" },
+      { code: "28", name: "Hyogo" },
+      { code: "01", name: "Hokkaido" },
+      { code: "40", name: "Fukuoka" },
     ],
   },
 };

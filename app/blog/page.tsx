@@ -3,9 +3,9 @@ import Link from "next/link";
 import { POSTS } from "@/data/blog";
 
 export const metadata: Metadata = {
-  title: "Blog — Guides to benefits, taxes, and savings",
+  title: "Blog - Guides to benefits, taxes, and savings",
   description:
-    "In-depth guides to government benefits, tax credits, property tax, and take-home pay across the US, UK, and Canada — written to help you understand and claim what you're owed.",
+    "In-depth guides to government benefits, tax credits, property tax, and take-home pay across the US, UK, and Canada - written to help you understand and claim what you're owed.",
   alternates: { canonical: "/blog" },
 };
 
@@ -18,7 +18,7 @@ export default function BlogIndexPage() {
         <h1 className="mb-stack-sm text-display-lg text-primary">The OnlineCalc Blog</h1>
         <p className="text-body-lg text-on-surface-variant">
           Plain-language guides to benefits, tax credits, property tax, and take-home pay. We explain how
-          the rules actually work — and how to make sure you claim what you&apos;re owed.
+          the rules actually work - and how to make sure you claim what you&apos;re owed.
         </p>
       </header>
 

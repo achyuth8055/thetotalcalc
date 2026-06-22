@@ -286,7 +286,7 @@ export default function GraphingCalculator() {
         explanation={<div><p className="mb-2">Enter any mathematical function using x as the variable. Move your mouse over the graph to see coordinates. Add multiple functions to compare them.</p><p className="text-sm text-gray-600">Syntax: use * for multiplication, ^ for powers, sin/cos/tan for trig, sqrt() for square root, π for pi.</p></div>}
         faqs={[
           { question: "How do I enter a function?", answer: "Type the formula using x as the variable. Examples: x^2, sin(x), 2*x+1, sqrt(x). Use * for multiplication." },
-          { question: "Can I plot multiple functions?", answer: "Yes — click '+ Add' to add more functions. Each gets a different color so you can compare them." },
+          { question: "Can I plot multiple functions?", answer: "Yes - click '+ Add' to add more functions. Each gets a different color so you can compare them." },
           { question: "How do I zoom in?", answer: "Use the Zoom In/Out buttons, or manually change the X min/max and Y min/max values to set your view range." },
         ]}
         relatedCalculators={[

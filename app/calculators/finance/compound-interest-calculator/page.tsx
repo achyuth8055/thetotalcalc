@@ -360,7 +360,7 @@ export default function CompoundInterestCalculator() {
                       <td className="px-3 py-2.5 text-right text-green-700">{fmt(result.finalAmount)}</td>
                       <td className="px-3 py-2.5 text-right text-blue-700">{fmt(result.totalInvested)}</td>
                       <td className="px-3 py-2.5 text-right text-orange-700">{fmt(result.totalInterest)}</td>
-                      <td className="px-3 py-2.5 text-right text-gray-600">—</td>
+                      <td className="px-3 py-2.5 text-right text-gray-600">-</td>
                     </tr>
                   </tfoot>
                 )}
@@ -388,14 +388,14 @@ export default function CompoundInterestCalculator() {
         explanation={
           <div>
             <p className="mb-3">
-              Compound interest means you earn interest on your interest — making your money grow
+              Compound interest means you earn interest on your interest - making your money grow
               exponentially over time. The more frequently it compounds, the faster it grows.
             </p>
             <p className="mb-2">
               Formula: <span className="font-mono bg-gray-100 px-1 rounded">A = P(1 + r/n)^(nt)</span>
             </p>
             <p className="text-sm text-gray-600">
-              With monthly contributions, each deposit also starts compounding — the earlier you
+              With monthly contributions, each deposit also starts compounding - the earlier you
               start, the more each dollar works for you.
             </p>
           </div>
@@ -409,12 +409,12 @@ export default function CompoundInterestCalculator() {
           {
             question: "How do monthly contributions affect compound interest?",
             answer:
-              "Each monthly contribution begins compounding immediately — so regular contributions can dramatically outpace a single lump sum over long time horizons.",
+              "Each monthly contribution begins compounding immediately - so regular contributions can dramatically outpace a single lump sum over long time horizons.",
           },
           {
             question: "How often should interest compound?",
             answer:
-              "More frequent compounding means slightly more growth. Daily compounding earns a bit more than monthly, which earns more than annually — though the difference diminishes at lower rates.",
+              "More frequent compounding means slightly more growth. Daily compounding earns a bit more than monthly, which earns more than annually - though the difference diminishes at lower rates.",
           },
           {
             question: "What is the Rule of 72?",

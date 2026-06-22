@@ -375,7 +375,7 @@ export default function DebtPayoffPlanner() {
           { question: "Which strategy saves more money?", answer: "Avalanche almost always saves more money in total interest because you eliminate high-rate debt first. Snowball may cost more in interest but provides motivational milestones by clearing individual debts faster." },
           { question: "What if I can't afford more than minimums?", answer: "Paying only minimums on high-interest debt means most of each payment goes to interest. Even an extra $25–$50/month can meaningfully reduce payoff time. Consider temporarily reducing expenses or finding additional income." },
           { question: "Should I pay off debt or invest?", answer: "Generally, if your debt interest rate exceeds your expected investment return (typically 6–8% for diversified portfolios), prioritize paying off the debt. Low-rate debt (under 4–5%) may not be worth rushing to pay off if you can invest at higher returns." },
-          { question: "How does the debt snowball effect work?", answer: "When you pay off a debt completely, you redirect that payment to the next debt on your list. Since you're now putting more money toward fewer debts, the payoff speed accelerates exponentially — this is the snowball effect." },
+          { question: "How does the debt snowball effect work?", answer: "When you pay off a debt completely, you redirect that payment to the next debt on your list. Since you're now putting more money toward fewer debts, the payoff speed accelerates exponentially - this is the snowball effect." },
         ]}
         relatedCalculators={[
           { name: "Loan Calculator", href: "/calculators/finance/loan-calculator" },
@@ -385,7 +385,7 @@ export default function DebtPayoffPlanner() {
       >
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-gray-900">Avalanche vs. Snowball: Which is Right for You?</h2>
-          <p className="text-sm text-gray-700">Both strategies work — the best one is the one you'll stick with. The avalanche saves the most money; the snowball builds momentum.</p>
+          <p className="text-sm text-gray-700">Both strategies work - the best one is the one you'll stick with. The avalanche saves the most money; the snowball builds momentum.</p>
         </div>
       </CalculatorLayout>
     </div>

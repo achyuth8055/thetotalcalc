@@ -188,7 +188,7 @@ export default function TimeCalculator() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-gray-600 block mb-1">Time 1 — Hours</label>
+                  <label className="text-xs font-semibold text-gray-600 block mb-1">Time 1 - Hours</label>
                   <input type="number" value={h1} min={0} onChange={(e) => setH1(Number(e.target.value) || 0)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md text-center font-semibold focus:ring-2 focus:ring-indigo-500" />
                 </div>
@@ -209,7 +209,7 @@ export default function TimeCalculator() {
               {(hoursOp === "add" || hoursOp === "subtract") ? (
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-xs font-semibold text-gray-600 block mb-1">Time 2 — Hours</label>
+                    <label className="text-xs font-semibold text-gray-600 block mb-1">Time 2 - Hours</label>
                     <input type="number" value={h2} min={0} onChange={(e) => setH2(Number(e.target.value) || 0)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md text-center font-semibold focus:ring-2 focus:ring-indigo-500" />
                   </div>
@@ -242,7 +242,7 @@ export default function TimeCalculator() {
         explanation={<p>Three modes: <strong>Time Duration</strong> finds how long between two times. <strong>Add/Subtract</strong> moves a time forward or backward. <strong>Hours Math</strong> adds, subtracts, multiplies, or divides time values.</p>}
         faqs={[
           { question: "What if end time is before start time?", answer: "In Duration mode, if the end time is earlier, the calculator assumes the period crosses midnight and adds 24 hours." },
-          { question: "How do I calculate hours worked?", answer: "Use Duration mode — enter your clock-in as Start Time and clock-out as End Time to get exact hours and minutes worked." },
+          { question: "How do I calculate hours worked?", answer: "Use Duration mode - enter your clock-in as Start Time and clock-out as End Time to get exact hours and minutes worked." },
           { question: "Can I calculate total hours across multiple shifts?", answer: "Use Hours Math mode with the Add (+) operation to sum multiple durations together." },
         ]}
         relatedCalculators={[

@@ -1,6 +1,6 @@
 // Previously "coming soon" calculators, now built on the rules engine.
 // Figures verified for 2025 / the July 2025–June 2026 benefit year.
-// Estimates only — every definition carries a disclaimer.
+// Estimates only - every definition carries a disclaimer.
 
 import type { CalculatorDefinition, Expr } from "@/lib/engine/types";
 
@@ -122,8 +122,8 @@ export const usHomestead: CalculatorDefinition = {
   ],
   eligibility: [
     { status: "likely_not_eligible", when: { not: { var: "primaryResidence" } }, confidence: "high", reason: "Homestead exemptions require the property to be your primary residence." },
-    { status: "likely_qualifies", when: { cmp: ">", left: { var: "exemption" }, right: 0 }, confidence: "medium", reason: "Your state offers a homestead exemption for primary residences — apply through your county assessor." },
-    { status: "need_local_review", when: true, confidence: "low", reason: "Homestead relief in your state varies by locality — check with your county assessor." },
+    { status: "likely_qualifies", when: { cmp: ">", left: { var: "exemption" }, right: 0 }, confidence: "medium", reason: "Your state offers a homestead exemption for primary residences - apply through your county assessor." },
+    { status: "need_local_review", when: true, confidence: "low", reason: "Homestead relief in your state varies by locality - check with your county assessor." },
   ],
   documents: ["Proof the home is your primary residence", "Deed or property tax bill", "Government-issued ID with the property address"],
   sources: [{ title: "Property tax exemptions overview", url: "https://www.irs.gov/credits-deductions/individuals", publisher: "Reference", retrieved: "2026-06-09" }],
@@ -174,7 +174,7 @@ export const usSalaryAfterTax: CalculatorDefinition = {
     { title: "Federal income tax rates and brackets", url: "https://www.irs.gov/filing/federal-income-tax-rates-and-brackets", publisher: "IRS", retrieved: "2026-06-09" },
     { title: "Social Security & Medicare withholding rates", url: "https://www.irs.gov/taxtopics/tc751", publisher: "IRS", retrieved: "2026-06-09" },
   ],
-  disclaimer: "Estimate only — federal income tax (standard deduction) plus FICA. Excludes state/local income tax, pre-tax deductions, and credits. Not tax advice.",
+  disclaimer: "Estimate only - federal income tax (standard deduction) plus FICA. Excludes state/local income tax, pre-tax deductions, and credits. Not tax advice.",
   version: "1.0.0", effectiveYear: 2025, lastVerified: "2026-06-09",
   tests: [{ name: "single 60k", inputs: { filingStatus: "single", gross: 60000 }, expect: { federalTax: 5071.5, fica: 4590, takeHome: 50338.5 } }],
 };
@@ -275,12 +275,12 @@ export const ukUniversalCredit: CalculatorDefinition = {
     { name: "uc", expr: { op: "max", args: [0, { op: "-", args: [{ var: "maxUC" }, { var: "taper" }, { var: "otherMonthlyIncome" }] }] } },
   ],
   outputs: [
-    { name: "uc", label: "Estimated monthly Universal Credit", expr: { var: "uc" }, format: "currency", primary: true, note: "Simplified — excludes housing, childcare, disability and carer elements, and capital over £16,000." },
+    { name: "uc", label: "Estimated monthly Universal Credit", expr: { var: "uc" }, format: "currency", primary: true, note: "Simplified - excludes housing, childcare, disability and carer elements, and capital over £16,000." },
     { name: "maxUC", label: "Maximum (before income)", expr: { var: "maxUC" }, format: "currency" },
   ],
   eligibility: [
     { status: "likely_qualifies", when: { cmp: ">", left: { var: "uc" }, right: 0 }, confidence: "medium", reason: "Based on these figures you'd likely receive some Universal Credit. Housing and other elements could increase it." },
-    { status: "likely_not_eligible", when: true, confidence: "medium", reason: "Your income may be too high for Universal Credit on these inputs — but housing and childcare costs can change this." },
+    { status: "likely_not_eligible", when: true, confidence: "medium", reason: "Your income may be too high for Universal Credit on these inputs - but housing and childcare costs can change this." },
   ],
   sources: [{ title: "Universal Credit", url: "https://www.gov.uk/universal-credit", publisher: "GOV.UK", retrieved: "2026-06-09" }],
   disclaimer: "Simplified estimate only. Real Universal Credit depends on housing costs, childcare, disability, savings, and your exact circumstances. Use the official GOV.UK service or a benefits calculator for an accurate figure.",
@@ -319,12 +319,12 @@ export const ukCouncilTaxReduction: CalculatorDefinition = {
     { name: "estReduction", expr: { op: "/", args: [{ op: "*", args: [{ var: "annualCouncilTax" }, { var: "pct" }] }, 100] } },
   ],
   outputs: [
-    { name: "estReduction", label: "Estimated annual reduction", expr: { var: "estReduction" }, format: "currency", primary: true, note: "Rough estimate only — your council sets the actual scheme and may differ significantly." },
+    { name: "estReduction", label: "Estimated annual reduction", expr: { var: "estReduction" }, format: "currency", primary: true, note: "Rough estimate only - your council sets the actual scheme and may differ significantly." },
     { name: "pct", label: "Estimated reduction", expr: { var: "pct" }, format: "percent" },
   ],
   eligibility: [
     { status: "likely_not_eligible", when: { var: "excluded" }, confidence: "high", reason: "On these inputs you're likely excluded (not liable, or working-age with savings over £16,000)." },
-    { status: "likely_qualifies", when: { cmp: ">=", left: { var: "pct" }, right: 50 }, confidence: "low", reason: "Your income suggests a substantial reduction may be available — apply through your local council." },
+    { status: "likely_qualifies", when: { cmp: ">=", left: { var: "pct" }, right: 50 }, confidence: "low", reason: "Your income suggests a substantial reduction may be available - apply through your local council." },
     { status: "may_qualify", when: { cmp: ">", left: { var: "pct" }, right: 0 }, confidence: "low", reason: "You may qualify for a partial reduction; the exact amount is set by your council." },
     { status: "likely_not_eligible", when: true, confidence: "low", reason: "Your income looks too high for a reduction under a typical scheme, but local schemes vary." },
   ],
@@ -391,7 +391,7 @@ export const caChildBenefit: CalculatorDefinition = {
     { name: "monthly", label: "Estimated monthly CCB", expr: { var: "monthly" }, format: "currency" },
     { name: "maxBenefit", label: "Maximum (before income reduction)", expr: { var: "maxBenefit" }, format: "currency" },
   ],
-  sources: [{ title: "Canada Child Benefit — how much you can get", url: "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/how-much.html", publisher: "Canada Revenue Agency", retrieved: "2026-06-09" }],
+  sources: [{ title: "Canada Child Benefit - how much you can get", url: "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/canada-child-benefit/how-much.html", publisher: "Canada Revenue Agency", retrieved: "2026-06-09" }],
   disclaimer: "Estimate only for the July 2025–June 2026 benefit year. Excludes the Child Disability Benefit and provincial top-ups. Confirm with the CRA.",
   version: "1.0.0", effectiveYear: 2025, lastVerified: "2026-06-09",
   tests: [
@@ -429,7 +429,7 @@ export const caGstHst: CalculatorDefinition = {
     { name: "annual", label: "Estimated annual GST/HST credit", expr: { var: "annual" }, format: "currency", primary: true },
     { name: "quarterly", label: "Per quarterly payment", expr: { var: "quarterly" }, format: "currency" },
   ],
-  sources: [{ title: "GST/HST credit — how much you can get", url: "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/gst-hst-credit/how-much.html", publisher: "Canada Revenue Agency", retrieved: "2026-06-09" }],
+  sources: [{ title: "GST/HST credit - how much you can get", url: "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/gst-hst-credit/how-much.html", publisher: "Canada Revenue Agency", retrieved: "2026-06-09" }],
   disclaimer: "Simplified estimate for the July 2025–June 2026 period. The single-supplement phase-in and provincial credits are approximated. Confirm with the CRA.",
   version: "1.0.0", effectiveYear: 2025, lastVerified: "2026-06-09",
   tests: [

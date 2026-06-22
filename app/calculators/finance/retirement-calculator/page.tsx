@@ -43,7 +43,7 @@ export default function RetirementCalculator() {
 
     const totalContributions = currentSavings + monthlyContribution * n;
 
-    // Withdrawal phase — how long does nest egg last at monthly expenses (4% withdrawal rate in retirement)
+    // Withdrawal phase - how long does nest egg last at monthly expenses (4% withdrawal rate in retirement)
     const monthlyIncome = finalNestEgg * 0.04 / 12;
     const postRetirementRate = 0.05 / 12; // conservative 5% in retirement
     let yearsMoneyLasts = 0;

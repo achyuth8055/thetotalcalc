@@ -253,14 +253,14 @@ export default function NetWorthCalculator() {
           <div>
             <p className="mb-4">Net worth is the single most important number in personal finance. It's the foundation of your financial health and the key metric for tracking long-term wealth building progress.</p>
             <p className="mb-3"><strong>Net Worth = Total Assets − Total Liabilities</strong></p>
-            <p>Assets are everything you own with value. Liabilities are everything you owe. The goal is to grow assets over time while reducing liabilities — the gap between them is your net worth.</p>
+            <p>Assets are everything you own with value. Liabilities are everything you owe. The goal is to grow assets over time while reducing liabilities - the gap between them is your net worth.</p>
           </div>
         }
         faqs={[
-          { question: "What is a good net worth by age?", answer: "A common benchmark is 1× your annual income by age 30, 3× by 40, 6× by 50, and 8× by 60. However, these are rough guides — net worth trajectories vary greatly based on income, location, and financial goals. The most important thing is a positive trend over time." },
+          { question: "What is a good net worth by age?", answer: "A common benchmark is 1× your annual income by age 30, 3× by 40, 6× by 50, and 8× by 60. However, these are rough guides - net worth trajectories vary greatly based on income, location, and financial goals. The most important thing is a positive trend over time." },
           { question: "Should I include my home in net worth?", answer: "Yes, your home's current market value is an asset, and the mortgage balance is a liability. The difference (home equity) contributes to net worth. However, since you can't easily spend home equity, many financial planners also track 'liquid net worth' which excludes real estate and retirement accounts." },
-          { question: "How often should I calculate my net worth?", answer: "Once a month or once a quarter is ideal. Monthly tracking helps you see trends and spot problems early. The goal isn't to maximize the number every month — it's to ensure the long-term trajectory is upward." },
-          { question: "What's the fastest way to increase net worth?", answer: "There are two paths: increase assets (save more, invest, grow income) or reduce liabilities (pay off debt, avoid new debt). High-interest debt reduction often has the best 'return' — paying off a 20% APR credit card is equivalent to a guaranteed 20% investment return." },
+          { question: "How often should I calculate my net worth?", answer: "Once a month or once a quarter is ideal. Monthly tracking helps you see trends and spot problems early. The goal isn't to maximize the number every month - it's to ensure the long-term trajectory is upward." },
+          { question: "What's the fastest way to increase net worth?", answer: "There are two paths: increase assets (save more, invest, grow income) or reduce liabilities (pay off debt, avoid new debt). High-interest debt reduction often has the best 'return' - paying off a 20% APR credit card is equivalent to a guaranteed 20% investment return." },
         ]}
         relatedCalculators={[
           { name: "Retirement Calculator", href: "/calculators/finance/retirement-calculator" },

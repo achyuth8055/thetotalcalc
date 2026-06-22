@@ -68,24 +68,24 @@ const content = `
 
 const faqs = [
   {
-    q: "What is a good 5K pace for a beginner?",
-    a: "For most beginners, completing a 5K in 28–40 minutes (9:00–13:00 per mile, or 5:36–8:03 per km) is a realistic and respectable goal. A sub-30 minute 5K (9:39/mile, 6:00/km) is a popular beginner milestone. Elite runners cover 5K in under 15 minutes (4:50/mile). Focus on running the full 3.1 miles without stopping before optimizing pace — consistency of effort matters more than speed in the first months of running.",
+    question: "What is a good 5K pace for a beginner?",
+    answer: "For most beginners, completing a 5K in 28–40 minutes (9:00–13:00 per mile, or 5:36–8:03 per km) is a realistic and respectable goal. A sub-30 minute 5K (9:39/mile, 6:00/km) is a popular beginner milestone. Elite runners cover 5K in under 15 minutes (4:50/mile). Focus on running the full 3.1 miles without stopping before optimizing pace — consistency of effort matters more than speed in the first months of running.",
   },
   {
-    q: "How do I run a negative split?",
-    a: "Start the first half of your race 5–10 seconds per mile slower than your goal pace. This feels frustratingly slow in the early miles when energy is high and adrenaline is flowing — this discomfort is normal and necessary. Trust the process. By mile 2–3 of a 5K or mile 10–13 of a half marathon, the effort should feel appropriate and you will have reserves to increase pace. Review your GPS data after races to calibrate future pacing decisions.",
+    question: "How do I run a negative split?",
+    answer: "Start the first half of your race 5–10 seconds per mile slower than your goal pace. This feels frustratingly slow in the early miles when energy is high and adrenaline is flowing — this discomfort is normal and necessary. Trust the process. By mile 2–3 of a 5K or mile 10–13 of a half marathon, the effort should feel appropriate and you will have reserves to increase pace. Review your GPS data after races to calibrate future pacing decisions.",
   },
   {
-    q: "What pace should my easy runs be?",
-    a: "Easy runs should be 60–90 seconds per mile (40–55 seconds per km) slower than your goal race pace, or at a pace where you can hold a full conversation without breathlessness. Many runners use heart rate: easy runs at 65–75% of maximum heart rate. For a runner targeting a 3:30 marathon (8:00/mile), easy runs would be around 9:00–9:30/mile. Easy pace is not junk mileage — it builds aerobic base, improves fat metabolism, and allows recovery between hard sessions.",
+    question: "What pace should my easy runs be?",
+    answer: "Easy runs should be 60–90 seconds per mile (40–55 seconds per km) slower than your goal race pace, or at a pace where you can hold a full conversation without breathlessness. Many runners use heart rate: easy runs at 65–75% of maximum heart rate. For a runner targeting a 3:30 marathon (8:00/mile), easy runs would be around 9:00–9:30/mile. Easy pace is not junk mileage — it builds aerobic base, improves fat metabolism, and allows recovery between hard sessions.",
   },
   {
-    q: "How does heat affect running pace?",
-    a: "Above 55°F (13°C), performance begins to decline. A useful rule of thumb: add 15–20 seconds per mile for every 5°F above 55°F for races under 10K; the adjustment compounds for longer distances. At 85°F (29°C), expect to run 60–90 seconds per mile slower than your cool-weather pace. High humidity compounds the effect by reducing the evaporative cooling of sweat. In heat, running by effort or heart rate rather than pace is more appropriate.",
+    question: "How does heat affect running pace?",
+    answer: "Above 55°F (13°C), performance begins to decline. A useful rule of thumb: add 15–20 seconds per mile for every 5°F above 55°F for races under 10K; the adjustment compounds for longer distances. At 85°F (29°C), expect to run 60–90 seconds per mile slower than your cool-weather pace. High humidity compounds the effect by reducing the evaporative cooling of sweat. In heat, running by effort or heart rate rather than pace is more appropriate.",
   },
   {
-    q: "What is a BQ (Boston Qualifier) pace?",
-    a: "Boston Qualifier standards vary by age group and sex and change periodically. As a reference: the 18–34 male standard requires a marathon under 3:00:00 (6:52/mile); 18–34 female under 3:30:00 (8:01/mile); 45–49 male under 3:15:00 (7:27/mile). Due to high demand, qualifying times are often cut by 2–5 minutes beyond the published standard. Check the official Boston Athletic Association website for current standards, as they update periodically based on registration volume.",
+    question: "What is a BQ (Boston Qualifier) pace?",
+    answer: "Boston Qualifier standards vary by age group and sex and change periodically. As a reference: the 18–34 male standard requires a marathon under 3:00:00 (6:52/mile); 18–34 female under 3:30:00 (8:01/mile); 45–49 male under 3:15:00 (7:27/mile). Due to high demand, qualifying times are often cut by 2–5 minutes beyond the published standard. Check the official Boston Athletic Association website for current standards, as they update periodically based on registration volume.",
   },
 ];
 
@@ -120,7 +120,12 @@ export default function RunningPaceCalculator() {
     return paceUnit === "km" ? raw : raw / 1.60934;
   }, [paceMinutes, paceSeconds, paceUnit]);
 
-  const result = useMemo(() => {
+  const result = useMemo<
+    | { paceKm: number }
+    | { totalSec: number }
+    | { distKm: number }
+    | null
+  >(() => {
     if (mode === "pace") {
       if (distanceKm <= 0 || totalTimeSec <= 0) return null;
       return { paceKm: totalTimeSec / distanceKm };
@@ -453,10 +458,14 @@ export default function RunningPaceCalculator() {
       <CalculatorLayout
         title="Running Pace Calculator"
         description="Use this running pace calculator to find your pace per mile or per kilometer, predict finish times, and plan training zones for any race distance."
-        content={content}
         faqs={faqs}
         relatedCalculators={relatedCalculators}
-      />
+      >
+        <div
+          className="prose max-w-none text-gray-700"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
+      </CalculatorLayout>
     </div>
   );
 }

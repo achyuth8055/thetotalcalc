@@ -67,24 +67,24 @@ Bedroom temperature is often overlooked in sleep optimization. Core body tempera
 
 const faqs = [
   {
-    q: "Is 6 hours of sleep enough?",
-    a: "For most adults, 6 hours is insufficient for optimal health and cognitive function. While a small percentage of people (estimated 1–3%) carry a genetic mutation (hDEC2) that allows them to function well on 6 hours, most people who report functioning fine on 6 hours have adapted to their impairment and can no longer accurately gauge their own deficit. Short-term sleep restriction for occasional demands is manageable; chronic 6-hour nights are associated with increased risks of obesity, type 2 diabetes, cardiovascular disease, and reduced immune function.",
+    question: "Is 6 hours of sleep enough?",
+    answer: "For most adults, 6 hours is insufficient for optimal health and cognitive function. While a small percentage of people (estimated 1–3%) carry a genetic mutation (hDEC2) that allows them to function well on 6 hours, most people who report functioning fine on 6 hours have adapted to their impairment and can no longer accurately gauge their own deficit. Short-term sleep restriction for occasional demands is manageable; chronic 6-hour nights are associated with increased risks of obesity, type 2 diabetes, cardiovascular disease, and reduced immune function.",
   },
   {
-    q: "Why do I wake up at 3am?",
-    a: "Waking between 2–4 am typically corresponds to the transition between sleep cycles when you are in the lighter N1/N2 phase. A natural cortisol mini-spike occurs in the early morning hours (part of the cortisol awakening response) as the body prepares to wake up. Stress, alcohol (which causes rebound arousal 4–6 hours after consumption), blood sugar fluctuations, or an overactive bladder can amplify this natural arousal to full wakefulness. Most 3 am wakings lasting less than 20 minutes are normal; persistent waking may indicate sleep apnea or anxiety.",
+    question: "Why do I wake up at 3am?",
+    answer: "Waking between 2–4 am typically corresponds to the transition between sleep cycles when you are in the lighter N1/N2 phase. A natural cortisol mini-spike occurs in the early morning hours (part of the cortisol awakening response) as the body prepares to wake up. Stress, alcohol (which causes rebound arousal 4–6 hours after consumption), blood sugar fluctuations, or an overactive bladder can amplify this natural arousal to full wakefulness. Most 3 am wakings lasting less than 20 minutes are normal; persistent waking may indicate sleep apnea or anxiety.",
   },
   {
-    q: "Should I nap to catch up on sleep?",
-    a: "A 20-minute power nap (set your alarm for 25 minutes to account for falling asleep) can restore alertness and performance without causing sleep inertia. Napping for 30–60 minutes risks waking in N2 or N3, causing grogginess. A full 90-minute nap completes one cycle and includes REM, which is restorative but can reduce nighttime sleep pressure if taken after 3 pm. Napping cannot fully repay sleep debt, but strategically placed power naps improve afternoon performance significantly.",
+    question: "Should I nap to catch up on sleep?",
+    answer: "A 20-minute power nap (set your alarm for 25 minutes to account for falling asleep) can restore alertness and performance without causing sleep inertia. Napping for 30–60 minutes risks waking in N2 or N3, causing grogginess. A full 90-minute nap completes one cycle and includes REM, which is restorative but can reduce nighttime sleep pressure if taken after 3 pm. Napping cannot fully repay sleep debt, but strategically placed power naps improve afternoon performance significantly.",
   },
   {
-    q: "What is sleep debt?",
-    a: "Sleep debt is the cumulative difference between the sleep you need and the sleep you actually get. If you need 8 hours but average 6.5, you accumulate 1.5 hours of debt per night — 10.5 hours per week. Research suggests sleep debt builds across multiple nights and affects health cumulatively, not just acutely. While two to three nights of extended sleep can partially reduce accumulated debt, chronic sleep deprivation creates changes in immune function and metabolic markers that require more than a weekend to fully reverse.",
+    question: "What is sleep debt?",
+    answer: "Sleep debt is the cumulative difference between the sleep you need and the sleep you actually get. If you need 8 hours but average 6.5, you accumulate 1.5 hours of debt per night — 10.5 hours per week. Research suggests sleep debt builds across multiple nights and affects health cumulatively, not just acutely. While two to three nights of extended sleep can partially reduce accumulated debt, chronic sleep deprivation creates changes in immune function and metabolic markers that require more than a weekend to fully reverse.",
   },
   {
-    q: "Does melatonin help you fall asleep?",
-    a: "Melatonin is most effective for circadian rhythm disruption (jet lag, shift work, delayed sleep phase syndrome) rather than as a general sleep aid. The key is timing and dose: 0.3–1 mg taken 2 hours before desired bedtime is evidence-based. Many commercial supplements contain 5–10 mg, which can shift the circadian clock but also cause morning grogginess. Melatonin signals 'it is dark outside' to the brain — it is not a sedative. It works best when light exposure is also managed (dark environment after taking it).",
+    question: "Does melatonin help you fall asleep?",
+    answer: "Melatonin is most effective for circadian rhythm disruption (jet lag, shift work, delayed sleep phase syndrome) rather than as a general sleep aid. The key is timing and dose: 0.3–1 mg taken 2 hours before desired bedtime is evidence-based. Many commercial supplements contain 5–10 mg, which can shift the circadian clock but also cause morning grogginess. Melatonin signals 'it is dark outside' to the brain — it is not a sedative. It works best when light exposure is also managed (dark environment after taking it).",
   },
 ];
 
@@ -313,7 +313,9 @@ export default function SleepCalculatorPage() {
         explanation={explanation}
         faqs={faqs}
         relatedCalculators={relatedCalculators}
-      />
+      >
+        <div />
+      </CalculatorLayout>
     </>
   );
 }

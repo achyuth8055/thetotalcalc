@@ -59,7 +59,7 @@ function primeFactorization(n: number): Map<number, number> {
 
 function countDivisors(factors: Map<number, number>): number {
   let count = 1;
-  for (const exp of factors.values()) {
+  for (const exp of Array.from(factors.values())) {
     count *= exp + 1;
   }
   return count;

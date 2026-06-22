@@ -106,24 +106,24 @@ const explanation = (
 
 const faqs = [
   {
-    q: "Does coffee count toward my daily water intake?",
-    a: "Yes. Despite caffeine's mild diuretic effect, research consistently shows that coffee and tea net contribute to daily hydration. Moderate caffeine consumption — up to 400mg per day, approximately 4 cups of coffee — does not cause net fluid loss. The water content of the beverage more than offsets the mild increase in urine output. Strongly caffeinated drinks such as energy shots and caffeine pills taken in high doses without accompanying fluid can cause meaningful diuresis, but standard coffee and tea consumption does not.",
+    question: "Does coffee count toward my daily water intake?",
+    answer: "Yes. Despite caffeine's mild diuretic effect, research consistently shows that coffee and tea net contribute to daily hydration. Moderate caffeine consumption — up to 400mg per day, approximately 4 cups of coffee — does not cause net fluid loss. The water content of the beverage more than offsets the mild increase in urine output. Strongly caffeinated drinks such as energy shots and caffeine pills taken in high doses without accompanying fluid can cause meaningful diuresis, but standard coffee and tea consumption does not.",
   },
   {
-    q: "Is sparkling water as hydrating as still water?",
-    a: "Yes. Carbonation does not affect hydration. Sparkling water, flavored sparkling water, and still water are equally hydrating. The CO₂ bubbles are inert from a hydration perspective and are simply expelled through the digestive tract. The only practical caveat is that some people find carbonated water less comfortable to drink in large volumes and may naturally drink less of it, which could affect total intake.",
+    question: "Is sparkling water as hydrating as still water?",
+    answer: "Yes. Carbonation does not affect hydration. Sparkling water, flavored sparkling water, and still water are equally hydrating. The CO₂ bubbles are inert from a hydration perspective and are simply expelled through the digestive tract. The only practical caveat is that some people find carbonated water less comfortable to drink in large volumes and may naturally drink less of it, which could affect total intake.",
   },
   {
-    q: "Can you drink too much water?",
-    a: "Yes, though it is rare in healthy adults. Hyponatremia — low blood sodium caused by excessive water diluting electrolyte levels — occurs most commonly in endurance athletes who drink large volumes of plain water during races, psychiatric patients with compulsive water-drinking disorder, or very young children given too much plain water. Symptoms include nausea, headache, confusion, and in severe cases, seizures or death. Healthy kidneys can process approximately 1 liter of water per hour — drinking more than this rate consistently exceeds renal excretion capacity and increases hyponatremia risk.",
+    question: "Can you drink too much water?",
+    answer: "Yes, though it is rare in healthy adults. Hyponatremia — low blood sodium caused by excessive water diluting electrolyte levels — occurs most commonly in endurance athletes who drink large volumes of plain water during races, psychiatric patients with compulsive water-drinking disorder, or very young children given too much plain water. Symptoms include nausea, headache, confusion, and in severe cases, seizures or death. Healthy kidneys can process approximately 1 liter of water per hour — drinking more than this rate consistently exceeds renal excretion capacity and increases hyponatremia risk.",
   },
   {
-    q: "Why do I need more water in summer?",
-    a: "Heat triggers sweating as the body's primary cooling mechanism. Sweat is predominantly water with dissolved electrolytes, primarily sodium and chloride. On a hot day, sweat rates of 1-2 liters per hour are common during even moderate activity. Even at rest in a hot environment, insensible water losses through skin evaporation and respiration increase substantially compared to cool conditions. Higher ambient humidity further reduces evaporative cooling efficiency, forcing the body to produce even more sweat to maintain core temperature, amplifying fluid requirements.",
+    question: "Why do I need more water in summer?",
+    answer: "Heat triggers sweating as the body's primary cooling mechanism. Sweat is predominantly water with dissolved electrolytes, primarily sodium and chloride. On a hot day, sweat rates of 1-2 liters per hour are common during even moderate activity. Even at rest in a hot environment, insensible water losses through skin evaporation and respiration increase substantially compared to cool conditions. Higher ambient humidity further reduces evaporative cooling efficiency, forcing the body to produce even more sweat to maintain core temperature, amplifying fluid requirements.",
   },
   {
-    q: "Does drinking more water help with weight loss?",
-    a: "Modestly, yes. Drinking 500mL of water before meals has been shown in controlled studies to reduce calorie intake at that meal by approximately 13%, likely by increasing gastric fullness. Water also temporarily increases resting metabolic rate by 24-30% for about an hour through thermogenesis — the energy cost of heating ingested water to body temperature. Replacing sugary beverages with water eliminates liquid calories directly. The effect is real but not dramatic in isolation. Hydration supports weight loss as part of a broader healthy diet rather than functioning as a primary weight-loss intervention on its own.",
+    question: "Does drinking more water help with weight loss?",
+    answer: "Modestly, yes. Drinking 500mL of water before meals has been shown in controlled studies to reduce calorie intake at that meal by approximately 13%, likely by increasing gastric fullness. Water also temporarily increases resting metabolic rate by 24-30% for about an hour through thermogenesis — the energy cost of heating ingested water to body temperature. Replacing sugary beverages with water eliminates liquid calories directly. The effect is real but not dramatic in isolation. Hydration supports weight loss as part of a broader healthy diet rather than functioning as a primary weight-loss intervention on its own.",
   },
 ];
 
@@ -376,6 +376,8 @@ export default function WaterIntakeCalculatorPage() {
       </div>
 
       <CalculatorLayout
+        title="Daily Water Intake Calculator"
+        description="Find your personalized daily hydration target based on weight, activity level, and climate"
         explanation={explanation}
         faqs={faqs}
         relatedCalculators={[
@@ -383,7 +385,9 @@ export default function WaterIntakeCalculatorPage() {
           { name: "BMI Calculator", href: "/calculators/health/bmi-calculator" },
           { name: "BMR Calculator", href: "/calculators/health/bmr-calculator" },
         ]}
-      />
+      >
+        <div />
+      </CalculatorLayout>
     </div>
   );
 }

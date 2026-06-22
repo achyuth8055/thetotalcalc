@@ -115,9 +115,9 @@ export default function BreakEvenCalculator() {
   ];
 
   const relatedCalculators = [
-    { label: "ROI Calculator", href: "/calculators/finance/roi-calculator" },
-    { label: "Margin Calculator", href: "/calculators/finance/margin-calculator" },
-    { label: "Investment Calculator", href: "/calculators/finance/investment-calculator" },
+    { name: "ROI Calculator", href: "/calculators/finance/roi-calculator" },
+    { name: "Margin Calculator", href: "/calculators/finance/margin-calculator" },
+    { name: "Investment Calculator", href: "/calculators/finance/investment-calculator" },
   ];
 
   return (

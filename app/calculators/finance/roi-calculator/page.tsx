@@ -144,9 +144,9 @@ export default function RoiCalculator() {
   ];
 
   const relatedCalculators = [
-    { label: "Break-Even Calculator", href: "/calculators/finance/break-even-calculator" },
-    { label: "Investment Calculator", href: "/calculators/finance/investment-calculator" },
-    { label: "Trade Calculator", href: "/calculators/finance/trade-calculator" },
+    { name: "Break-Even Calculator", href: "/calculators/finance/break-even-calculator" },
+    { name: "Investment Calculator", href: "/calculators/finance/investment-calculator" },
+    { name: "Trade Calculator", href: "/calculators/finance/trade-calculator" },
   ];
 
   const tabs: { id: Tab; label: string }[] = [

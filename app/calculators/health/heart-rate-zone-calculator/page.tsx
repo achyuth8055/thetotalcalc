@@ -200,7 +200,7 @@ export default function HeartRateZoneCalculatorPage() {
     { label: "Home", href: "/" },
     { label: "Calculators", href: "/calculators" },
     { label: "Health", href: "/calculators/health" },
-    { label: "Heart Rate Zone Calculator" },
+    { label: "Heart Rate Zone Calculator", href: "/calculators/health/heart-rate-zone-calculator" },
   ];
 
   return (

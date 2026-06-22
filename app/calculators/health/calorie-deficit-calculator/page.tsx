@@ -224,8 +224,8 @@ export default function CalorieDeficitCalculator() {
                   />
                   <Tooltip
                     formatter={(v: number) => [`${v.toFixed(1)} ${useKg ? "kg" : "lb"}`, "Weight"]}
-                    labelFormatter={(_: unknown, payload: Array<{ payload: { week: number } }>) =>
-                      payload?.[0] ? `Week ${payload[0].payload.week}` : ""
+                    labelFormatter={(_label: unknown, payload?: ReadonlyArray<{ payload?: { week?: number } }>) =>
+                      payload?.[0]?.payload?.week != null ? `Week ${payload[0].payload.week}` : ""
                     }
                   />
                   <ReferenceLine y={goalWeightKg} stroke="#16a34a" strokeDasharray="3 3" label={{ value: "Goal", fontSize: 10, fill: "#16a34a" }} />

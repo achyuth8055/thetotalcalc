@@ -119,9 +119,9 @@ export default function CryptoProfitCalculator() {
   ];
 
   const relatedCalculators = [
-    { label: "Investment Calculator", href: "/calculators/finance/investment-calculator" },
-    { label: "ROI Calculator", href: "/calculators/finance/roi-calculator" },
-    { label: "Tax Calculator", href: "/calculators/finance/tax-calculator" },
+    { name: "Investment Calculator", href: "/calculators/finance/investment-calculator" },
+    { name: "ROI Calculator", href: "/calculators/finance/roi-calculator" },
+    { name: "Tax Calculator", href: "/calculators/finance/tax-calculator" },
   ];
 
   return (

@@ -139,9 +139,9 @@ export default function FireCalculator() {
   ];
 
   const relatedCalculators = [
-    { label: "Retirement Calculator", href: "/calculators/finance/retirement-calculator" },
-    { label: "Investment Calculator", href: "/calculators/finance/investment-calculator" },
-    { label: "Savings Goal Calculator", href: "/calculators/finance/savings-goal-calculator" },
+    { name: "Retirement Calculator", href: "/calculators/finance/retirement-calculator" },
+    { name: "Investment Calculator", href: "/calculators/finance/investment-calculator" },
+    { name: "Savings Goal Calculator", href: "/calculators/finance/savings-goal-calculator" },
   ];
 
   const swrOptions = [

@@ -154,9 +154,9 @@ export default function SavingsGoalCalculator() {
   ];
 
   const relatedCalculators = [
-    { label: "FIRE Calculator", href: "/calculators/finance/fire-calculator" },
-    { label: "Retirement Calculator", href: "/calculators/finance/retirement-calculator" },
-    { label: "Emergency Fund Calculator", href: "/calculators/finance/emergency-fund-calculator" },
+    { name: "FIRE Calculator", href: "/calculators/finance/fire-calculator" },
+    { name: "Retirement Calculator", href: "/calculators/finance/retirement-calculator" },
+    { name: "Emergency Fund Calculator", href: "/calculators/finance/emergency-fund-calculator" },
   ];
 
   return (

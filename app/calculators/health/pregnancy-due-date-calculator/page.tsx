@@ -269,7 +269,7 @@ export default function PregnancyDueDateCalculator() {
   return (
     <CalculatorLayout
       title="Pregnancy Due Date Calculator"
-      subtitle="Estimate your due date from LMP, conception date, or IVF transfer"
+      description="Estimate your due date from LMP, conception date, or IVF transfer"
       explanation={explanation}
       faqs={faqs}
       relatedCalculators={relatedCalculators}

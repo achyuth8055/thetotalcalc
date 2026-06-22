@@ -173,7 +173,7 @@ export default function OvulationCalculatorPage() {
     { label: "Home", href: "/" },
     { label: "Calculators", href: "/calculators" },
     { label: "Health", href: "/calculators/health" },
-    { label: "Ovulation Calculator" },
+    { label: "Ovulation Calculator", href: "/calculators/health/ovulation-calculator" },
   ];
 
   const faqs = [

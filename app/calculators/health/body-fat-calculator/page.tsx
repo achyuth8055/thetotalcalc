@@ -320,7 +320,7 @@ export default function BodyFatCalculatorPage() {
   const breadcrumbs = [
     { label: "Home", href: "/" },
     { label: "Health Calculators", href: "/calculators/health" },
-    { label: "Body Fat Calculator" },
+    { label: "Body Fat Calculator", href: "/calculators/health/body-fat-calculator" },
   ];
 
   return (
@@ -488,7 +488,9 @@ export default function BodyFatCalculatorPage() {
         description="Estimate your body fat percentage using the US Navy circumference method."
         explanation={explanation}
         relatedCalculators={relatedCalculators}
-      />
+      >
+        <div />
+      </CalculatorLayout>
     </>
   );
 }
